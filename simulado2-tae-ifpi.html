@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SIMULADO 2 — TAE/IFPI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ph:#8dff5e; --ph-hi:#e2ffd4; --ph-dim:#3f9a2c; --ph-ghost:rgba(141,255,94,.13);
+  --hot:#d8ff17; --red:#ff4326; --amber:#ffc400; --blue:#5ac8ff;
+  --seg:"VT323","Lucida Console","Courier New",monospace;
+  --ttl:"Orbitron","Arial Narrow",Impact,sans-serif;
+  --ui:Tahoma,Verdana,"DejaVu Sans",sans-serif;
+  --metal:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.09) 0 1px, rgba(0,0,0,.05) 1px 2px),
+    linear-gradient(180deg,#ffffff 0, #f0f5f7 2px, #cfd7dc 6px, #aab4ba 42%, #9aa4aa 48%,
+      #8b959b 50%, #b7c0c5 56%, #dde4e8 88%, #97a1a7 96%, #576066 100%);
+  --cut: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+  --cut-s: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--ui);background:#030804;color:#e2ffd4;padding:14px;min-height:100vh;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+/* fundo: teia vetorial + disco translúcido */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:radial-gradient(120% 100% at 78% 8%, #14481c 0%, #08240e 38%, #030c05 74%, #010402 100%)}
+.bg-net{position:absolute;inset:-10%;opacity:.5;
+  background:
+    repeating-linear-gradient(24deg, rgba(141,255,94,.14) 0 1px, transparent 1px 78px),
+    repeating-linear-gradient(-38deg, rgba(141,255,94,.10) 0 1px, transparent 1px 104px),
+    repeating-linear-gradient(72deg, rgba(141,255,94,.07) 0 1px, transparent 1px 150px);
+  filter:blur(.3px)}
+.bg-cd{position:absolute;right:-9vw;top:6vh;width:62vw;height:62vw;max-width:820px;max-height:820px;
+  border-radius:50%;opacity:.3;filter:blur(1px);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(3,12,5,1) 0 15%, transparent 15.5%),
+    conic-gradient(from 210deg, rgba(141,255,94,.05), rgba(141,255,94,.55) 12%, rgba(20,90,30,.1) 26%,
+      rgba(200,255,150,.4) 40%, rgba(10,60,20,.1) 55%, rgba(141,255,94,.5) 70%, rgba(20,80,30,.08) 84%, rgba(141,255,94,.05));
+  box-shadow:0 0 140px rgba(141,255,94,.28)}
+.bg-glow{position:absolute;left:-20%;bottom:-30%;width:70vw;height:70vw;border-radius:50%;
+  background:radial-gradient(circle, rgba(141,255,94,.16), transparent 62%)}
+.wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto}
+
+/* ============ JANELA ============ */
+.win{filter:drop-shadow(0 3px 0 rgba(28,34,30,.9)) drop-shadow(0 14px 26px rgba(0,0,0,.72))}
+.win + .win{margin-top:11px}
+.frame{clip-path:var(--cut);background:var(--metal);padding:5px 5px 6px;position:relative}
+.frame::after{content:"";position:absolute;inset:0;clip-path:var(--cut);pointer-events:none;
+  box-shadow:inset 2px 0 0 rgba(255,255,255,.4), inset -2px 0 0 rgba(0,0,0,.22), inset 0 -2px 0 rgba(0,0,0,.3)}
+.screw{position:absolute;width:9px;height:9px;border-radius:50%;z-index:2;
+  background:radial-gradient(circle at 32% 28%,#ffffff,#b9c2c7 42%,#6d767b 78%,#414a4e);
+  box-shadow:0 1px 1px rgba(255,255,255,.7), inset 0 0 0 1px rgba(0,0,0,.28)}
+.screw::after{content:"";position:absolute;left:1.5px;right:1.5px;top:4px;height:1.5px;background:rgba(0,0,0,.45);transform:rotate(28deg)}
+.screw.tr{right:6px;top:5px}.screw.bl{left:6px;bottom:6px}
+
+/* barra de título */
+.bar{display:flex;align-items:center;gap:8px;height:19px;margin-bottom:5px;padding:0 3px}
+.rid{width:26px;height:11px;flex:none;
+  background:repeating-linear-gradient(90deg, rgba(255,255,255,.85) 0 1px, rgba(0,0,0,.34) 1px 3px);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.22)}
+.bar h2{margin:0;font-family:var(--ttl);font-size:10px;font-weight:900;letter-spacing:.42em;
+  color:#2c3438;text-shadow:0 1px 0 rgba(255,255,255,.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .line{flex:1;height:5px;min-width:8px;
+  background:repeating-linear-gradient(180deg, rgba(0,0,0,.3) 0 1px, rgba(255,255,255,.8) 1px 2px, transparent 2px 5px)}
+.wbtn{display:flex;gap:2px;flex:none}
+.wbtn i{width:9px;height:11px;display:block;
+  background:linear-gradient(180deg,#fbfdfe,#c3ccd1 50%,#96a0a6);box-shadow:inset 0 0 0 1px rgba(0,0,0,.35)}
+
+/* ============ VIDRO LCD ============ */
+.glass{position:relative;clip-path:var(--cut-s);overflow:hidden;
+  background:
+    radial-gradient(140% 110% at 14% -22%, rgba(180,255,160,.3), transparent 60%),
+    linear-gradient(180deg,#125b1d 0%, #093c14 30%, #052609 70%, #031706 100%);
+  box-shadow:inset 0 0 0 1px rgba(141,255,94,.3), inset 0 4px 14px rgba(0,0,0,.8),
+    inset 0 -18px 34px rgba(0,0,0,.62)}
+.glass::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+  background:repeating-linear-gradient(180deg, rgba(0,0,0,.24) 0 1px, transparent 1px 3px);mix-blend-mode:multiply;opacity:.6}
+.glass::before{content:"";position:absolute;left:-40%;top:-70%;width:60%;height:240%;transform:rotate(19deg);
+  pointer-events:none;z-index:2;background:linear-gradient(90deg,transparent,rgba(255,255,255,.075),transparent)}
+.glass > *{position:relative;z-index:1}
+.dark{background:linear-gradient(180deg,#04160a,#020c05);box-shadow:inset 0 0 0 1px rgba(141,255,94,.24), inset 0 3px 10px rgba(0,0,0,.9)}
+
+.seg{font-family:var(--seg);line-height:.94}
+.tt{font-family:var(--ttl);font-weight:700}
+.lbl{font-size:8px;letter-spacing:.2em;color:var(--ph-dim);font-weight:bold;text-transform:uppercase}
+.glow{text-shadow:0 0 7px rgba(141,255,94,.6),0 0 20px rgba(141,255,94,.24)}
+
+/* ============ BOTÕES ============ */
+.btn{font-family:var(--ui);font-size:9px;font-weight:bold;letter-spacing:.16em;text-transform:uppercase;
+  cursor:pointer;padding:6px 10px;color:#20272a;border:0;clip-path:var(--cut-s);
+  background:linear-gradient(180deg,#ffffff 0,#e6ecef 40%,#b4bec4 52%,#d3dade 78%,#8e989e 100%);
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.9), inset -1px -2px 0 rgba(0,0,0,.3)}
+.btn:hover{background:linear-gradient(180deg,#fff,#f2f6f8 40%,#c4ced4 52%,#e0e6ea 78%,#9ba5ab)}
+.btn:active{transform:translateY(2px)}
+.btn:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none}
+.btn--g{color:var(--ph);text-shadow:0 0 6px rgba(141,255,94,.6);
+  background:linear-gradient(180deg,#1e7c2a 0,#0e5218 40%,#062c0d 52%,#0b4514 78%,#04200a 100%);
+  box-shadow:inset 1px 1px 0 rgba(141,255,94,.32), inset -1px -2px 0 rgba(0,0,0,.6)}
+.btn--g:hover{background:linear-gradient(180deg,#2b9a38,#146a20 40%,#0a3c12 52%,#10561a 78%,#072b0d)}
+.btn--on{color:#141a00;text-shadow:none;
+  background:linear-gradient(180deg,#fbffb8 0,#e6ff3a 42%,#b9d400 54%,#e2f24d 100%);
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.85), 0 0 16px rgba(216,255,23,.55)}
+.btn--go{color:#03240a;background:linear-gradient(180deg,#e6ffd6,#8dff5e 42%,#33ac1c 54%,#7ceb52);
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.9), 0 0 22px rgba(141,255,94,.5)}
+.btn--stop{color:#2a0500;background:linear-gradient(180deg,#ffdad2,#ff8064 42%,#cf3317 54%,#f26a4a);
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.75), 0 0 18px rgba(255,67,38,.45)}
+.btn--xl{font-size:13px;padding:13px 26px;letter-spacing:.24em}
+.tbtn{width:38px;height:26px;display:grid;place-items:center;font-size:11px;color:#1b2124;cursor:pointer;border:0;
+  clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px);
+  background:linear-gradient(180deg,#ffffff,#dfe6ea 44%,#a9b3b9 52%,#cfd7db 82%,#8b959b);
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.9), inset -1px -2px 0 rgba(0,0,0,.32)}
+.tbtn:hover{background:linear-gradient(180deg,#fff,#eaf0f3 44%,#b6c0c6 52%,#dae1e5 82%,#98a2a8)}
+.tbtn:active{transform:translateY(2px)}
+.tbtn:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+.tbtn[disabled]{opacity:.4;cursor:not-allowed;transform:none}
+.tray{display:flex;gap:4px;padding:5px 6px;clip-path:var(--cut-s);
+  background:linear-gradient(180deg,#6f797f,#9aa4aa 40%,#c3ccd1);
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.55)}
+
+/* dica circular estilo console */
+.hint{display:flex;align-items:center;gap:7px}
+.hint b{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;flex:none;
+  font-family:var(--seg);font-size:16px;color:#08300f;
+  background:radial-gradient(circle at 34% 28%, #dcffcb, #8dff5e 46%, #2f9e1c);
+  box-shadow:0 0 14px rgba(141,255,94,.55), inset 0 -2px 4px rgba(0,0,0,.35)}
+.hint span{font-size:9px;letter-spacing:.2em;color:var(--ph);font-weight:bold;
+  border-bottom:1px solid rgba(141,255,94,.45);padding-bottom:2px}
+
+/* ============ CABEÇALHO / PLAYER ============ */
+.head{display:grid;grid-template-columns:264px minmax(0,1fr);gap:5px}
+.clockbox{padding:7px 9px 8px;display:flex;flex-direction:column;gap:5px}
+.cl-top{display:flex;align-items:flex-end;gap:8px}
+.cl-scale{display:flex;gap:14px;padding-left:36px}
+.cl-scale span{font-size:7px;letter-spacing:.16em;color:var(--ph-dim)}
+.cl-num{position:relative;font-family:var(--seg);font-size:42px;color:var(--ph-hi);text-shadow:0 0 9px rgba(141,255,94,.75)}
+.cl-num u{position:absolute;left:0;top:0;color:var(--ph-ghost);text-decoration:none;text-shadow:none}
+.cl-ico{font-size:13px;color:var(--ph);padding-bottom:7px}
+.viz{display:flex;align-items:flex-end;gap:2px;height:30px;padding-bottom:5px}
+.viz i{width:4px;display:block;background:linear-gradient(180deg,#d8ff17,#8dff5e 42%,#1c7a10)}
+@keyframes bounce{0%,100%{height:12%}18%{height:82%}36%{height:30%}54%{height:98%}72%{height:44%}90%{height:66%}}
+.cl-foot{display:flex;gap:5px;align-items:center}
+.chip{font-family:var(--seg);font-size:13px;color:var(--ph);padding:1px 6px 0;
+  background:rgba(141,255,94,.1);box-shadow:inset 0 0 0 1px rgba(141,255,94,.3)}
+.chip.b{color:var(--hot)}
+
+.infobox{padding:7px 9px 8px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.nowline{display:flex;align-items:center;gap:8px;min-width:0}
+.nowline .n{font-family:var(--seg);font-size:22px;color:var(--hot);text-shadow:0 0 8px rgba(216,255,23,.5);flex:none}
+.nowline .t{font-family:var(--seg);font-size:20px;color:var(--ph-hi);white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;min-width:0;text-shadow:0 0 7px rgba(141,255,94,.45)}
+.stats{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.stat{display:flex;align-items:baseline;gap:5px;padding:2px 7px 1px;
+  background:rgba(141,255,94,.07);box-shadow:inset 0 0 0 1px rgba(141,255,94,.22)}
+.stat b{font-size:7.5px;letter-spacing:.16em;color:var(--ph-dim)}
+.stat i{font-family:var(--seg);font-size:16px;font-style:normal;color:var(--ph)}
+.seek{position:relative;height:12px;background:#021005;box-shadow:inset 0 0 0 1px rgba(141,255,94,.26), inset 0 2px 6px rgba(0,0,0,.9)}
+.seek i{position:absolute;inset:0 auto 0 0;display:block;
+  background:repeating-linear-gradient(90deg,#8dff5e 0 3px, #57c43a 3px 5px);box-shadow:0 0 12px rgba(141,255,94,.6)}
+.seek i.warn{background:repeating-linear-gradient(90deg,#ffc400 0 3px,#c08c00 3px 5px)}
+.seek i.crit{background:repeating-linear-gradient(90deg,#ff4326 0 3px,#a3230e 3px 5px)}
+.seek u{position:absolute;top:50%;transform:translate(-50%,-50%);width:11px;height:18px;text-decoration:none;
+  background:linear-gradient(180deg,#fff,#c9d2d7 50%,#8d979d);box-shadow:0 0 6px rgba(0,0,0,.7), inset 0 0 0 1px rgba(0,0,0,.35)}
+
+/* ============ QUESTÃO ============ */
+.qbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:6px 10px;
+  background:linear-gradient(180deg,rgba(141,255,94,.18),rgba(141,255,94,.02));
+  border-bottom:1px solid rgba(141,255,94,.3)}
+.qbar .k{font-family:var(--ttl);font-weight:900;font-size:11px;letter-spacing:.2em;color:var(--ph-hi);
+  text-shadow:0 0 10px rgba(141,255,94,.6),0 1px 0 #04220a}
+.qbar .b{font-size:8.5px;letter-spacing:.18em;color:var(--ph);font-weight:bold}
+.qbar .y{margin-left:auto;font-size:10px;color:var(--ph-dim);text-align:right}
+.qtext{padding:15px 16px 6px;font-size:14px;line-height:1.64;color:var(--ph-hi);white-space:pre-wrap;
+  max-width:76ch;text-shadow:0 0 5px rgba(141,255,94,.3)}
+.alts{padding:10px 9px 12px;display:flex;flex-direction:column;gap:4px}
+.alt{display:grid;grid-template-columns:24px minmax(0,1fr) 16px;gap:9px;align-items:start;width:100%;
+  padding:9px 12px 9px 9px;cursor:pointer;border:0;text-align:left;font-family:var(--ui);
+  font-size:13px;line-height:1.5;color:var(--ph);
+  clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+  background:linear-gradient(90deg, rgba(141,255,94,.16), rgba(141,255,94,.04) 70%, transparent);
+  box-shadow:inset 1px 0 0 rgba(141,255,94,.5)}
+.alt:hover{color:var(--ph-hi);background:linear-gradient(90deg, rgba(141,255,94,.34), rgba(141,255,94,.1) 70%, rgba(141,255,94,.02))}
+.alt:focus-visible{outline:2px solid var(--hot);outline-offset:-2px}
+.alt .l{font-family:var(--seg);font-size:20px;color:var(--ph-dim);text-align:center;line-height:1.05}
+.alt .c{font-size:12px;color:transparent;line-height:1.4}
+.alt.on{color:#141a00;text-shadow:none;
+  background:linear-gradient(90deg,#f4ff9a,#e0ff2a 55%,#a9c400);
+  box-shadow:0 0 22px rgba(216,255,23,.5), inset 1px 0 0 #fff}
+.alt.on .l,.alt.on .c{color:#141a00}
+.qfoot{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 10px;
+  border-top:1px solid rgba(141,255,94,.24);background:linear-gradient(180deg,transparent,rgba(141,255,94,.07))}
+.qfoot .sp{flex:1;min-width:6px}
+
+/* ============ PLAYLIST ============ */
+.plbar{display:flex;align-items:center;gap:7px;padding:4px 8px;border-bottom:1px solid rgba(141,255,94,.26)}
+.plbar h3{margin:0;font-family:var(--ttl);font-weight:900;font-size:9px;letter-spacing:.34em;color:var(--ph-hi)}
+.plbar .c{margin-left:auto;font-family:var(--seg);font-size:14px;color:var(--ph-dim)}
+.plscroll{max-height:432px;overflow-y:auto;padding:3px 0 5px;scrollbar-width:thin;scrollbar-color:#2f9e1c #021005}
+.plscroll::-webkit-scrollbar{width:12px}
+.plscroll::-webkit-scrollbar-track{background:#021005;box-shadow:inset 0 0 0 1px rgba(141,255,94,.18)}
+.plscroll::-webkit-scrollbar-thumb{background:linear-gradient(90deg,#c8ff9e,#8dff5e 40%,#2f9e1c);box-shadow:inset 0 0 0 1px #04160a}
+.plgrp{display:flex;align-items:center;gap:6px;padding:9px 8px 4px}
+.plgrp b{font-size:7.5px;letter-spacing:.2em;color:var(--ph-dim);white-space:nowrap}
+.plgrp i{flex:1;height:1px;background:repeating-linear-gradient(90deg, rgba(141,255,94,.4) 0 2px, transparent 2px 5px)}
+.row{display:grid;grid-template-columns:26px minmax(0,1fr) 26px;gap:6px;align-items:center;width:100%;
+  padding:3px 10px 2px 7px;border:0;cursor:pointer;text-align:left;background:transparent;
+  font-family:var(--seg);font-size:15px;color:var(--ph-dim);
+  clip-path:polygon(0 0, calc(100% - 9px) 0, 100% 50%, calc(100% - 9px) 100%, 0 100%)}
+.row:hover{color:var(--ph-hi);background:rgba(141,255,94,.16)}
+.row:focus-visible{outline:1px solid var(--hot);outline-offset:-1px}
+.row .t{font-family:var(--ui);font-size:10.5px;letter-spacing:.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .v{text-align:right;font-size:15px}
+.row.ans{color:var(--ph)}
+.row.ans .v{color:var(--ph-hi)}
+.row.mk{box-shadow:inset 3px 0 0 var(--blue)}
+.row.cur{color:#141a00;background:linear-gradient(90deg,#f4ff9a,#dcff2a 65%,#a9c400);text-shadow:none}
+.row.cur .v{color:#141a00}
+.row.ok{color:#b7ff9a;background:rgba(90,220,60,.14);box-shadow:inset 3px 0 0 #6ff04a}
+.row.bad{color:#ffb9a8;background:rgba(255,67,38,.16);box-shadow:inset 3px 0 0 #ff4326}
+.row.blank{color:#79856f;background:rgba(0,0,0,.3);box-shadow:inset 3px 0 0 #4a5544}
+.plfoot{display:flex;gap:4px;padding:5px 6px;flex-wrap:wrap;border-top:1px solid rgba(141,255,94,.22)}
+
+/* ============ EQ ============ */
+.eqwrap{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;padding:9px 10px 8px}
+.eqscale{display:flex;flex-direction:column;justify-content:space-between;height:112px;padding:3px 0}
+.eqscale span{font-family:var(--seg);font-size:12px;color:var(--ph-dim);text-align:right}
+.eqsliders{display:flex;gap:10px;align-items:flex-end;justify-content:space-around}
+.sl{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0}
+.rail{position:relative;width:22px;height:112px;background:linear-gradient(180deg,#010c04,#04180a);
+  box-shadow:inset 0 0 0 1px rgba(141,255,94,.26), inset 0 2px 6px rgba(0,0,0,.9)}
+.rail::before{content:"";position:absolute;left:50%;top:5px;bottom:5px;width:3px;transform:translateX(-50%);
+  background:repeating-linear-gradient(180deg, rgba(141,255,94,.3) 0 1px, transparent 1px 6px)}
+.knob{position:absolute;left:-3px;width:28px;height:12px;transition:bottom .5s cubic-bezier(.2,.85,.3,1);
+  background:linear-gradient(180deg,#ffffff,#dde4e8 38%,#98a2a8 52%,#c8d0d5 78%,#79838a);
+  box-shadow:0 2px 4px rgba(0,0,0,.75), inset 0 1px 0 #fff}
+.knob::after{content:"";position:absolute;left:4px;right:4px;top:5px;height:2px;background:rgba(0,0,0,.5)}
+.minline{position:absolute;left:-5px;right:-5px;height:2px;background:var(--red);box-shadow:0 0 8px var(--red)}
+.sl b{font-size:8px;letter-spacing:.14em;color:var(--ph-dim);text-align:center}
+.sl i{font-family:var(--seg);font-size:15px;font-style:normal;color:var(--ph)}
+.sl i.bad{color:#ff8f78}
+.eqtop{display:flex;gap:5px;align-items:center;padding:6px 10px 0}
+.curve{flex:1;height:26px;position:relative;background:#021005;
+  box-shadow:inset 0 0 0 1px rgba(141,255,94,.24);overflow:hidden}
+.curve::before{content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,rgba(141,255,94,.16) 0 1px,transparent 1px 8px),
+             repeating-linear-gradient(180deg,rgba(141,255,94,.16) 0 1px,transparent 1px 8px)}
+.curve svg{position:absolute;inset:0;width:100%;height:100%}
+
+/* ============ BOOT ============ */
+.boot{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;padding:24px 22px 20px;align-items:end;min-height:344px}
+.boot h1{margin:0;font-family:var(--ttl);font-weight:900;font-size:46px;line-height:.92;letter-spacing:.04em;
+  color:#eaffdd;text-shadow:0 0 26px rgba(141,255,94,.55), 0 2px 0 #0b3c14, 0 4px 0 #052309, 0 6px 12px rgba(0,0,0,.8)}
+.boot .sub{font-family:var(--seg);font-size:20px;color:var(--ph);letter-spacing:.06em;margin:6px 0 16px}
+.boot .rules{font-size:12.5px;line-height:1.65;color:var(--ph);max-width:56ch;margin:0 0 20px}
+.boot .rules b{color:var(--hot);font-weight:normal}
+.hints{display:flex;gap:20px;flex-wrap:wrap;align-items:center}
+/* card de disco, canto cortado (ref: card do álbum) */
+.card{padding:12px 14px 13px;clip-path:polygon(0 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%);
+  background:linear-gradient(180deg, rgba(141,255,94,.2), rgba(141,255,94,.05));
+  box-shadow:inset 0 0 0 1px rgba(141,255,94,.45)}
+.card h4{margin:0 0 9px;font-family:var(--ttl);font-weight:900;font-size:13px;letter-spacing:.1em;color:#eaffdd;
+  text-shadow:0 0 12px rgba(141,255,94,.5)}
+.card dl{margin:0;display:grid;gap:7px}
+.card dt{font-size:7.5px;letter-spacing:.2em;color:var(--ph-dim);font-weight:bold}
+.card dd{margin:0;font-family:var(--seg);font-size:21px;color:var(--ph-hi);line-height:.95}
+
+/* ============ RESULTADO ============ */
+.res{display:grid;grid-template-columns:210px minmax(0,1fr) 250px;gap:18px;padding:18px 20px;align-items:center}
+.disc{position:relative;width:200px;height:200px;margin:0 auto}
+.disc-f{position:absolute;inset:0;border-radius:50%;animation:spin 6s linear infinite;
+  background:
+    radial-gradient(circle at 50% 50%, #041407 0 16%, transparent 16.5%),
+    conic-gradient(from 0deg,#7dff4a,#29b6f6,#d8ff17,#ff5ea8,#7dff4a,#29b6f6,#d8ff17,#7dff4a);
+  box-shadow:0 0 40px rgba(141,255,94,.4), inset 0 0 34px rgba(0,0,0,.6)}
+.disc-f::after{content:"";position:absolute;inset:0;border-radius:50%;
+  background:repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,.07) 0 2px, transparent 2px 5px)}
+.disc-h{position:absolute;left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;
+  background:#031406;box-shadow:inset 0 0 0 2px rgba(141,255,94,.35)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.res h2{margin:0;font-family:var(--ttl);font-weight:900;font-size:34px;line-height:.95;color:#eaffdd;
+  text-shadow:0 0 22px rgba(141,255,94,.5),0 2px 0 #0b3c14,0 4px 0 #052309}
+.res .sub{font-size:9px;letter-spacing:.2em;color:var(--ph-dim);margin:7px 0 14px}
+.reslines{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:10px;margin-bottom:15px}
+.reslines b{display:block;font-size:7.5px;letter-spacing:.2em;color:var(--ph-dim);margin-bottom:2px}
+.reslines i{font-family:var(--seg);font-size:31px;font-style:normal;color:var(--ph-hi);line-height:.95}
+.stamp{display:inline-block;padding:9px 20px;font-family:var(--ttl);font-weight:900;font-size:13px;letter-spacing:.2em;
+  clip-path:var(--cut-s)}
+.stamp.ok{color:#032a0b;background:linear-gradient(180deg,#e6ffd6,#8dff5e 50%,#33ac1c);box-shadow:0 0 28px rgba(141,255,94,.55)}
+.stamp.no{color:#2a0500;background:linear-gradient(180deg,#ffdad2,#ff8064 50%,#cf3317);box-shadow:0 0 28px rgba(255,67,38,.5)}
+
+.filters{display:flex;gap:5px;flex-wrap:wrap;padding:7px 8px;align-items:center;border-bottom:1px solid rgba(141,255,94,.2)}
+.rev{padding:2px 9px 12px}
+.rvi{margin-top:7px;background:rgba(141,255,94,.05);box-shadow:inset 0 0 0 1px rgba(141,255,94,.22);
+  clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px)}
+.rvh{display:grid;grid-template-columns:auto 12px minmax(0,1fr) auto;gap:9px;align-items:center;width:100%;
+  padding:8px 11px;cursor:pointer;border:0;background:transparent;text-align:left;font-family:var(--ui)}
+.rvh:hover{background:rgba(141,255,94,.1)}
+.rvh:focus-visible{outline:2px solid var(--hot);outline-offset:-2px}
+.rvh .n{font-family:var(--seg);font-size:19px;color:var(--ph-dim)}
+.led{width:12px;height:12px;border-radius:50%}
+.led.ok{background:radial-gradient(circle at 34% 30%,#dcffcb,#8dff5e 55%,#2f9e1c);box-shadow:0 0 10px #8dff5e}
+.led.bad{background:radial-gradient(circle at 34% 30%,#ffd0c6,#ff4326 55%,#8e1c07);box-shadow:0 0 10px #ff4326}
+.led.blank{background:radial-gradient(circle at 34% 30%,#7d8a76,#3d453a);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.rvh .t{font-size:10.5px;color:var(--ph);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rvh .s{font-family:var(--seg);font-size:16px;color:var(--ph-dim);white-space:nowrap}
+.rvb{display:none;padding:2px 13px 14px;border-top:1px solid rgba(141,255,94,.18)}
+.rvb.open{display:block}
+.rvb .q{font-size:13px;line-height:1.6;color:var(--ph-hi);white-space:pre-wrap;margin:12px 0;max-width:74ch}
+.ra{display:grid;grid-template-columns:20px minmax(0,1fr);gap:9px;padding:8px 10px;margin-bottom:4px;
+  font-size:12.5px;line-height:1.5;color:var(--ph-dim);
+  clip-path:polygon(0 0,calc(100% - 9px) 0,100% 50%,calc(100% - 9px) 100%,0 100%)}
+.ra .l{font-family:var(--seg);font-size:17px}
+.ra.right{color:var(--ph-hi);background:rgba(141,255,94,.17);box-shadow:inset 2px 0 0 #8dff5e}
+.ra.wrong{color:#ffcabe;background:rgba(255,67,38,.17);box-shadow:inset 2px 0 0 #ff4326}
+.ra .cm{display:block;margin-top:5px;font-size:11.5px;line-height:1.5;color:var(--ph-dim)}
+.ra.right .cm{color:#a9e895}.ra.wrong .cm{color:#e8a493}
+.pick{font-size:8px;letter-spacing:.16em;padding:2px 5px 1px;margin-left:7px;vertical-align:middle;font-weight:bold}
+.pick.you{background:var(--blue);color:#02202e}
+.pick.key{background:var(--hot);color:#141a00}
+.fund{margin-top:11px;padding:9px 12px;background:rgba(90,200,255,.1);box-shadow:inset 3px 0 0 var(--blue);
+  font-size:11.5px;line-height:1.55;color:#c6ecff}
+.fund b{display:block;font-size:7.5px;letter-spacing:.22em;color:var(--blue);margin-bottom:4px}
+
+/* ============ MODAIS ============ */
+.ov{position:fixed;inset:0;z-index:60;display:none;place-items:center;padding:16px;background:rgba(1,8,3,.86)}
+.ov.open{display:grid}
+.dlg{width:min(740px,100%)}
+.dlg .glass{display:flex;flex-direction:column;max-height:84vh}
+.dlgb{overflow-y:auto;padding:15px 20px 20px;scrollbar-width:thin;scrollbar-color:#2f9e1c #021005}
+.dlgb::-webkit-scrollbar{width:12px}
+.dlgb::-webkit-scrollbar-track{background:#021005}
+.dlgb::-webkit-scrollbar-thumb{background:linear-gradient(90deg,#8dff5e,#2f9e1c)}
+.dlgb p{font-size:14px;line-height:1.7;color:var(--ph-hi);margin:0 0 14px;max-width:70ch}
+.dlgnote{font-size:9px;letter-spacing:.18em;color:var(--ph-dim);margin-bottom:14px;font-weight:bold}
+.xb{margin-left:auto;width:20px;height:16px;font-size:9px;cursor:pointer;border:0;color:#20272a;font-weight:bold;
+  background:linear-gradient(180deg,#fbfdfe,#c3ccd1 50%,#96a0a6);box-shadow:inset 0 0 0 1px rgba(0,0,0,.35)}
+
+.deck{display:grid;grid-template-columns:minmax(0,1fr) 328px;gap:11px;align-items:start;margin-top:11px}
+.deck.nopl{grid-template-columns:minmax(0,1fr)}
+.col{min-width:0}
+.col > .win + .win{margin-top:11px}
+.side.collapsed{display:none}
+.note{font-size:9.5px;letter-spacing:.06em;color:var(--ph-dim);line-height:1.6;padding:8px 4px 0}
+.hidden{display:none !important}
+
+@media (max-width:1040px){
+  .res{grid-template-columns:170px minmax(0,1fr)}
+  .res .card{grid-column:1/-1}
+}
+@media (max-width:900px){
+  body{padding:8px}
+  .deck{grid-template-columns:minmax(0,1fr)}
+  .head{grid-template-columns:minmax(0,1fr)}
+  .boot{grid-template-columns:minmax(0,1fr);align-items:start}
+  .res{grid-template-columns:minmax(0,1fr);text-align:center}
+  .disc{width:140px;height:140px}
+  .boot h1{font-size:32px}
+  .res h2{font-size:26px}
+  .cl-num{font-size:36px}
+  .plscroll{max-height:250px}
+  .reslines{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+</style>
+</head>
+<body>
+<div class="bg"><div class="bg-net"></div><div class="bg-cd"></div><div class="bg-glow"></div></div>
+<div class="wrap">
+
+<!-- ================= BOOT ================= -->
+<section class="win" id="boot">
+  <div class="frame">
+    <span class="screw tr"></span><span class="screw bl"></span>
+    <div class="bar"><span class="rid"></span><h2>DISC DRIVE</h2><span class="line"></span>
+      <span class="wbtn"><i></i><i></i><i></i></span></div>
+    <div class="glass boot">
+      <div>
+        <h1>SIMULADO&nbsp;2</h1>
+        <div class="sub" id="boot-sub"></div>
+        <p class="rules">
+          Você tem <b>4 horas</b> para 50 questões e o relógio não pausa. Cada questão vale 2 pontos.
+          Para ser habilitado é preciso bater o mínimo em <b>cada bloco</b>, e não só somar 50 pontos no total.
+          O gabarito e os comentários aparecem depois de entregar.
+        </p>
+        <div class="hints">
+          <button class="hint" id="btn-start" style="background:none;border:0;cursor:pointer;padding:0">
+            <b>A</b><span>INICIAR PROVA</span>
+          </button>
+          <button class="hint hidden" id="btn-resume" style="background:none;border:0;cursor:pointer;padding:0">
+            <b>B</b><span id="resume-lbl">RETOMAR</span>
+          </button>
+        </div>
+      </div>
+      <div class="card">
+        <h4 id="card-h4">TAE / IFPI</h4>
+        <dl id="boot-dl"></dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROVA ================= -->
+<div id="exam" class="hidden">
+
+  <section class="win">
+    <div class="frame">
+      <span class="screw tr"></span><span class="screw bl"></span>
+      <div class="bar"><span class="rid"></span><h2>SIMULADO 2</h2><span class="line"></span>
+        <span class="wbtn"><i></i><i></i><i></i></span></div>
+      <div class="head">
+        <div class="glass clockbox">
+          <div class="cl-scale"><span>H</span><span>MIN</span><span>SEC</span></div>
+          <div class="cl-top">
+            <span class="cl-ico">▶</span>
+            <div class="cl-num seg"><u>0:00:00</u><span id="clock">0:00:00</span></div>
+            <div class="viz" id="viz" aria-hidden="true"></div>
+          </div>
+          <div class="cl-foot">
+            <span class="chip">RESTAM</span><span class="chip b" id="left">4:00:00</span>
+            <span class="chip">128 KBPS</span><span class="chip">44 KHZ</span>
+          </div>
+        </div>
+        <div class="glass infobox">
+          <div class="nowline"><span class="n seg" id="now-n">01</span><span class="t" id="now-t">—</span></div>
+          <div class="stats">
+            <span class="stat"><b>OK</b><i id="m-ans">0/50</i></span>
+            <span class="stat"><b>MARCADAS</b><i id="m-mk">00</i></span>
+            <span class="stat"><b>BRANCO</b><i id="m-bl">50</i></span>
+            <span style="flex:1"></span>
+            <button class="btn btn--on" id="btn-pl" title="Playlist">PL</button>
+            <button class="btn btn--on" id="btn-eq" title="Equalizer">EQ</button>
+          </div>
+          <div class="seek"><i id="seek" style="width:0"></i><u id="seekh" style="left:0"></u></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="deck">
+    <div class="col">
+      <section class="win">
+        <div class="frame">
+          <span class="screw tr"></span><span class="screw bl"></span>
+          <div class="bar"><span class="rid"></span><h2 id="win-q">NOW PLAYING</h2><span class="line"></span>
+            <span class="wbtn"><i></i><i></i><i></i></span></div>
+          <div class="glass">
+            <div class="qbar">
+              <span class="k" id="q-num">FAIXA 01</span>
+              <span class="b" id="q-blk"></span>
+              <span class="y" id="q-typ"></span>
+            </div>
+            <div class="qtext" id="q-text"></div>
+            <div class="alts" id="q-alts"></div>
+            <div class="qfoot">
+              <div class="tray">
+                <button class="tbtn" id="b-prev" title="Anterior (←)">◀◀</button>
+                <button class="tbtn" id="b-next" title="Próxima (→)">▶▶</button>
+              </div>
+              <button class="btn btn--g" id="b-mark">MARCAR</button>
+              <button class="btn btn--g" id="b-clear">LIMPAR</button>
+              <button class="btn btn--g hidden" id="b-text">TEXTO I</button>
+              <span class="sp"></span>
+              <button class="btn btn--stop" id="b-submit">⏏ ENTREGAR</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <p class="note">A–E respondem · ← → navegam · M marca · T abre o texto de apoio</p>
+    </div>
+
+    <div class="col side" id="side">
+      <section class="win">
+        <div class="frame">
+          <span class="screw tr"></span><span class="screw bl"></span>
+          <div class="bar"><span class="rid"></span><h2>PLAYLIST</h2><span class="line"></span>
+            <span class="wbtn"><i></i><i></i><i></i></span></div>
+          <div class="glass dark">
+            <div class="plbar"><h3>50 FAIXAS</h3><span class="c" id="pl-cnt">00:00</span></div>
+            <div class="plscroll" id="pl"></div>
+            <div class="plfoot">
+              <button class="btn btn--g" data-jump="first">1ª BRANCO</button>
+              <button class="btn btn--g" data-jump="mark">MARCADA</button>
+              <button class="btn btn--g" data-jump="cur">ATUAL</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="win" id="eqwin">
+        <div class="frame">
+          <span class="screw tr"></span><span class="screw bl"></span>
+          <div class="bar"><span class="rid"></span><h2>EQUALIZER</h2><span class="line"></span>
+            <span class="wbtn"><i></i><i></i><i></i></span></div>
+          <div class="glass">
+            <div class="eqtop">
+              <span class="btn btn--on" style="cursor:default">ON</span>
+              <div class="curve"><svg viewBox="0 0 100 26" preserveAspectRatio="none"><polyline id="eqcurve" fill="none" stroke="#8dff5e" stroke-width="1.4" points=""/></svg></div>
+            </div>
+            <div class="eqwrap">
+              <div class="eqscale"><span>+20</span><span>0</span><span>-20</span></div>
+              <div class="eqsliders" id="eq"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- ================= RESULTADO ================= -->
+<div id="result" class="hidden">
+  <section class="win">
+    <div class="frame">
+      <span class="screw tr"></span><span class="screw bl"></span>
+      <div class="bar"><span class="rid"></span><h2>DISC COMPLETE</h2><span class="line"></span>
+        <span class="wbtn"><i></i><i></i><i></i></span></div>
+      <div class="glass res">
+        <div class="disc"><div class="disc-f"></div><div class="disc-h"></div></div>
+        <div>
+          <h2>FIM DA FAIXA</h2>
+          <div class="sub" id="r-sub"></div>
+          <div class="reslines" id="r-lines"></div>
+          <div id="r-stamp"></div>
+        </div>
+        <div class="card">
+          <h4>RESUMO DO DISCO</h4>
+          <dl id="r-card"></dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="deck">
+    <div class="col">
+      <section class="win">
+        <div class="frame">
+          <span class="screw tr"></span><span class="screw bl"></span>
+          <div class="bar"><span class="rid"></span><h2>REVISÃO</h2><span class="line"></span>
+            <span class="wbtn"><i></i><i></i><i></i></span></div>
+          <div class="glass">
+            <div class="filters" id="r-filters">
+              <button class="btn btn--on" data-f="all">TODAS</button>
+              <button class="btn btn--g" data-f="bad">ERROS</button>
+              <button class="btn btn--g" data-f="ok">ACERTOS</button>
+              <button class="btn btn--g" data-f="blank">EM BRANCO</button>
+              <span style="flex:1"></span>
+              <span class="chip" id="r-cnt">00</span>
+              <button class="btn btn--g" id="b-expand">ABRIR TUDO</button>
+            </div>
+            <div class="rev" id="rev"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="col">
+      <section class="win">
+        <div class="frame">
+          <span class="screw tr"></span><span class="screw bl"></span>
+          <div class="bar"><span class="rid"></span><h2>NÍVEIS POR BLOCO</h2><span class="line"></span>
+            <span class="wbtn"><i></i><i></i><i></i></span></div>
+          <div class="glass">
+            <div class="eqwrap">
+              <div class="eqscale"><span>MAX</span><span>MIN</span><span>0</span></div>
+              <div class="eqsliders" id="r-eq"></div>
+            </div>
+            <p class="note" style="padding:0 12px 11px" id="r-eqnote"></p>
+          </div>
+        </div>
+      </section>
+      <section class="win">
+        <div class="frame">
+          <span class="screw tr"></span><span class="screw bl"></span>
+          <div class="bar"><span class="rid"></span><h2>MAPA</h2><span class="line"></span>
+            <span class="wbtn"><i></i><i></i><i></i></span></div>
+          <div class="glass dark"><div class="plscroll" id="r-pl" style="max-height:360px"></div></div>
+        </div>
+      </section>
+      <section class="win">
+        <div class="frame">
+          <div class="glass" style="padding:11px">
+            <button class="btn btn--go" id="b-again" style="width:100%">⏮ REFAZER DO ZERO</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="ov" id="ov-text">
+  <div class="win dlg"><div class="frame">
+    <span class="screw tr"></span><span class="screw bl"></span>
+    <div class="bar"><span class="rid"></span><h2 id="tx-title">TEXTO I</h2><span class="line"></span>
+      <button class="xb" data-close="ov-text">✕</button></div>
+    <div class="glass"><div class="dlgb" id="tx-body"></div></div>
+  </div></div>
+</div>
+
+<div class="ov" id="ov-confirm">
+  <div class="win dlg" style="width:min(430px,100%)"><div class="frame">
+    <span class="screw tr"></span><span class="screw bl"></span>
+    <div class="bar"><span class="rid"></span><h2>EJECT</h2><span class="line"></span>
+      <button class="xb" data-close="ov-confirm">✕</button></div>
+    <div class="glass"><div class="dlgb">
+      <p id="cf-msg" style="font-size:13px"></p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn--stop" id="cf-yes">⏏ ENTREGAR AGORA</button>
+        <button class="btn btn--g" data-close="ov-confirm">VOLTAR</button>
+      </div>
+    </div></div>
+  </div></div>
+</div>
+
+<script type="application/json" id="dataset">{"meta":{"titulo":"Simulado 2 — TAE/IFPI — Edital 103/2026","cargo":"Técnico em Assuntos Educacionais (Nível E)","total":50,"duracao_minutos":240,"peso_por_questao":2,"blocos":[{"id":1,"nome":"Língua Portuguesa","questoes":10,"minimo_acertos":5,"minimo_pontos":10},{"id":2,"nome":"Legislação e Ética na Administração Pública","questoes":10,"minimo_acertos":5,"minimo_pontos":10},{"id":3,"nome":"Conhecimentos Específicos","questoes":30,"minimo_acertos":15,"minimo_pontos":30}],"regra_habilitacao":"É preciso atingir o mínimo em CADA bloco, não apenas 50 pontos no total.","desempate":"1) 60 anos ou mais; 2) maior nota em Específicos; 3) Português; 4) Legislação; 5) maior idade; 6) jurado.","aviso":"Material de treino independente, sem vínculo com o IFPI. Questões originais."},"textos":{"TEXTO_I":{"conteudo":"Há uma pergunta que atravessa a educação profissional brasileira desde a sua origem e que raramente é formulada em voz alta: para que serve formar alguém para o trabalho numa sociedade que não garante trabalho a todos? A questão incomoda porque desloca o problema. Não se trata de saber se a escola prepara bem ou mal o egresso para o posto, mas de perguntar que posto é esse, quem o define e a quem ele serve.\n\nDurante décadas, a resposta brasileira foi pragmática. Formou-se para a demanda. O currículo perseguia o perfil que a indústria descrevia, e a instituição media seu sucesso pela taxa de empregabilidade dos formandos. Havia uma elegância aparente nesse arranjo: ele parecia objetivo, mensurável, imune à retórica. O que ele escondia era uma escolha política travestida de escolha técnica.\n\nA crítica a esse modelo não vem de fora da educação profissional, e sim de dentro dela. \"A formação humana integral não é um adorno humanista acrescentado ao currículo técnico; é a condição para que o egresso compreenda o processo do qual participa\", escreveu uma pesquisadora da área. O argumento é menos idealista do que parece. Um trabalhador que domina apenas o procedimento fica obsoleto quando o procedimento muda, e ele muda cada vez mais rápido.\n\nMas seria ingênuo tratar a formação integral como panaceia. Ela custa tempo, e tempo é exatamente o que falta a quem precisa entrar no mercado. Aqui reside a tensão real, e não há currículo que a dissolva por decreto: o mesmo estudante que se beneficiaria de quatro anos de formação ampla é aquele que, muitas vezes, não pode esperar quatro anos.\n\nTalvez o mérito dos Institutos Federais não esteja em ter resolvido essa tensão, e sim em tê-la assumido como problema institucional. Ao oferecer, no mesmo campus, o curso técnico integrado e o subsequente, a licenciatura e a qualificação de curta duração, eles admitem que não existe um único percurso justo. Existe um leque de percursos, e a justiça está em que a escolha entre eles não seja determinada, de antemão, pela renda da família.","aplica_a":[1,2,3,4,5,6,7,8,9,10],"chamada":"As questões de 1 a 10 referem-se ao texto."}},"questoes":[{"n":1,"bloco":1,"bloco_nome":"LÍNGUA PORTUGUESA","tipo":"Tese e progressão argumentativa","texto_apoio":"TEXTO_I","enunciado":"Considerando o Texto I em sua totalidade, a tese sustentada pelo autor é a de que","alternativas":[{"letra":"A","texto":"a tensão entre formação ampla e urgência de inserção no mercado é irredutível, e o mérito dos Institutos Federais está em assumi-la institucionalmente por meio da diversidade de percursos."},{"letra":"B","texto":"a crítica ao modelo pautado pela empregabilidade é externa ao campo da educação profissional e, por isso, tem alcance limitado."},{"letra":"C","texto":"o modelo de formação orientado pela demanda do setor produtivo é tecnicamente superior, embora politicamente questionável."},{"letra":"D","texto":"a formação humana integral resolve a tensão histórica da educação profissional brasileira, desde que assegurada a todos os estudantes."},{"letra":"E","texto":"a educação profissional brasileira deve abandonar os cursos de curta duração, por reproduzirem a lógica da empregabilidade."}],"gabarito":"A","fundamentacao":"Quarto e quinto parágrafos do Texto I, em que o autor nega a existência de solução por decreto e localiza o mérito institucional na assunção do problema.","comentarios":{"A":"CORRETA. O autor recusa a solução única e desloca o critério de justiça para a não determinação do percurso pela renda familiar.","B":"Errada. O terceiro parágrafo afirma o oposto: a crítica vem de dentro da própria educação profissional.","C":"Errada. O segundo parágrafo desqualifica a suposta superioridade técnica do modelo, chamando-a de escolha política travestida de escolha técnica.","D":"Errada. O quarto parágrafo afirma explicitamente que seria ingênuo tratar a formação integral como panaceia.","E":"Errada. A qualificação de curta duração é apresentada no quinto parágrafo como parte legítima do leque de percursos, não como algo a abandonar."}},{"n":2,"bloco":1,"bloco_nome":"LÍNGUA PORTUGUESA","tipo":"Função dos dois-pontos e progressão temática","texto_apoio":"TEXTO_I","enunciado":"No primeiro parágrafo, os dois-pontos que antecedem a pergunta cumprem a função de","alternativas":[{"letra":"A","texto":"explicitar o conteúdo da pergunta anunciada pelo termo antecedente, funcionando como recurso de catáfora."},{"letra":"B","texto":"substituir uma conjunção conclusiva, indicando o resultado do raciocínio desenvolvido."},{"letra":"C","texto":"assinalar a supressão de um trecho da citação que se segue."},{"letra":"D","texto":"introduzir uma enumeração de causas do problema anunciado."},{"letra":"E","texto":"marcar uma oposição entre a origem histórica da educação profissional e sua configuração atual."}],"gabarito":"A","fundamentacao":"Os dois-pontos aqui anunciam e explicitam o conteúdo do termo 'uma pergunta', que os antecede. A relação é catafórica, pois o elemento retomado vem depois.","comentarios":{"A":"CORRETA. O termo 'uma pergunta' fica semanticamente incompleto até que os dois-pontos abram o seu conteúdo.","B":"Errada. A conclusão do raciocínio aparece no período seguinte, não é sinalizada pelos dois-pontos.","C":"Errada. Supressão em citação é marcada por reticências entre colchetes, recurso que não ocorre no parágrafo.","D":"Errada. Não há enumeração, mas um único enunciado interrogativo.","E":"Errada. Não há relação de oposição marcada por esse sinal no trecho."}},{"n":3,"bloco":1,"bloco_nome":"LÍNGUA PORTUGUESA","tipo":"Efeito de sentido do léxico","texto_apoio":"TEXTO_I","enunciado":"No segundo parágrafo, o emprego do particípio 'travestida', em 'uma escolha política travestida de escolha técnica', produz o efeito de sentido de","alternativas":[{"letra":"A","texto":"marcar hesitação do autor quanto à natureza do arranjo que descreve."},{"letra":"B","texto":"denunciar um disfarce deliberado, sugerindo que a aparência de neutralidade técnica encobria uma decisão de outra natureza."},{"letra":"C","texto":"reforçar a objetividade do arranjo descrito, corroborando o adjetivo 'mensurável'."},{"letra":"D","texto":"atenuar a crítica ao modelo, atribuindo-lhe boa-fé."},{"letra":"E","texto":"indicar que a escolha técnica precedeu historicamente a escolha política."}],"gabarito":"B","fundamentacao":"O verbo travestir carrega a ideia de disfarce e de ocultação intencional, o que confere caráter acusatório ao período e articula-se ao verbo 'escondia'.","comentarios":{"A":"Errada. O período é assertivo, construído com o verbo no pretérito imperfeito do indicativo, sem qualquer modalizador de dúvida.","B":"CORRETA. O par 'escondia' e 'travestida' constrói a denúncia de uma despolitização apenas aparente.","C":"Errada. 'Objetivo' e 'mensurável' pertencem à aparência que o parágrafo justamente desmonta, e são precedidos do verbo 'parecia'.","D":"Errada. O termo agrava a crítica em vez de atenuá-la.","E":"Errada. Não há afirmação de precedência cronológica entre as duas ordens."}},{"n":4,"bloco":1,"bloco_nome":"LÍNGUA PORTUGUESA","tipo":"Discurso citado","texto_apoio":"TEXTO_I","enunciado":"Sobre a citação atribuída à pesquisadora, no terceiro parágrafo, é correto afirmar que a voz citada","alternativas":[{"letra":"A","texto":"aparece sob forma de discurso direto, em que se transcreve o dito, e contrapõe-se ao posicionamento do autor do texto."},{"letra":"B","texto":"aparece sob forma de discurso indireto, em que se parafraseia o dito, e sustenta o posicionamento do autor do texto."},{"letra":"C","texto":"aparece sob forma de discurso direto, em que se transcreve o dito, e sustenta o posicionamento do autor do texto."},{"letra":"D","texto":"aparece sob forma de discurso indireto, em que se parafraseia o dito, e contrapõe-se ao posicionamento do autor do texto."},{"letra":"E","texto":"aparece sob forma de discurso indireto livre, mesclando-se à voz do autor sem marcação tipográfica."}],"gabarito":"C","fundamentacao":"A presença das aspas e do verbo dicendi posposto caracteriza o discurso direto. O período seguinte, ao afirmar que o argumento é menos idealista do que parece, indica adesão do autor.","comentarios":{"A":"Errada. Acerta a forma, mas erra a relação. Não há contraposição: o autor segue defendendo o argumento citado.","B":"Errada. Erra na forma do discurso, ainda que acerte a relação de sustentação.","C":"CORRETA. Aspas e transcrição literal indicam discurso direto, e o encadeamento seguinte reforça a tese citada.","D":"Errada. Erra na forma do discurso e na relação com o autor.","E":"Errada. O discurso indireto livre não admite aspas nem verbo dicendi explícito, ambos presentes no trecho."}},{"n":5,"bloco":1,"bloco_nome":"LÍNGUA PORTUGUESA","tipo":"Operadores argumentativos","texto_apoio":"TEXTO_I","enunciado":"Ao afirmar, no terceiro parágrafo, que 'O argumento é menos idealista do que parece', o autor","alternativas":[{"letra":"A","texto":"transfere a responsabilidade pela afirmação para a fonte citada, distanciando-se dela."},{"letra":"B","texto":"retifica a citação que acabou de reproduzir, reconhecendo nela um excesso."},{"letra":"C","texto":"antecipa e desarma uma objeção previsível do leitor, preparando a justificativa de ordem prática que vem em seguida."},{"letra":"D","texto":"conclui o raciocínio do parágrafo, dispensando desenvolvimento posterior."},{"letra":"E","texto":"exemplifica, por meio de um caso concreto, a tese sustentada pela pesquisadora citada."}],"gabarito":"C","fundamentacao":"A construção comparativa 'menos ... do que parece' pressupõe uma leitura prévia atribuída ao interlocutor, que é então refutada pelo período seguinte, de natureza pragmática.","comentarios":{"A":"Errada. O distanciamento em relação à fonte ocorreria com modalizadores como 'segundo a autora', ausentes aqui.","B":"Errada. Não há retificação: o autor sustenta a citação, apenas rejeita o rótulo de idealismo.","C":"CORRETA. O período seguinte, sobre a obsolescência de quem domina só o procedimento, é exatamente a justificativa prática antecipada.","D":"Errada. O parágrafo prossegue e é justamente o período seguinte que carrega o argumento.","E":"Errada. Não há exemplificação por caso concreto, mas argumentação de ordem geral."}},{"n":6,"bloco":1,"bloco_nome":"LÍNGUA PORTUGUESA","tipo":"Articulação entre parágrafos","texto_apoio":"TEXTO_I","enunciado":"A relação estabelecida pelo período que abre o quarto parágrafo com o conteúdo do parágrafo anterior é de","alternativas":[{"letra":"A","texto":"ressalva, pois admite a validade do argumento anterior e, ao mesmo tempo, limita o seu alcance."},{"letra":"B","texto":"causa, pois apresenta o motivo pelo qual a crítica ao modelo surgiu dentro do campo."},{"letra":"C","texto":"exemplificação, pois particulariza a tese defendida pela pesquisadora citada."},{"letra":"D","texto":"reformulação, pois reenuncia em outros termos aquilo que já havia sido afirmado."},{"letra":"E","texto":"conclusão, pois deriva do argumento sobre a obsolescência do trabalhador."}],"gabarito":"A","fundamentacao":"A conjunção adversativa 'Mas' combinada ao termo 'panaceia' introduz limitação sem negar o que foi sustentado no parágrafo anterior, movimento típico da concessão argumentativa.","comentarios":{"A":"CORRETA. O autor não abandona a defesa da formação integral, apenas recusa tratá-la como solução universal.","B":"Errada. Não há relação causal, e a origem interna da crítica é assunto do parágrafo anterior.","C":"Errada. Não há particularização de caso.","D":"Errada. O conteúdo é novo e restritivo, não uma reformulação do que já foi dito.","E":"Errada. Conclusão seria marcada por operadores como portanto ou logo, e o sentido é adversativo."}},{"n":7,"bloco":1,"bloco_nome":"LÍNGUA PORTUGUESA","tipo":"Classificação do 'que'","texto_apoio":"TEXTO_I","enunciado":"Considere as quatro primeiras ocorrências da palavra 'que' no primeiro parágrafo do Texto I, a saber: 'uma pergunta QUE atravessa'; 'e QUE raramente é formulada'; 'numa sociedade QUE não garante'; 'A questão incomoda porQUE desloca'. Sobre elas, é correto afirmar:","alternativas":[{"letra":"A","texto":"as três primeiras são conjunções integrantes e a quarta é advérbio interrogativo."},{"letra":"B","texto":"todas as quatro são pronomes relativos, com antecedentes distintos."},{"letra":"C","texto":"as duas primeiras são pronomes relativos, a terceira é conjunção integrante e a quarta é partícula expletiva."},{"letra":"D","texto":"as três primeiras são pronomes relativos e a quarta integra uma conjunção causal."},{"letra":"E","texto":"a primeira e a terceira são pronomes relativos e a segunda e a quarta são conjunções subordinativas."}],"gabarito":"D","fundamentacao":"Nas três primeiras ocorrências o 'que' retoma um antecedente e exerce função sintática na oração que introduz, o que caracteriza o pronome relativo. Na quarta, integra a locução conjuntiva 'porque'.","comentarios":{"A":"Errada. Conjunção integrante introduziria oração substantiva, o que não ocorre em nenhuma das três primeiras.","B":"Errada. A quarta ocorrência não é pronome relativo, e as duas primeiras compartilham o mesmo antecedente.","C":"Errada. A terceira ocorrência retoma 'uma sociedade' e é relativa, não integrante. Não há partícula expletiva no trecho.","D":"CORRETA. Os antecedentes são 'uma pergunta' nas duas primeiras, coordenadas entre si, e 'uma sociedade' na terceira.","E":"Errada. A segunda ocorrência é pronome relativo coordenado à primeira, e não conjunção."}},{"n":8,"bloco":1,"bloco_nome":"LÍNGUA PORTUGUESA","tipo":"Crase","texto_apoio":"TEXTO_I","enunciado":"No quarto parágrafo, em 'tempo é exatamente o que falta a quem precisa entrar no mercado', a ausência do acento grave no 'a' justifica-se porque","alternativas":[{"letra":"A","texto":"o verbo faltar é transitivo direto e, portanto, não exige preposição."},{"letra":"B","texto":"a palavra seguinte é masculina, o que impede a ocorrência do fenômeno."},{"letra":"C","texto":"o termo seguinte é pronome, classe que não admite artigo definido."},{"letra":"D","texto":"o termo seguinte está empregado em sentido generalizador, o que dispensa o artigo."},{"letra":"E","texto":"o 'a' funciona como artigo definido feminino, e não como preposição."}],"gabarito":"C","fundamentacao":"A crase resulta da fusão da preposição 'a' com o artigo definido 'a'. Diante do pronome 'quem' não cabe artigo, de modo que resta apenas a preposição exigida pela regência de faltar.","comentarios":{"A":"Errada. Faltar é transitivo indireto nessa acepção e exige a preposição 'a'. Ela está presente, o que falta é o artigo.","B":"Errada. Gênero não é o critério aqui, e a alternativa desconsidera a natureza pronominal do termo.","C":"CORRETA. O pronome 'quem' não admite artigo, o que torna a crase impossível nesse contexto, ainda que a preposição esteja presente.","D":"Errada. O sentido generalizador explica a ausência de crase diante de substantivos, mas 'quem' é pronome, não substantivo.","E":"Errada. Inverte a análise. Há preposição exigida pela regência de faltar, e é o artigo que está ausente."}},{"n":9,"bloco":1,"bloco_nome":"LÍNGUA PORTUGUESA","tipo":"Coesão referencial","texto_apoio":"TEXTO_I","enunciado":"No trecho 'Um trabalhador que domina apenas o procedimento fica obsoleto quando o procedimento muda, e ele muda cada vez mais rápido', o pronome 'ele' retoma","alternativas":[{"letra":"A","texto":"o currículo técnico"},{"letra":"B","texto":"o trabalhador"},{"letra":"C","texto":"o procedimento"},{"letra":"D","texto":"o processo do qual o egresso participa"},{"letra":"E","texto":"o egresso mencionado na citação"}],"gabarito":"C","fundamentacao":"A retomada é anafórica e recupera o núcleo nominal mais próximo compatível com a predicação do verbo mudar, que é 'o procedimento'.","comentarios":{"A":"Errada. O currículo técnico é mencionado no parágrafo, mas não é o termo retomado nesse período.","B":"Errada. Atribuiria ao trabalhador a ação de mudar, o que desfaz a lógica do argumento sobre obsolescência.","C":"CORRETA. A repetição deliberada de 'o procedimento' no período anterior prepara e desambigua a retomada pronominal.","D":"Errada. O processo é complemento na citação e não figura como antecedente disponível nesse período.","E":"Errada. O egresso é sujeito da oração citada, não o antecedente do pronome nesse trecho."}},{"n":10,"bloco":1,"bloco_nome":"LÍNGUA PORTUGUESA","tipo":"Pontuação","texto_apoio":"TEXTO_I","enunciado":"No último período do Texto I, as vírgulas que isolam a expressão 'de antemão' justificam-se por","alternativas":[{"letra":"A","texto":"isolar aposto explicativo que retoma o sujeito da oração."},{"letra":"B","texto":"separar orações coordenadas assindéticas."},{"letra":"C","texto":"separar vocativo empregado com função apelativa."},{"letra":"D","texto":"marcar a elipse de um termo já mencionado anteriormente."},{"letra":"E","texto":"isolar adjunto adverbial intercalado entre a forma verbal e o agente da passiva."}],"gabarito":"E","fundamentacao":"'De antemão' é locução adverbial intercalada na estrutura da oração. Nesse período, com a locução encaixada entre a forma verbal e o agente da passiva, o isolamento por vírgulas é a pontuação adequada.","comentarios":{"A":"Errada. Aposto explicativo é termo de natureza nominal que especifica outro nome, o que não é o caso.","B":"Errada. Não há duas orações coordenadas nesse ponto do período.","C":"Errada. Não há interlocutor invocado no período.","D":"Errada. Não há termo elidido cuja supressão a vírgula estivesse sinalizando.","E":"CORRETA. A expressão poderia ser deslocada para outra posição sem prejuízo sintático, o que confirma sua natureza adverbial."}},{"n":11,"bloco":2,"bloco_nome":"LEGISLAÇÃO E ÉTICA NA ADMINISTRAÇÃO PÚBLICA","tipo":"Lei 8.112/1990 - acumulação de cargos","texto_apoio":null,"enunciado":"Sobre a acumulação de cargos públicos, à luz da Constituição Federal e da Lei nº 8.112/1990, analise as afirmativas:\n\nI. A acumulação lícita fica condicionada à comprovação da compatibilidade de horários.\n\nII. É lícita a acumulação de um cargo de professor de rede municipal com um cargo de assistente em administração de instituto federal.\n\nIII. Comprovada a má-fé na acumulação ilegal, aplica-se ao servidor a pena de demissão em relação a ambos os cargos.\n\nIV. Detectada a acumulação ilegal, o servidor será notificado para, no prazo improrrogável de trinta dias, apresentar opção por um dos cargos.","alternativas":[{"letra":"A","texto":"Apenas I e III estão corretas."},{"letra":"B","texto":"Apenas I, II e III estão corretas."},{"letra":"C","texto":"Apenas II e IV estão corretas."},{"letra":"D","texto":"Apenas III e IV estão corretas."},{"letra":"E","texto":"Apenas I e IV estão corretas."}],"gabarito":"A","fundamentacao":"Art. 37, XVI e XVII, da CF/88 e arts. 118, 132, XII, e 133 da Lei nº 8.112/1990.","comentarios":{"A":"CORRETA. I reproduz o requisito constitucional da compatibilidade de horários. III corresponde ao art. 133, § 6º, que impõe demissão, destituição ou cassação em relação aos cargos em acumulação ilegal quando provada a má-fé. A assertiva IV é falsa: o prazo do art. 133 é de dez dias, não de trinta.","B":"Errada por incluir II. A hipótese constitucional de acumulação exige um cargo de professor com outro técnico ou científico. Assistente em administração é cargo de nível médio de natureza administrativa, o que afasta a licitude.","C":"Errada. Ambas as afirmativas são falsas.","D":"Errada. Apenas III é verdadeira nesse par.","E":"Errada por incluir IV. O prazo do art. 133 é de DEZ dias improrrogáveis, e não de trinta. Persistindo a omissão, adota-se procedimento sumário de apuração e regularização imediata."}},{"n":12,"bloco":2,"bloco_nome":"LEGISLAÇÃO E ÉTICA NA ADMINISTRAÇÃO PÚBLICA","tipo":"Lei 8.112/1990 - provimento","texto_apoio":null,"enunciado":"Assinale a alternativa INCORRETA a respeito do provimento de cargos públicos federais, nos termos da Lei nº 8.112/1990.","alternativas":[{"letra":"A","texto":"A exoneração de cargo efetivo constitui penalidade disciplinar aplicável ao servidor que não entrar em exercício no prazo legal."},{"letra":"B","texto":"É de quinze dias o prazo para o servidor empossado entrar em exercício, contados da data da posse."},{"letra":"C","texto":"A posse poderá dar-se mediante procuração específica."},{"letra":"D","texto":"São formas de provimento a nomeação, a promoção, a readaptação, a reversão, o aproveitamento, a reintegração e a recondução."},{"letra":"E","texto":"A posse ocorrerá no prazo de trinta dias contados da publicação do ato de provimento, e, se o nomeado estiver em licença ou afastamento legalmente previsto, o prazo será contado do término do impedimento."}],"gabarito":"A","fundamentacao":"Art. 15, § 2º, combinado com o art. 127 da Lei nº 8.112/1990.","comentarios":{"A":"CORRETA como resposta, por ser a única afirmação falsa. A exoneração de ofício não é penalidade disciplinar. As penalidades estão taxativamente previstas no art. 127 e são advertência, suspensão, demissão, cassação de aposentadoria ou disponibilidade e destituição de cargo em comissão ou de função comissionada.","B":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Corresponde ao art. 15, § 1º.","C":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Corresponde ao art. 13, § 3º.","D":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Corresponde ao art. 8º.","E":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Corresponde ao art. 13, §§ 1º e 2º."}},{"n":13,"bloco":2,"bloco_nome":"LEGISLAÇÃO E ÉTICA NA ADMINISTRAÇÃO PÚBLICA","tipo":"Decreto 1.171/1994","texto_apoio":null,"enunciado":"Sobre o Código de Ética Profissional do Servidor Público Civil do Poder Executivo Federal, analise as afirmativas:\n\nI. A dignidade, o decoro, o zelo, a eficácia e a consciência dos princípios morais são primados maiores que devem nortear o servidor público.\n\nII. O trabalho desenvolvido pelo servidor perante a comunidade deve ser entendido como acréscimo ao seu próprio bem-estar, já que, como cidadão, integrante da sociedade, o êxito desse trabalho pode ser considerado como seu maior patrimônio.\n\nIII. A pena aplicável pela Comissão de Ética é a de censura, o que não exclui a apuração disciplinar autônoma prevista na Lei nº 8.112/1990.\n\nIV. É vedado ao servidor apresentar-se embriagado no serviço ou fora dele habitualmente.\n\nEstão corretas:","alternativas":[{"letra":"A","texto":"Apenas I, II e III."},{"letra":"B","texto":"Apenas I e III."},{"letra":"C","texto":"Apenas I, II e IV."},{"letra":"D","texto":"I, II, III e IV."},{"letra":"E","texto":"Apenas II, III e IV."}],"gabarito":"D","fundamentacao":"Incisos I e V da Seção I, inciso XXII e Seção III, alínea 'q', do Anexo ao Decreto nº 1.171/1994.","comentarios":{"A":"Errada. Exclui indevidamente a afirmativa IV.","B":"Errada. Deixa de fora duas afirmativas verdadeiras.","C":"Errada. Exclui indevidamente a afirmativa III.","D":"CORRETA. Todas as quatro reproduzem dispositivos do Código. A afirmativa IV é a que costuma gerar dúvida, mas a vedação alcança expressamente a conduta habitual fora do serviço.","E":"Errada. Exclui indevidamente a afirmativa I, que reproduz o inciso VII."}},{"n":14,"bloco":2,"bloco_nome":"LEGISLAÇÃO E ÉTICA NA ADMINISTRAÇÃO PÚBLICA","tipo":"CF/88 - Administração Pública","texto_apoio":null,"enunciado":"À luz do art. 37 da Constituição Federal, assinale a alternativa INCORRETA.","alternativas":[{"letra":"A","texto":"A publicidade dos atos, programas, obras, serviços e campanhas dos órgãos públicos poderá conter nomes, símbolos ou imagens que caracterizem promoção pessoal de autoridades ou servidores públicos, desde que autorizada em lei."},{"letra":"B","texto":"Durante o prazo improrrogável previsto no edital de convocação, o aprovado em concurso público será convocado com prioridade sobre novos concursados para assumir cargo ou emprego, na carreira."},{"letra":"C","texto":"A lei reservará percentual dos cargos e empregos públicos para as pessoas com deficiência e definirá os critérios de sua admissão."},{"letra":"D","texto":"Os atos de improbidade administrativa importarão a suspensão dos direitos políticos, a perda da função pública, a indisponibilidade dos bens e o ressarcimento ao erário, na forma e gradação previstas em lei, sem prejuízo da ação penal cabível."},{"letra":"E","texto":"O prazo de validade do concurso público será de até dois anos, prorrogável uma vez, por igual período."}],"gabarito":"A","fundamentacao":"Art. 37, § 1º, da CF/88, que veda expressamente a promoção pessoal na publicidade oficial.","comentarios":{"A":"É A RESPOSTA, por ser a única afirmação FALSA. A publicidade oficial deve ter caráter educativo, informativo ou de orientação social, e a vedação à promoção pessoal é absoluta, não comportando autorização legal em sentido contrário.","B":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Corresponde ao art. 37, IV.","C":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Corresponde ao art. 37, VIII.","D":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Corresponde ao art. 37, § 4º.","E":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Corresponde ao art. 37, III."}},{"n":15,"bloco":2,"bloco_nome":"LEGISLAÇÃO E ÉTICA NA ADMINISTRAÇÃO PÚBLICA","tipo":"LDB - incumbências","texto_apoio":null,"enunciado":"A LDB distribui incumbências distintas entre os estabelecimentos de ensino e os docentes. Assinale a alternativa que apresenta incumbência atribuída aos DOCENTES, e não aos estabelecimentos de ensino.","alternativas":[{"letra":"A","texto":"Notificar ao Conselho Tutelar a relação dos alunos que apresentem quantidade de faltas acima de trinta por cento do percentual permitido em lei."},{"letra":"B","texto":"Prover meios para a recuperação dos alunos de menor rendimento."},{"letra":"C","texto":"Administrar seu pessoal e seus recursos materiais e financeiros."},{"letra":"D","texto":"Velar pelo cumprimento do plano de trabalho de cada docente."},{"letra":"E","texto":"Estabelecer estratégias de recuperação para os alunos de menor rendimento."}],"gabarito":"E","fundamentacao":"Art. 13, IV, da LDB, que trata das incumbências dos docentes. As demais alternativas reproduzem incisos do art. 12, relativo aos estabelecimentos.","comentarios":{"A":"Errada como resposta. É incumbência do estabelecimento, prevista no art. 12, VIII.","B":"Errada como resposta. É incumbência do estabelecimento, prevista no art. 12, V. O verbo é PROVER MEIOS.","C":"Errada como resposta. É incumbência do estabelecimento, prevista no art. 12, III.","D":"Errada como resposta. É incumbência do estabelecimento, prevista no art. 12, IV. Note o contraste: à escola cabe VELAR, ao docente cabe ELABORAR e CUMPRIR o plano.","E":"CORRETA. É incumbência docente, prevista no art. 13, IV. A distinção entre prover meios, que é da escola, e estabelecer estratégias, que é do professor, é a pegadinha clássica desse par de artigos."}},{"n":16,"bloco":2,"bloco_nome":"LEGISLAÇÃO E ÉTICA NA ADMINISTRAÇÃO PÚBLICA","tipo":"Lei 11.892/2008","texto_apoio":null,"enunciado":"A respeito dos Institutos Federais, nos termos da Lei nº 11.892/2008, analise as afirmativas:\n\nI. São instituições de educação superior, básica e profissional, pluricurriculares e multicampi.\n\nII. Possuem natureza jurídica de autarquia, detentoras de autonomia administrativa, patrimonial, financeira, didático-pedagógica e disciplinar.\n\nIII. No âmbito de sua atuação, exercem o papel de instituições acreditadoras e certificadoras de competências profissionais.\n\nIV. Os Reitores serão nomeados pelo Presidente da República para mandato de quatro anos, vedada a recondução.\n\nEstão corretas:","alternativas":[{"letra":"A","texto":"I, II, III e IV."},{"letra":"B","texto":"Apenas I, II e III."},{"letra":"C","texto":"Apenas I, III e IV."},{"letra":"D","texto":"Apenas I e III."},{"letra":"E","texto":"Apenas II e IV."}],"gabarito":"B","fundamentacao":"Arts. 1º, 2º, caput e § 3º, e 12 da Lei nº 11.892/2008.","comentarios":{"A":"Errada. A afirmativa IV é falsa quanto à vedação de recondução.","B":"CORRETA. A afirmativa IV é a única falsa: o mandato é de quatro anos, mas é PERMITIDA uma recondução, após processo de consulta à comunidade escolar.","C":"Errada. Inclui a afirmativa IV, que é falsa.","D":"Errada. A afirmativa II também é verdadeira.","E":"Errada. Inclui a falsa e exclui duas verdadeiras."}},{"n":17,"bloco":2,"bloco_nome":"LEGISLAÇÃO E ÉTICA NA ADMINISTRAÇÃO PÚBLICA","tipo":"Lei 9.784/1999","texto_apoio":null,"enunciado":"Sobre o processo administrativo no âmbito da Administração Pública Federal, assinale a alternativa correta.","alternativas":[{"letra":"A","texto":"O recurso administrativo tem efeito suspensivo como regra geral."},{"letra":"B","texto":"O recurso administrativo tramitará no máximo por três instâncias administrativas, salvo disposição legal diversa, e será interposto no prazo de dez dias contados da ciência ou divulgação oficial da decisão recorrida."},{"letra":"C","texto":"São legitimados como interessados apenas as pessoas físicas ou jurídicas diretamente atingidas pelo ato, excluídas as associações representativas."},{"letra":"D","texto":"O direito da Administração de anular atos de que decorram efeitos favoráveis aos destinatários decai em cinco anos, ainda que comprovada a má-fé."},{"letra":"E","texto":"A Administração deve decidir os processos administrativos no prazo de sessenta dias após a instrução, sem possibilidade de prorrogação."}],"gabarito":"B","fundamentacao":"Art. 57 e art. 59, caput, da Lei nº 9.784/1999.","comentarios":{"A":"Errada. O art. 61 estabelece justamente o contrário: salvo disposição legal em contrário, o recurso NÃO tem efeito suspensivo.","B":"CORRETA. Três instâncias como teto e dez dias como prazo de interposição, salvo disposição legal específica em sentido diverso.","C":"Errada. O art. 9º inclui entre os legitimados as organizações e associações representativas quanto a direitos e interesses coletivos, além dos cidadãos ou associações quanto a direitos difusos.","D":"Errada. A má-fé comprovada afasta a decadência, nos termos do art. 54.","E":"Errada. O art. 49 fixa prazo de até trinta dias após a instrução, expressamente prorrogável por igual período mediante justificativa."}},{"n":18,"bloco":2,"bloco_nome":"LEGISLAÇÃO E ÉTICA NA ADMINISTRAÇÃO PÚBLICA","tipo":"Lei 11.091/2005 - PCCTAE","texto_apoio":null,"enunciado":"A Lei nº 15.141/2025 promoveu alterações relevantes no Plano de Carreira dos Cargos Técnico-Administrativos em Educação. Considerando a redação vigente da Lei nº 11.091/2005, o interstício exigido para a progressão por mérito profissional é de","alternativas":[{"letra":"A","texto":"36 (trinta e seis) meses de efetivo exercício"},{"letra":"B","texto":"18 (dezoito) meses de efetivo exercício"},{"letra":"C","texto":"5 (cinco) anos de efetivo exercício"},{"letra":"D","texto":"12 (doze) meses de efetivo exercício"},{"letra":"E","texto":"24 (vinte e quatro) meses de efetivo exercício"}],"gabarito":"D","fundamentacao":"Art. 10 da Lei nº 11.091/2005, com a redação dada pela Lei nº 15.141/2025, que reduziu o interstício da progressão por mérito de dezoito para doze meses a partir de 1º de janeiro de 2025. O edital 103/2026 cita expressamente essa alteração.","comentarios":{"A":"Errada. Não há previsão de interstício trienal na carreira.","B":"Errada, e é a pegadinha central. Dezoito meses era a redação ANTERIOR, revogada pela Lei nº 15.141/2025. Qualquer apostila ou prova anterior a 2025 traz esse número, que hoje está errado.","C":"Errada, mas é a alternativa mais próxima de uma verdade parcial. Cinco anos é o interstício da ACELERAÇÃO DA PROGRESSÃO POR CAPACITAÇÃO, instituída pela mesma lei em substituição à antiga progressão por capacitação. Não se confunde com a progressão por mérito.","D":"CORRETA. A redução para doze meses vale a partir de 1º de janeiro de 2025. A mesma lei verticalizou a carreira em dezenove padrões de vencimento.","E":"Errada. Vinte e quatro meses corresponde ao prazo do estágio probatório na Lei nº 8.112/1990, não ao interstício de progressão."}},{"n":19,"bloco":2,"bloco_nome":"LEGISLAÇÃO E ÉTICA NA ADMINISTRAÇÃO PÚBLICA","tipo":"Organização Didática do IFPI","texto_apoio":null,"enunciado":"Uma estudante de curso superior de graduação do IFPI encerrou o semestre em determinada disciplina com Média Semestral 3,8 e frequência de 90%. À luz da Organização Didática do IFPI, a situação acadêmica dela é de","alternativas":[{"letra":"A","texto":"submetida a Conselho de Classe, que deliberará sobre a aprovação."},{"letra":"B","texto":"aprovada por média, uma vez que a frequência supera o mínimo exigido."},{"letra":"C","texto":"reprovada por nota, sem direito a Exame Final."},{"letra":"D","texto":"submetida a Exame Final, precisando obter nota igual ou superior a 8,2 para ser aprovada."},{"letra":"E","texto":"reprovada por falta, independentemente da nota obtida."}],"gabarito":"C","fundamentacao":"Art. 115, caput, da Organização Didática do IFPI, segundo o qual nota semestral inferior a 4,0 acarreta reprovação direta por nota na graduação.","comentarios":{"A":"Errada. O Conselho de Classe da Organização Didática alcança os cursos técnicos integrados, concomitantes, subsequentes e a EJA, não a graduação.","B":"Errada. A aprovação por média na graduação exige nota igual ou superior a 7,0, além da frequência.","C":"CORRETA. Aqui está a diferença crucial entre os níveis: nos cursos técnicos o piso para ir à prova final é 2,0, mas na graduação é 4,0. Com 3,8 ela fica abaixo do piso e reprova sem exame.","D":"Errada. Ela sequer tem direito ao Exame Final, e o cálculo parte de premissa equivocada.","E":"Errada. A frequência de 90% supera com folga o mínimo de 75%. Não há reprovação por falta."}},{"n":20,"bloco":2,"bloco_nome":"LEGISLAÇÃO E ÉTICA NA ADMINISTRAÇÃO PÚBLICA","tipo":"Organização Didática do IFPI","texto_apoio":null,"enunciado":"Assinale a alternativa INCORRETA sobre matrícula, trancamento e cancelamento na Organização Didática do IFPI.","alternativas":[{"letra":"A","texto":"O estudante que tiver a matrícula cancelada poderá retornar às atividades acadêmicas mediante simples requerimento à Direção de Ensino, dispensado novo processo seletivo."},{"letra":"B","texto":"O trancamento de matrícula é restrito aos cursos superiores e aos técnicos concomitantes e subsequentes."},{"letra":"C","texto":"O IFPI aceitará solicitação de reingresso, uma única vez, decorrido o prazo máximo de até um ano letivo, ao estudante cujo cancelamento tenha decorrido de evasão."},{"letra":"D","texto":"O cancelamento compulsório poderá ocorrer por reprovação em séries ou módulos por três vezes consecutivas, mediante parecer da Coordenação Pedagógica e apreciação da Direção de Ensino."},{"letra":"E","texto":"Não será permitido o cancelamento de disciplinas para os cursos técnicos integrados ao médio nem para as disciplinas do primeiro período da matriz curricular."}],"gabarito":"A","fundamentacao":"Art. 57, § 2º, da Organização Didática do IFPI.","comentarios":{"A":"É A RESPOSTA, por ser a única afirmação FALSA. A norma exige expressamente que o estudante se submeta a NOVO PROCESSO SELETIVO. Não confunda com o reingresso, hipótese distinta e restrita ao cancelamento por evasão.","B":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Corresponde ao art. 53.","C":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Corresponde ao art. 60.","D":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Corresponde ao art. 57, IV.","E":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Corresponde ao parágrafo único do art. 52, que ainda limita o cancelamento de cada disciplina a uma única vez."}},{"n":21,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"EPT - história e dualidade","texto_apoio":null,"enunciado":"Sobre a trajetória histórica da educação profissional no Brasil, analise as afirmativas:\n\nI. As Escolas de Aprendizes Artífices, criadas em 1909, tinham finalidade declaradamente assistencialista, voltadas aos chamados desfavorecidos da fortuna.\n\nII. O Decreto nº 2.208/1997 proibiu a oferta integrada entre ensino médio e educação profissional técnica, sendo posteriormente revogado.\n\nIII. O Decreto nº 5.154/2004 restabeleceu a possibilidade da forma integrada, ao lado da concomitante e da subsequente.\n\nIV. A dualidade estrutural designa a coexistência histórica de percursos formativos distintos segundo a origem social do estudante.\n\nEstão corretas:","alternativas":[{"letra":"A","texto":"Apenas I e IV."},{"letra":"B","texto":"Apenas III e IV."},{"letra":"C","texto":"Apenas I, II e III."},{"letra":"D","texto":"I, II, III e IV."},{"letra":"E","texto":"Apenas II e IV."}],"gabarito":"D","fundamentacao":"Decreto nº 7.566/1909, Decreto nº 2.208/1997, Decreto nº 5.154/2004 e a produção de Frigotto, Ciavatta e Ramos sobre dualidade estrutural.","comentarios":{"A":"Errada. Exclui indevidamente as afirmativas II e III.","B":"Errada. Exclui indevidamente as afirmativas I e II.","C":"Errada. A afirmativa IV também é verdadeira e é conceitualmente central.","D":"CORRETA. As quatro afirmativas são verdadeiras e, juntas, resumem a trajetória de avanços e retrocessos da integração curricular no Brasil.","E":"Errada. As afirmativas I e III também são verdadeiras."}},{"n":22,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"EPT - verticalização e indissociabilidade","texto_apoio":null,"enunciado":"Em reunião de planejamento, um Técnico em Assuntos Educacionais defende que o campus articule um projeto em que estudantes do curso técnico integrado participem, como bolsistas, de uma pesquisa aplicada coordenada por docente do mestrado profissional, com devolutiva dos resultados a uma associação de produtores locais. Essa proposta materializa, simultaneamente,","alternativas":[{"letra":"A","texto":"a progressão parcial e o aproveitamento de estudos."},{"letra":"B","texto":"a flexibilização curricular e a terminalidade específica."},{"letra":"C","texto":"a educação continuada e a formação inicial de trabalhadores."},{"letra":"D","texto":"a verticalização do ensino e a indissociabilidade entre ensino, pesquisa e extensão."},{"letra":"E","texto":"a modularização do currículo e a certificação intermediária."}],"gabarito":"D","fundamentacao":"Art. 6º, III, e art. 7º da Lei nº 11.892/2008. A verticalização aparece na articulação entre diferentes níveis de formação no mesmo campus, e o arranjo integra ensino, pesquisa aplicada e extensão, dimensões expressamente previstas entre as finalidades e os objetivos dos Institutos Federais.","comentarios":{"A":"Errada. Progressão parcial e aproveitamento de estudos são mecanismos de percurso individual do estudante, sem relação com o caso.","B":"Errada. Flexibilização curricular e terminalidade específica são institutos distintos e não descrevem o caso.","C":"Errada. Educação continuada e FIC não descrevem o arranjo apresentado.","D":"CORRETA. A verticalização aparece na articulação entre nível médio e pós-graduação no mesmo campus. A indissociabilidade aparece na união entre a formação, a pesquisa aplicada e a devolutiva à comunidade.","E":"Errada. Não há menção a módulos nem a saídas com certificação intermediária."}},{"n":23,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"EJA e PROEJA","texto_apoio":null,"enunciado":"Sobre a EJA e o PROEJA, assinale a alternativa correta.","alternativas":[{"letra":"A","texto":"O PROEJA destina-se exclusivamente à elevação de escolaridade, sendo vedada a articulação com a qualificação profissional."},{"letra":"B","texto":"A EJA constitui nível de ensino autônomo, situado entre a educação básica e a educação superior."},{"letra":"C","texto":"A oferta de EJA é facultativa aos sistemas de ensino, que decidem sobre sua implantação conforme a demanda local."},{"letra":"D","texto":"A LDB veda o aproveitamento, na EJA, de conhecimentos adquiridos no trabalho."},{"letra":"E","texto":"O PROEJA foi instituído no âmbito das instituições federais pelo Decreto nº 5.840/2006, ampliando programa criado no ano anterior."}],"gabarito":"E","fundamentacao":"Decreto nº 5.840/2006, que ampliou o programa criado pelo Decreto nº 5.478/2005, e arts. 37, 38 e 41 da LDB.","comentarios":{"A":"Errada. A integração entre elevação de escolaridade e qualificação profissional é justamente a razão de ser do programa.","B":"Errada. A EJA é MODALIDADE da educação básica, não nível autônomo.","C":"Errada. O art. 37 da LDB impõe aos sistemas de ensino o dever de assegurar oportunidades educacionais apropriadas.","D":"Errada. O art. 41 da LDB prevê expressamente que o conhecimento adquirido na educação profissional, inclusive no trabalho, poderá ser objeto de avaliação, reconhecimento e certificação.","E":"CORRETA. O decreto de 2006 ampliou a abrangência, incluindo o ensino fundamental e permitindo a participação de outras redes além da federal."}},{"n":24,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Formas de articulação","texto_apoio":null,"enunciado":"Sobre as formas de articulação entre a educação profissional técnica de nível médio e o ensino médio, analise as afirmativas:\n\nI. Na forma integrada, a oferta é destinada a quem já concluiu o ensino fundamental, com matrícula única na mesma instituição.\n\nII. Na forma concomitante, há matrículas distintas para cada curso, podendo ocorrer em instituições distintas.\n\nIII. A concomitância pode dar-se mediante convênios de intercomplementaridade, visando a projetos pedagógicos unificados.\n\nIV. Na forma subsequente, a oferta destina-se a quem já concluiu o ensino médio.\n\nEstão corretas:","alternativas":[{"letra":"A","texto":"I, II, III e IV."},{"letra":"B","texto":"Apenas II e III."},{"letra":"C","texto":"Apenas I, II e IV."},{"letra":"D","texto":"Apenas I, III e IV."},{"letra":"E","texto":"Apenas I e IV."}],"gabarito":"A","fundamentacao":"Art. 36-B e art. 36-C da LDB, Decreto nº 5.154/2004 e art. 16 da Organização Didática do IFPI, que reproduz integralmente essa classificação.","comentarios":{"A":"CORRETA. As quatro reproduzem o texto normativo. A afirmativa III é a menos lembrada, mas está prevista no art. 16, § 1º, II, 'b', da Organização Didática do IFPI.","B":"Errada. As afirmativas I e IV também são verdadeiras.","C":"Errada. A afirmativa III também é verdadeira e consta expressamente da norma.","D":"Errada. A afirmativa II também é verdadeira.","E":"Errada. Exclui indevidamente as afirmativas II e III."}},{"n":25,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Reserva de vagas","texto_apoio":null,"enunciado":"Sobre a política de reserva de vagas nas instituições federais de ensino, considerando as alterações promovidas pela Lei nº 14.723/2023 na Lei nº 12.711/2012, assinale a alternativa correta.","alternativas":[{"letra":"A","texto":"A reserva de vagas para pessoas com deficiência foi extinta, por absorção pela política de cotas raciais."},{"letra":"B","texto":"O percentual global de reserva para egressos de escola pública foi elevado de 50% para 60% das vagas por curso e turno."},{"letra":"C","texto":"O candidato cotista concorre exclusivamente às vagas reservadas, sendo-lhe vedada a disputa pelas vagas de ampla concorrência."},{"letra":"D","texto":"O teto de renda da subcota social foi mantido em um salário-mínimo e meio per capita."},{"letra":"E","texto":"Os quilombolas passaram a integrar expressamente o rol de beneficiários da reserva, ao lado de pretos, pardos, indígenas e pessoas com deficiência."}],"gabarito":"E","fundamentacao":"Lei nº 12.711/2012, com as alterações da Lei nº 13.409/2016 e da Lei nº 14.723/2023.","comentarios":{"A":"Errada. A reserva para pessoas com deficiência, criada pela Lei nº 13.409/2016, foi mantida.","B":"Errada. O percentual de 50% por curso e turno foi mantido.","C":"Errada. A lei passou a determinar justamente o contrário: o cotista concorre primeiro às vagas de ampla concorrência e só disputa as reservadas se não for classificado.","D":"Errada. O teto foi reduzido para um salário-mínimo per capita, mudança que derruba o gabarito de provas anteriores a 2024.","E":"CORRETA. A inclusão expressa dos quilombolas é uma das principais novidades da lei de 2023."}},{"n":26,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"SINAES","texto_apoio":null,"enunciado":"Sobre os princípios e a estrutura do Sistema Nacional de Avaliação da Educação Superior (SINAES), analise as afirmativas:\n\nI. O respeito à identidade e à diversidade de instituições e de cursos.\n\nII. O caráter público de todos os procedimentos, dados e resultados dos processos avaliativos.\n\nIII. A participação do corpo discente, docente e técnico-administrativo das instituições, e da sociedade civil, por meio de suas representações.\n\nIV. A avaliação institucional interna é realizada pela Comissão Própria de Avaliação (CPA).\n\nEstão corretas:","alternativas":[{"letra":"A","texto":"Apenas I, III e IV."},{"letra":"B","texto":"I, II, III e IV."},{"letra":"C","texto":"Apenas I e II."},{"letra":"D","texto":"Apenas III e IV."},{"letra":"E","texto":"Apenas II e IV."}],"gabarito":"B","fundamentacao":"Arts. 1º, § 1º, 2º, 3º e 11 da Lei nº 10.861/2004.","comentarios":{"A":"Errada. A afirmativa II também é verdadeira.","B":"CORRETA. Atenção especial à afirmativa II: os procedimentos e resultados do SINAES são PÚBLICOS, e não sigilosos. Trocar 'público' por 'sigiloso' é a alteração mais frequente nas provas.","C":"Errada. As afirmativas III e IV também são verdadeiras.","D":"Errada. As afirmativas I e II também são verdadeiras.","E":"Errada. As afirmativas I e III também são verdadeiras."}},{"n":27,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Extensão e relações étnico-raciais","texto_apoio":null,"enunciado":"Relacione corretamente cada norma ao seu objeto.\n\n1. Resolução CNE/CES nº 7/2018\n2. Lei nº 11.645/2008\n3. Lei nº 9.795/1999\n\n( ) Torna obrigatório o estudo da história e cultura afro-brasileira e indígena no ensino fundamental e médio.\n( ) Institui a Política Nacional de Educação Ambiental.\n( ) Estabelece que as atividades de extensão devem compor no mínimo 10% da carga horária curricular dos cursos de graduação.","alternativas":[{"letra":"A","texto":"3 - 1 - 2"},{"letra":"B","texto":"3 - 2 - 1"},{"letra":"C","texto":"1 - 2 - 3"},{"letra":"D","texto":"2 - 1 - 3"},{"letra":"E","texto":"2 - 3 - 1"}],"gabarito":"E","fundamentacao":"Resolução CNE/CES nº 7/2018, art. 4º; art. 26-A da LDB com redação da Lei nº 11.645/2008; Lei nº 9.795/1999.","comentarios":{"A":"Errada. Inverte a correspondência dos três itens.","B":"Errada. Inverte a primeira e a terceira correspondências.","C":"Errada. Atribui a curricularização da extensão ao objeto errado.","D":"Errada. Confunde a Lei de Educação Ambiental com a curricularização da extensão.","E":"CORRETA. A Lei 11.645/2008 ampliou a Lei 10.639/2003, que tratava apenas da temática afro-brasileira, para incluir também a indígena."}},{"n":28,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Organização curricular da EPT","texto_apoio":null,"enunciado":"Sobre a organização curricular da educação profissional técnica de nível médio, assinale a alternativa INCORRETA.","alternativas":[{"letra":"A","texto":"Os cursos organizam-se por eixos tecnológicos, tendo como referência o Catálogo Nacional de Cursos Técnicos."},{"letra":"B","texto":"A organização modular admite saídas intermediárias com certificação de qualificação profissional."},{"letra":"C","texto":"O itinerário formativo é o conjunto de etapas que compõem a organização da educação profissional em determinada área, possibilitando o aproveitamento contínuo e articulado dos estudos."},{"letra":"D","texto":"O currículo integrado pressupõe a justaposição de um bloco de disciplinas de formação geral a um bloco de disciplinas técnicas, sem articulação entre eles."},{"letra":"E","texto":"A oferta deve observar as Diretrizes Curriculares Nacionais definidas pelo Conselho Nacional de Educação."}],"gabarito":"D","fundamentacao":"Resolução CNE/CEB nº 2/2020 e literatura sobre currículo integrado, especialmente Ciavatta e Ramos.","comentarios":{"A":"Afirmação VERDADEIRA, logo não é a alternativa buscada.","B":"Afirmação VERDADEIRA, logo não é a alternativa buscada.","C":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Reproduz o conceito adotado no art. 15, § 1º, da Organização Didática do IFPI.","D":"É A RESPOSTA, por ser a única afirmação FALSA. A justaposição sem articulação é exatamente o oposto da integração. O currículo integrado exige que formação geral e formação técnica se constituam mutuamente em torno do trabalho como princípio educativo.","E":"Afirmação VERDADEIRA, logo não é a alternativa buscada."}},{"n":29,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"FUNDEB","texto_apoio":null,"enunciado":"Nos termos da Lei nº 14.113/2020, que regulamenta o FUNDEB, é correto afirmar que","alternativas":[{"letra":"A","texto":"a complementação da União ao Fundo é facultativa e definida anualmente na Lei Orçamentária."},{"letra":"B","texto":"o Fundo destina-se exclusivamente ao financiamento do ensino fundamental."},{"letra":"C","texto":"no mínimo 70% dos recursos anuais totais do Fundo serão destinados à remuneração dos profissionais da educação básica em efetivo exercício."},{"letra":"D","texto":"a totalidade dos recursos do Fundo deve ser aplicada em remuneração de pessoal."},{"letra":"E","texto":"no mínimo 60% dos recursos anuais totais do Fundo serão destinados à remuneração dos profissionais do magistério da educação básica em efetivo exercício."}],"gabarito":"C","fundamentacao":"Art. 26 da Lei nº 14.113/2020, em consonância com a Emenda Constitucional nº 108/2020.","comentarios":{"A":"Errada. A complementação da União é obrigatória e tem percentuais mínimos progressivos definidos constitucionalmente.","B":"Errada. O FUNDEB abrange toda a educação básica, incluindo a educação infantil, o ensino médio e as modalidades.","C":"CORRETA.","D":"Errada. Parte dos recursos destina-se a manutenção e desenvolvimento do ensino em sentido amplo.","E":"Errada, e é a pegadinha central. Sessenta por cento era o percentual do FUNDEB anterior, destinado especificamente ao MAGISTÉRIO. Houve duas mudanças simultâneas: o percentual subiu para 70% e o universo de beneficiários passou a alcançar todos os profissionais da educação básica."}},{"n":30,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Políticas públicas - ciclo","texto_apoio":null,"enunciado":"Uma equipe da Pró-Reitoria de Ensino levanta dados de evasão, identifica que o problema se concentra no primeiro ano dos cursos integrados, apresenta o diagnóstico ao Conselho Superior e obtém a inclusão do tema entre as prioridades institucionais do ano seguinte. Em termos do ciclo de políticas públicas, o movimento descrito corresponde principalmente à etapa de","alternativas":[{"letra":"A","texto":"monitoramento de execução"},{"letra":"B","texto":"implementação"},{"letra":"C","texto":"avaliação de impacto"},{"letra":"D","texto":"formação de agenda"},{"letra":"E","texto":"tomada de decisão sobre alternativas"}],"gabarito":"D","fundamentacao":"Modelo do policy cycle, sistematizado no Brasil por autores como Celina Souza e Leonardo Secchi.","comentarios":{"A":"Errada. Não há execução em curso a ser monitorada.","B":"Errada. A implementação pressupõe uma política já formulada e decidida, o que ainda não ocorreu no caso.","C":"Errada. A avaliação de impacto ocorre após a execução da política.","D":"CORRETA. O caso descreve exatamente a passagem de um problema social para o rol de prioridades do poder público, que é o núcleo do agenda setting.","E":"Errada. Ainda não houve escolha entre alternativas de enfrentamento, apenas o reconhecimento do problema."}},{"n":31,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"PNAES e assistência estudantil","texto_apoio":null,"enunciado":"Sobre a Política Nacional de Assistência Estudantil (PNAES), instituída pela Lei nº 14.914/2024, assinale a alternativa correta.","alternativas":[{"letra":"A","texto":"A política veda a participação estudantil na gestão dos programas, atribuindo a decisão exclusivamente às pró-reitorias."},{"letra":"B","texto":"A política manteve o critério de renda familiar per capita de até um salário-mínimo e meio, na forma originalmente prevista no Decreto nº 7.234/2010."},{"letra":"C","texto":"A política tem por finalidade principal premiar o mérito acadêmico dos estudantes com melhor desempenho."},{"letra":"D","texto":"A política destina-se exclusivamente a estudantes matriculados em cursos de graduação presenciais, excluídos os da educação profissional técnica de nível médio."},{"letra":"E","texto":"A política alcança estudantes da educação superior e da educação profissional, científica e tecnológica pública federal, adotando como critério de renda o valor de até 1 (um) salário-mínimo de renda familiar bruta mensal per capita."}],"gabarito":"E","fundamentacao":"Lei nº 14.914, de 3 de julho de 2024, que instituiu a PNAES, reduzindo o critério de renda para um salário-mínimo per capita e ampliando o alcance da política para além da graduação presencial.","comentarios":{"A":"Errada. A lei prevê expressamente a participação estudantil na gestão dos programas, por meio de comitês de gestão colegiada.","B":"Errada, e é a armadilha principal. Um salário-mínimo e meio era o critério do Decreto nº 7.234/2010. Provas e apostilas anteriores a 2024 ainda repetem esse número, que hoje está superado.","C":"Errada. A finalidade é a permanência e a conclusão do curso, com redução das taxas de retenção e evasão. Mérito acadêmico é critério de bolsas de pesquisa, não de assistência estudantil.","D":"Errada. A PNAES passou a alcançar também estudantes de pós-graduação e da educação profissional, científica e tecnológica, conforme disponibilidade orçamentária.","E":"CORRETA. A lei ampliou o alcance da política e reduziu o teto de renda. Note a simetria com a Lei nº 14.723/2023, que fez o mesmo movimento na política de cotas."}},{"n":32,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Teorias do currículo","texto_apoio":null,"enunciado":"Associe cada conceito à respectiva vertente teórica do currículo.\n\n1. Teorias tradicionais\n2. Teorias críticas\n3. Teorias pós-críticas\n\n( ) Multiculturalismo, identidade e diferença\n( ) Objetivos comportamentais, eficiência e mensuração\n( ) Ideologia, reprodução cultural e classe social","alternativas":[{"letra":"A","texto":"3 - 2 - 1"},{"letra":"B","texto":"2 - 3 - 1"},{"letra":"C","texto":"3 - 1 - 2"},{"letra":"D","texto":"2 - 1 - 3"},{"letra":"E","texto":"1 - 2 - 3"}],"gabarito":"C","fundamentacao":"Tomaz Tadeu da Silva, Documentos de identidade: uma introdução às teorias do currículo.","comentarios":{"A":"Errada. Troca as teorias tradicionais pelas críticas na segunda e terceira posições.","B":"Errada. Associa incorretamente as três vertentes.","C":"CORRETA. As tradicionais herdam Bobbitt e Tyler, as críticas herdam Althusser, Bourdieu, Apple e Freire, e as pós-críticas deslocam o foco do poder de classe para as múltiplas relações de poder.","D":"Errada. Associa incorretamente as três vertentes.","E":"Errada. Inverte completamente a associação."}},{"n":33,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Documentos institucionais","texto_apoio":null,"enunciado":"Sobre os documentos que orientam a organização acadêmica de um Instituto Federal, assinale a alternativa INCORRETA.","alternativas":[{"letra":"A","texto":"O PPI expressa a dimensão pedagógica do planejamento institucional e orienta a elaboração dos PPCs."},{"letra":"B","texto":"O Regimento Geral é o documento que define a matriz curricular e os critérios de avaliação da aprendizagem de cada curso."},{"letra":"C","texto":"O PPP expressa a intencionalidade educativa da instituição ou unidade escolar, articulando dimensões política e pedagógica."},{"letra":"D","texto":"O PPC define a identidade, o perfil do egresso, a matriz curricular e os critérios de avaliação de um curso específico."},{"letra":"E","texto":"O PDI é o instrumento de planejamento estratégico institucional, geralmente quinquenal, que projeta metas, expansão e infraestrutura."}],"gabarito":"B","fundamentacao":"Distinção consolidada nos instrumentos de avaliação do SINAES e no art. 11 da Organização Didática do IFPI, que atribui expressamente ao PPC o detalhamento da estrutura curricular.","comentarios":{"A":"Afirmação VERDADEIRA, logo não é a alternativa buscada.","B":"É A RESPOSTA, por ser a única afirmação FALSA. O Regimento Geral disciplina o funcionamento administrativo e as competências dos órgãos. Matriz curricular e critérios de avaliação são objeto do PPC.","C":"Afirmação VERDADEIRA, logo não é a alternativa buscada.","D":"Afirmação VERDADEIRA, logo não é a alternativa buscada.","E":"Afirmação VERDADEIRA, logo não é a alternativa buscada."}},{"n":34,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Currículo integrado","texto_apoio":null,"enunciado":"A concepção de currículo integrado na educação profissional e tecnológica fundamenta-se, centralmente, na noção de","alternativas":[{"letra":"A","texto":"pedagogia das competências, que organiza o currículo a partir do perfil demandado pelo setor produtivo."},{"letra":"B","texto":"aprendizagem por descoberta, que organiza o currículo em espiral segundo o nível de representação do aprendiz."},{"letra":"C","texto":"racionalidade técnica, que define objetivos comportamentais mensuráveis como eixo do planejamento."},{"letra":"D","texto":"teoria do capital humano, que compreende a educação como investimento individual em produtividade."},{"letra":"E","texto":"trabalho como princípio educativo, tomado em sua dimensão ontológica de produção da existência humana."}],"gabarito":"E","fundamentacao":"Concepção de matriz gramsciana desenvolvida no Brasil por Saviani, Frigotto, Ciavatta e Ramos, base das Diretrizes Curriculares Nacionais para a EPT.","comentarios":{"A":"Errada. A pedagogia das competências é objeto de crítica nessa mesma tradição teórica, por subordinar a formação à demanda do mercado.","B":"Errada. Aprendizagem por descoberta e currículo em espiral são conceitos de Jerome Bruner, no campo da psicologia da aprendizagem.","C":"Errada. Racionalidade técnica é categoria das teorias tradicionais do currículo.","D":"Errada. A teoria do capital humano é justamente o marco teórico que a concepção de currículo integrado busca superar.","E":"CORRETA. A dimensão ontológica do trabalho fundamenta a formação humana integral, ou omnilateral, e a superação da dualidade."}},{"n":35,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Planejamento educacional","texto_apoio":null,"enunciado":"Sobre planejamento educacional e planejamento de ensino, analise as afirmativas:\n\nI. Na sistematização de Libâneo, os planos organizam-se em três níveis: plano da escola, plano de ensino e plano de aula.\n\nII. O planejamento participativo pressupõe o envolvimento dos sujeitos da comunidade escolar na definição de finalidades e meios.\n\nIII. O plano de ensino é documento estritamente burocrático, cuja função esgota-se no cumprimento de exigência administrativa.\n\nIV. Na Organização Didática do IFPI, a realização do planejamento de ensino pelos professores é obrigatória, sob orientação da equipe pedagógica e homologação do Coordenador de Curso.\n\nEstão corretas apenas:","alternativas":[{"letra":"A","texto":"I e III."},{"letra":"B","texto":"I, III e IV."},{"letra":"C","texto":"II e III."},{"letra":"D","texto":"I, II e IV."},{"letra":"E","texto":"II, III e IV."}],"gabarito":"D","fundamentacao":"Libâneo, Didática; Danilo Gandin, Planejamento participativo; art. 12, parágrafo único, da Organização Didática do IFPI.","comentarios":{"A":"Errada. Inclui a afirmativa III e exclui duas verdadeiras.","B":"Errada. Inclui a afirmativa III.","C":"Errada. Inclui a afirmativa falsa e exclui duas verdadeiras.","D":"CORRETA. A afirmativa III é a única falsa: reduzir o plano a formalidade burocrática contraria toda a tradição da didática crítica e o próprio texto da Organização Didática, que vincula o planejamento ao zelo pela aprendizagem.","E":"Errada. Inclui a afirmativa III."}},{"n":36,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Gestão democrática","texto_apoio":null,"enunciado":"Sobre a gestão democrática do ensino público, assinale a alternativa correta.","alternativas":[{"letra":"A","texto":"A LDB define como princípios a participação dos profissionais da educação na elaboração do projeto pedagógico e a participação das comunidades escolar e local em conselhos escolares ou equivalentes."},{"letra":"B","texto":"A gestão democrática aplica-se igualmente às instituições públicas e privadas de ensino, por força de comando constitucional."},{"letra":"C","texto":"A elaboração do projeto pedagógico compete exclusivamente à equipe diretiva, cabendo aos docentes apenas sua execução."},{"letra":"D","texto":"A autonomia das unidades escolares é plena, dispensando a observância das normas gerais de direito financeiro público."},{"letra":"E","texto":"A LDB impõe a todos os sistemas de ensino a eleição direta de diretores por voto universal."}],"gabarito":"A","fundamentacao":"Art. 14, I e II, da LDB, e art. 206, VI, da CF/88.","comentarios":{"A":"CORRETA. São exatamente os dois incisos do art. 14, cuja regulamentação a LDB deixa a cargo de cada sistema de ensino.","B":"Errada. O princípio constitucional refere-se à gestão democrática do ensino PÚBLICO.","C":"Errada. O art. 13, I, da LDB atribui expressamente aos docentes a participação na elaboração da proposta pedagógica.","D":"Errada. O art. 15 da LDB prevê graus progressivos de autonomia, sempre observadas as normas de direito financeiro público.","E":"Errada. A LDB não impõe a forma de provimento da direção, que é definida por cada sistema."}},{"n":37,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Indicadores educacionais","texto_apoio":null,"enunciado":"Um Técnico em Assuntos Educacionais precisa levantar, para o relatório de gestão do campus, a taxa de evasão, a taxa de retenção, a relação de alunos por professor e o gasto corrente por aluno, com dados oficiais e comparáveis entre os campi da Rede Federal. A fonte adequada é","alternativas":[{"letra":"A","texto":"o Índice de Desenvolvimento da Educação Básica (IDEB)."},{"letra":"B","texto":"a Plataforma Nilo Peçanha, mantida pela SETEC/MEC."},{"letra":"C","texto":"a Pesquisa Nacional por Amostra de Domicílios (PNAD), do IBGE."},{"letra":"D","texto":"o Sistema Nacional de Avaliação da Educação Básica (SAEB)."},{"letra":"E","texto":"o Censo da Educação Superior, do INEP."}],"gabarito":"B","fundamentacao":"A PNP é o ambiente oficial de coleta, validação e disseminação das estatísticas da Rede Federal de EPT.","comentarios":{"A":"Errada. O IDEB combina fluxo e proficiência da educação básica em geral, sem os indicadores específicos da Rede Federal.","B":"CORRETA. Os quatro indicadores citados são exatamente os que a PNP consolida, e a comparabilidade entre campi é sua razão de ser.","C":"Errada. A PNAD é pesquisa amostral domiciliar, sem granularidade por campus.","D":"Errada. O SAEB é avaliação de desempenho de estudantes da educação básica, não sistema de indicadores institucionais.","E":"Errada. O Censo da Educação Superior não abrange a educação básica e profissional ofertada pelos IFs, que é justamente o núcleo dos indicadores pedidos."}},{"n":38,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Didática - componentes","texto_apoio":null,"enunciado":"Sobre a didática na perspectiva crítica, assinale a alternativa correta.","alternativas":[{"letra":"A","texto":"Os objetivos de ensino devem ser definidos após a escolha dos métodos, que condicionam o que é possível ensinar."},{"letra":"B","texto":"O ensino justifica-se na medida em que suscita e organiza a atividade de aprendizagem do estudante, sendo os dois processos distintos, porém indissociáveis."},{"letra":"C","texto":"A didática é disciplina de caráter puramente instrumental, neutra em relação a finalidades educativas."},{"letra":"D","texto":"Ensino e aprendizagem são processos idênticos, de modo que a aprendizagem é consequência automática do ensino."},{"letra":"E","texto":"O domínio do conteúdo específico pelo professor é condição suficiente para o êxito do processo de ensino."}],"gabarito":"B","fundamentacao":"Libâneo, Didática, sobre a unidade dialética entre ensino e aprendizagem e os componentes do processo didático.","comentarios":{"A":"Errada. Inverte a lógica do planejamento: os objetivos orientam a seleção de conteúdos e métodos.","B":"CORRETA. A didática crítica sustenta a unidade sem confusão entre ensinar e aprender.","C":"Errada. A didática crítica recusa a neutralidade, entendendo o ensino como prática socialmente situada.","D":"Errada. A identificação entre os dois processos torna incompreensível o próprio fracasso escolar.","E":"Errada. O domínio do conteúdo é necessário, mas a transposição didática exige conhecimento pedagógico próprio."}},{"n":39,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Saberes docentes","texto_apoio":null,"enunciado":"Na tipologia de Maurice Tardif, o saber relativo aos programas, objetivos, conteúdos e métodos que a instituição escolar define e que o professor deve aplicar denomina-se saber","alternativas":[{"letra":"A","texto":"disciplinar"},{"letra":"B","texto":"curricular"},{"letra":"C","texto":"da formação profissional"},{"letra":"D","texto":"tácito"},{"letra":"E","texto":"experiencial"}],"gabarito":"B","fundamentacao":"Tardif, Saberes docentes e formação profissional.","comentarios":{"A":"Errada. O saber disciplinar refere-se ao campo de conhecimento específico da área lecionada, como a matemática ou a história.","B":"CORRETA. O saber curricular corresponde à apropriação, pelo professor, dos programas e prescrições institucionais.","C":"Errada. O saber da formação profissional é o transmitido pelas instituições formadoras de professores.","D":"Errada. Saber tácito não integra a tipologia de Tardif, sendo categoria oriunda de outra tradição teórica.","E":"Errada. O saber experiencial é construído na prática cotidiana e validado pela vivência das situações concretas."}},{"n":40,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Metodologias ativas","texto_apoio":null,"enunciado":"Um docente organiza a disciplina em torno de situações-problema reais do setor produtivo local, apresentadas aos estudantes antes de qualquer exposição teórica. Os estudantes, em grupos, formulam hipóteses, identificam o que precisam aprender para resolver o problema e buscam esse conhecimento com mediação docente. Essa organização corresponde à metodologia denominada","alternativas":[{"letra":"A","texto":"aula expositiva dialogada"},{"letra":"B","texto":"estudo dirigido"},{"letra":"C","texto":"instrução programada"},{"letra":"D","texto":"aprendizagem baseada em problemas"},{"letra":"E","texto":"sala de aula invertida"}],"gabarito":"D","fundamentacao":"Definição corrente de Problem Based Learning, cuja marca é o problema como disparador e organizador do percurso de aprendizagem.","comentarios":{"A":"Errada. A exposição, ainda que dialogada, é justamente o que o enunciado afasta do momento inicial.","B":"Errada. O estudo dirigido é técnica de condução de leitura por roteiro de questões, sem a centralidade do problema real.","C":"Errada. A instrução programada é de base behaviorista, com pequenos passos sequenciados e reforço imediato.","D":"CORRETA. O elemento decisivo é o problema anteceder o conteúdo e definir o que será estudado.","E":"Errada. Na sala de aula invertida há material expositivo estudado previamente, o que o enunciado exclui expressamente."}},{"n":41,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Funções da avaliação","texto_apoio":null,"enunciado":"Ao longo de uma unidade didática, uma professora aplica pequenas atividades semanais cujo resultado não compõe nota, usando-as para ajustar o ritmo das aulas e retomar conteúdos em que a turma demonstrou dificuldade. Essa prática caracteriza avaliação com função predominantemente","alternativas":[{"letra":"A","texto":"classificatória"},{"letra":"B","texto":"diagnóstica"},{"letra":"C","texto":"somativa"},{"letra":"D","texto":"certificativa"},{"letra":"E","texto":"formativa"}],"gabarito":"E","fundamentacao":"Tipologia de Bloom, Hastings e Madaus, difundida no Brasil por Luckesi, Hoffmann e Perrenoud.","comentarios":{"A":"Errada. Não há classificação, e as atividades sequer compõem nota.","B":"Errada. A função diagnóstica situa-se no início do processo, para sondar a situação de partida. Aqui a avaliação ocorre ao longo do percurso.","C":"Errada. A somativa realiza balanço ao final de um período ou unidade, com finalidade de registro do resultado.","D":"Errada. A certificação atesta a conclusão de um percurso formativo.","E":"CORRETA. A marca da avaliação formativa é a regulação contínua do ensino e da aprendizagem durante o processo, com retorno imediato ao planejamento docente."}},{"n":42,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Luckesi - avaliação e exame","texto_apoio":null,"enunciado":"Sobre a distinção entre avaliação da aprendizagem e exames escolares, na perspectiva de Cipriano Luckesi, analise as afirmativas:\n\nI. O exame é pontual, classificatório e seletivo.\n\nII. A avaliação é diagnóstica, dinâmica e inclusiva, voltada à tomada de decisão para a melhoria da aprendizagem.\n\nIII. A distinção entre ambos reside no instrumento utilizado, e não na finalidade.\n\nIV. Avaliar implica diagnosticar para intervir, o que pressupõe que o resultado retorne ao processo.\n\nEstão corretas apenas:","alternativas":[{"letra":"A","texto":"I e III."},{"letra":"B","texto":"II, III e IV."},{"letra":"C","texto":"I, II e IV."},{"letra":"D","texto":"III e IV."},{"letra":"E","texto":"I, II e III."}],"gabarito":"C","fundamentacao":"Luckesi, Avaliação da aprendizagem escolar e Avaliação da aprendizagem: componente do ato pedagógico.","comentarios":{"A":"Errada. Inclui a afirmativa falsa.","B":"Errada. Inclui a afirmativa III e exclui a afirmativa I.","C":"CORRETA. A afirmativa III é a única falsa. Para o autor, a distinção é de FINALIDADE, não de instrumento. Uma mesma prova pode servir à lógica do exame ou à da avaliação, conforme o uso que se faça do resultado.","D":"Errada. Inclui a afirmativa III e exclui duas verdadeiras.","E":"Errada. Inclui a afirmativa III."}},{"n":43,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Recuperação e conselho de classe","texto_apoio":null,"enunciado":"À luz da LDB e da Organização Didática do IFPI, assinale a alternativa correta sobre recuperação e conselho de classe.","alternativas":[{"letra":"A","texto":"A recuperação deve ocorrer apenas ao final do ano letivo, após o encerramento de todos os bimestres."},{"letra":"B","texto":"Os estudos de recuperação são de oferta facultativa, cabendo a cada docente decidir sobre sua realização."},{"letra":"C","texto":"A nota obtida na recuperação será somada à média bimestral, compondo com ela a média final."},{"letra":"D","texto":"A LDB determina a obrigatoriedade de estudos de recuperação, de preferência paralelos ao período letivo, para os casos de baixo rendimento escolar."},{"letra":"E","texto":"O conselho de classe tem natureza exclusivamente consultiva, sendo-lhe vedado deliberar sobre a situação do estudante."}],"gabarito":"D","fundamentacao":"Art. 12, V, e art. 24, V, 'e', da LDB, combinados com os arts. 109 a 112 da Organização Didática do IFPI.","comentarios":{"A":"Errada. A Organização Didática prevê recuperação ao final de cada bimestre, de forma contínua e paralela.","B":"Errada. A obrigatoriedade decorre de lei e vincula o estabelecimento de ensino, não sendo faculdade individual do professor.","C":"Errada. O parágrafo único do art. 109 determina que a nota da recuperação SUBSTITUI a média bimestral quando lhe for superior, e não que se some a ela.","D":"CORRETA. A expressão 'de preferência paralelos ao período letivo' é literal da LDB e sustenta a recuperação contínua e paralela adotada pelo IFPI.","E":"Errada. O art. 112 da Organização Didática atribui ao Conselho de Classe natureza consultiva E deliberativa."}},{"n":44,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Ausubel e Vygotsky","texto_apoio":null,"enunciado":"Relacione cada conceito ao respectivo autor.\n\n1. David Ausubel\n2. Lev Vygotsky\n3. Jean Piaget\n\n( ) Zona de desenvolvimento proximal\n( ) Subsunçores e organizadores prévios\n( ) Assimilação, acomodação e equilibração","alternativas":[{"letra":"A","texto":"1 - 2 - 3"},{"letra":"B","texto":"1 - 3 - 2"},{"letra":"C","texto":"3 - 1 - 2"},{"letra":"D","texto":"2 - 3 - 1"},{"letra":"E","texto":"2 - 1 - 3"}],"gabarito":"E","fundamentacao":"Vygotsky, A formação social da mente; Ausubel, Psicologia educacional; Piaget, Epistemologia genética.","comentarios":{"A":"Errada. Atribui a ZDP a Ausubel.","B":"Errada. Atribui a ZDP a Ausubel e os subsunçores a Piaget.","C":"Errada. Atribui a ZDP a Piaget e os processos de equilibração a Vygotsky.","D":"Errada. Associa incorretamente os dois últimos itens.","E":"CORRETA. A troca mais comum em provas é atribuir a ZDP a Ausubel ou os subsunçores a Piaget."}},{"n":45,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Wallon e Bruner","texto_apoio":null,"enunciado":"Sobre os fundamentos psicológicos da aprendizagem, assinale a alternativa correta.","alternativas":[{"letra":"A","texto":"Para Piaget, o desenvolvimento cognitivo decorre exclusivamente da transmissão social de conhecimentos, sem participação ativa do sujeito."},{"letra":"B","texto":"Para Vygotsky, o ensino deve limitar-se ao nível de desenvolvimento já consolidado pelo estudante, sob pena de gerar frustração."},{"letra":"C","texto":"Para Jerome Bruner, o currículo em espiral pressupõe que qualquer conteúdo pode ser ensinado de forma intelectualmente honesta em qualquer estágio de desenvolvimento, retomando-se o tema em níveis crescentes de complexidade."},{"letra":"D","texto":"Para Ausubel, a aprendizagem significativa dispensa conhecimentos prévios, bastando que o material apresentado seja logicamente estruturado."},{"letra":"E","texto":"Para Henri Wallon, a afetividade e a cognição são domínios estanques, devendo a escola privilegiar exclusivamente o segundo."}],"gabarito":"C","fundamentacao":"Bruner, O processo da educação, e as respectivas obras de referência dos demais autores citados.","comentarios":{"A":"Errada. Descreve uma perspectiva empirista, incompatível com o construtivismo piagetiano, que atribui papel central à ação do sujeito.","B":"Errada. Vygotsky sustenta o oposto: o bom ensino antecipa-se ao desenvolvimento e o impulsiona, atuando na zona de desenvolvimento proximal.","C":"CORRETA. A formulação sobre a honestidade intelectual do ensino em qualquer estágio é uma das teses mais conhecidas do autor.","D":"Errada. Os conhecimentos prévios, ou subsunçores, são condição da aprendizagem significativa, ao lado da predisposição para aprender.","E":"Errada. Wallon é justamente o autor que integra afetividade, motricidade e cognição na constituição da pessoa completa."}},{"n":46,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"LBI e educação inclusiva","texto_apoio":null,"enunciado":"Sobre o direito à educação da pessoa com deficiência, assinale a alternativa INCORRETA.","alternativas":[{"letra":"A","texto":"É vedada a cobrança de valores adicionais de qualquer natureza nas mensalidades e matrículas de instituições privadas em razão da adoção de medidas de acessibilidade."},{"letra":"B","texto":"Incumbe ao poder público assegurar sistema educacional inclusivo em todos os níveis e modalidades de ensino."},{"letra":"C","texto":"O atendimento educacional especializado é complementar ou suplementar à escolarização em classe comum, jamais substitutivo."},{"letra":"D","texto":"A matrícula em classe comum pode ser condicionada à apresentação de laudo que ateste a capacidade de o estudante acompanhar o currículo."},{"letra":"E","texto":"A recusa de matrícula em razão da deficiência configura crime, nos termos da Lei nº 7.853/1989, com a redação dada pela LBI."}],"gabarito":"D","fundamentacao":"Arts. 27 e 28 da Lei nº 13.146/2015 e art. 8º da Lei nº 7.853/1989.","comentarios":{"A":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Corresponde ao art. 28, § 1º, da LBI.","B":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Corresponde ao art. 27 da LBI.","C":"Afirmação VERDADEIRA, logo não é a alternativa buscada. Decorre da PNEEPEI e do art. 58 da LDB.","D":"É A RESPOSTA, por ser a única afirmação FALSA. Condicionar a matrícula a laudo constitui recusa velada, vedada pela LBI. O laudo pode ser exigido para organizar o atendimento especializado, jamais para autorizar o ingresso.","E":"Afirmação VERDADEIRA, logo não é a alternativa buscada."}},{"n":47,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"DUA e PEI","texto_apoio":null,"enunciado":"Sobre acessibilidade curricular, analise as afirmativas:\n\nI. O Desenho Universal para a Aprendizagem estrutura-se em três princípios: múltiplos meios de representação, de ação e expressão, e de engajamento.\n\nII. O DUA pressupõe planejamento antecipado para a diversidade, e não adaptação posterior dirigida a um estudante específico.\n\nIII. Na Organização Didática do IFPI, a acessibilidade curricular será promovida por meio de Plano Educacional Individualizado, com flexibilizações e adaptações curriculares.\n\nIV. O DUA e o PEI são instrumentos excludentes entre si, não podendo coexistir na mesma instituição.\n\nEstão corretas apenas:","alternativas":[{"letra":"A","texto":"III e IV."},{"letra":"B","texto":"II e IV."},{"letra":"C","texto":"I, III e IV."},{"letra":"D","texto":"I e IV."},{"letra":"E","texto":"I, II e III."}],"gabarito":"E","fundamentacao":"Estrutura do DUA formulada pelo CAST e art. 29 da Organização Didática do IFPI.","comentarios":{"A":"Errada. Inclui a afirmativa IV e exclui duas verdadeiras.","B":"Errada. Inclui a afirmativa falsa e exclui duas verdadeiras.","C":"Errada. Inclui a afirmativa IV.","D":"Errada. Inclui a afirmativa IV e exclui duas verdadeiras.","E":"CORRETA. A afirmativa IV é a única falsa. Os dois instrumentos são complementares: o DUA opera no planejamento universal do ensino e o PEI responde a necessidades individuais que persistem mesmo com o planejamento acessível."}},{"n":48,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"NAPNE e regime disciplinar","texto_apoio":null,"enunciado":"Segundo a Organização Didática do IFPI, tratando-se de discente público-alvo da Educação Especial, as medidas disciplinares previstas na norma","alternativas":[{"letra":"A","texto":"limitam-se à advertência oral, vedadas as demais penalidades."},{"letra":"B","texto":"deverão ser impreterivelmente mediadas por representante do NAPNE, consideradas as especificidades desse público."},{"letra":"C","texto":"dependem de autorização prévia do Conselho Tutelar em todos os casos."},{"letra":"D","texto":"não se aplicam, em razão da condição do estudante."},{"letra":"E","texto":"serão aplicadas diretamente pela Direção-Geral, dispensada qualquer mediação."}],"gabarito":"B","fundamentacao":"Art. 159, § 3º, da Organização Didática do IFPI.","comentarios":{"A":"Errada. Não há limitação das penalidades aplicáveis, e sim exigência de mediação qualificada.","B":"CORRETA. A mediação pelo NAPNE assegura que a leitura da conduta considere as especificidades do estudante antes da aplicação da medida.","C":"Errada. A comunicação ao Conselho Tutelar é prevista para o cancelamento de matrícula de estudante menor de idade, e não como autorização prévia genérica.","D":"Errada. A norma não isenta esses estudantes do regime disciplinar, o que seria, aliás, forma de infantilização.","E":"Errada. Dispensar a mediação contraria expressamente o dispositivo."}},{"n":49,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Diversidade e direitos humanos","texto_apoio":null,"enunciado":"Sobre educação em direitos humanos e relações étnico-raciais no contexto escolar, assinale a alternativa correta.","alternativas":[{"letra":"A","texto":"O estudo da história e cultura afro-brasileira e indígena deve concentrar-se exclusivamente na disciplina de História."},{"letra":"B","texto":"O uso do nome social por pessoas travestis e transexuais na administração pública federal depende de decisão judicial."},{"letra":"C","texto":"A educação em direitos humanos é conteúdo restrito aos cursos superiores de licenciatura."},{"letra":"D","texto":"A promoção da cultura de paz nas escolas é recomendação de caráter facultativo, sem previsão legal."},{"letra":"E","texto":"A educação escolar quilombola e a educação escolar indígena possuem diretrizes curriculares nacionais próprias."}],"gabarito":"E","fundamentacao":"Resolução CNE/CEB nº 8/2012 (educação escolar quilombola), Resolução CNE/CEB nº 5/2012 (educação escolar indígena), art. 26-A da LDB, Lei nº 13.663/2018 e Decreto nº 8.727/2016.","comentarios":{"A":"Errada. O § 2º do art. 26-A determina que os conteúdos sejam ministrados no âmbito de todo o currículo escolar.","B":"Errada. O Decreto nº 8.727/2016 assegura o uso do nome social mediante simples requerimento da pessoa interessada.","C":"Errada. A educação em direitos humanos é princípio transversal a todos os níveis e modalidades, nos termos da Resolução CNE/CP nº 1/2012.","D":"Errada. A Lei nº 13.663/2018 incluiu a promoção da cultura de paz entre as incumbências dos estabelecimentos de ensino no art. 12 da LDB.","E":"CORRETA. Ambas contam com diretrizes curriculares nacionais específicas, aprovadas em 2012, que reconhecem as particularidades territoriais, culturais e pedagógicas dessas comunidades."}},{"n":50,"bloco":3,"bloco_nome":"CONHECIMENTOS ESPECÍFICOS","tipo":"Tecnologias e EaD","texto_apoio":null,"enunciado":"Sobre a Educação a Distância e a educação semipresencial na Organização Didática do IFPI, assinale a alternativa correta.","alternativas":[{"letra":"A","texto":"Os docentes, mediadores e tutores que atuarem em EaD deverão participar de formação específica, constituindo essa participação requisito para atuação na modalidade."},{"letra":"B","texto":"Os cursos ofertados a distância deverão adotar base curricular distinta da dos cursos presenciais equivalentes, com certificação diferenciada."},{"letra":"C","texto":"A modalidade semipresencial dispensa a elaboração de Projeto Pedagógico de Curso próprio, aproveitando integralmente o do curso presencial."},{"letra":"D","texto":"A EaD caracteriza-se pela ausência total de mediação docente, com ênfase exclusiva na autoaprendizagem."},{"letra":"E","texto":"A EaD no IFPI fundamenta-se exclusivamente no Decreto nº 9.057/2017, sem alterações posteriores."}],"gabarito":"A","fundamentacao":"Art. 20, § 1º, e art. 23, parágrafo único, da Organização Didática do IFPI.","comentarios":{"A":"CORRETA. A formação específica é condição de atuação, tanto na EaD quanto nas disciplinas a distância ofertadas em cursos presenciais.","B":"Errada. O art. 21 determina justamente a MESMA base curricular e a MESMA certificação, garantindo equivalência formativa.","C":"Errada. O art. 24 exige PPC específico para a modalidade, contemplando suas particularidades pedagógicas e tecnológicas.","D":"Errada. O art. 20 define a modalidade com ênfase na autoaprendizagem, mas COM mediação docente, tutorial e de recursos didáticos organizados.","E":"Errada. Os arts. 19 e 22 remetem expressamente ao Decreto nº 12.456, de 19 de maio de 2025."}}]}</script>
+<script>
+(function(){
+"use strict";
+var DATA = JSON.parse(document.getElementById('dataset').textContent);
+var META = DATA.meta, QS = DATA.questoes, TEXTOS = DATA.textos;
+var LETRAS = ['A','B','C','D','E'];
+var DURACAO = META.duracao_minutos * 60, PESO = META.peso_por_questao;
+var SKEY = 'simulado2:run:v1';
+var S = { answers:{}, marked:{}, cur:1, elapsed:0, running:false, done:false };
+var timerId=null, saveId=null, byQ={};
+QS.forEach(function(q){ byQ[q.n]=q; });
+var $ = function(id){ return document.getElementById(id); };
+
+function hms(s){ s=Math.max(0,Math.floor(s));
+  return Math.floor(s/3600)+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+function pad2(n){ return String(n).padStart(2,'0'); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function nAns(){ return Object.keys(S.answers).length; }
+function nMk(){ var c=0; for(var k in S.marked) if(S.marked[k]) c++; return c; }
+function shortName(id){ return ['','PORT','LEGIS','ESPEC'][id] || ('B'+id); }
+function curto(q){
+  var t = q.tipo.replace(/^(Lei|Decreto|Resolução)\s+/,'');
+  return t.length > 34 ? t.slice(0,33)+'…' : t;
+}
+
+/* -------- storage -------- */
+function save(){ if(!window.storage||S.done) return;
+  try{ window.storage.set(SKEY, JSON.stringify({answers:S.answers,marked:S.marked,cur:S.cur,elapsed:S.elapsed}), false).catch(function(){}); }catch(e){} }
+function wipe(){ if(!window.storage) return;
+  try{ window.storage.delete(SKEY,false).catch(function(){}); }catch(e){} }
+
+/* -------- boot -------- */
+function buildBoot(){
+  $('boot-sub').textContent = META.cargo.toUpperCase();
+  $('card-h4').textContent = 'EDITAL 103/2026';
+  $('boot-dl').innerHTML = [
+    ['FAIXAS', META.total],
+    ['DURAÇÃO', (META.duracao_minutos/60)+':00:00'],
+    ['PONTOS', META.total*PESO],
+    ['BLOCOS', META.blocos.map(function(b){return b.minimo_acertos+'/'+b.questoes;}).join('  ')]
+  ].map(function(x){ return '<dt>'+x[0]+'</dt><dd>'+x[1]+'</dd>'; }).join('');
+  var viz=$('viz');
+  for(var i=0;i<12;i++){
+    var b=document.createElement('i');
+    b.style.height=(12+Math.random()*72)+'%';
+    b.style.animation='bounce '+(0.5+Math.random()*0.8).toFixed(2)+'s ease-in-out infinite';
+    b.style.animationDelay=(Math.random()*0.8).toFixed(2)+'s';
+    viz.appendChild(b);
+  }
+}
+
+/* -------- prova -------- */
+function start(fresh){
+  if(fresh){ S.answers={}; S.marked={}; S.cur=1; S.elapsed=0; wipe(); }
+  S.running=true; S.done=false;
+  $('boot').classList.add('hidden'); $('result').classList.add('hidden'); $('exam').classList.remove('hidden');
+  buildPlaylist(); buildEq(); render(); tick();
+  if(timerId) clearInterval(timerId);
+  timerId=setInterval(function(){ S.elapsed++; tick(); if(S.elapsed>=DURACAO) submit(true); },1000);
+  if(saveId) clearInterval(saveId);
+  saveId=setInterval(save,8000);
+  window.scrollTo(0,0);
+}
+function tick(){
+  $('clock').textContent=hms(S.elapsed);
+  $('left').textContent=hms(DURACAO-S.elapsed);
+  $('pl-cnt').textContent=hms(S.elapsed).replace(/^0:/,'');
+  var p=Math.min(100,S.elapsed/DURACAO*100);
+  var f=$('seek'); f.style.width=p+'%';
+  f.className = p>92?'crit':p>75?'warn':'';
+  $('seekh').style.left=p+'%';
+}
+function meters(){
+  $('m-ans').textContent=nAns()+'/'+META.total;
+  $('m-mk').textContent=pad2(nMk());
+  $('m-bl').textContent=pad2(META.total-nAns());
+}
+function buildPlaylist(){
+  var h='';
+  META.blocos.forEach(function(b){
+    h+='<div class="plgrp"><b>BLOCO '+b.id+' · '+b.nome.toUpperCase()+'</b><i></i><b>MÍN '+b.minimo_acertos+'</b></div>';
+    QS.filter(function(q){return q.bloco===b.id;}).forEach(function(q){
+      h+='<button class="row" id="r-'+q.n+'" data-n="'+q.n+'">'+
+         '<span>'+pad2(q.n)+'.</span><span class="t">'+esc(curto(q))+'</span>'+
+         '<span class="v" id="rv-'+q.n+'">--</span></button>';
+    });
+  });
+  var pl=$('pl'); pl.innerHTML=h;
+  pl.onclick=function(e){ var t=e.target.closest('.row'); if(t) go(parseInt(t.dataset.n,10)); };
+}
+function paintPlaylist(){
+  QS.forEach(function(q){
+    var el=$('r-'+q.n); if(!el) return;
+    var c='row';
+    if(S.answers[q.n]) c+=' ans';
+    if(S.marked[q.n]) c+=' mk';
+    if(q.n===S.cur) c+=' cur';
+    el.className=c;
+    $('rv-'+q.n).textContent=S.answers[q.n]||'--';
+  });
+}
+function buildEq(){
+  $('eq').innerHTML=META.blocos.map(function(b){
+    return '<div class="sl"><i id="ev-'+b.id+'">0</i>'+
+      '<div class="rail"><div class="knob" id="ek-'+b.id+'" style="bottom:0"></div></div>'+
+      '<b>'+shortName(b.id)+'</b></div>';
+  }).join('');
+}
+function paintEq(){
+  var pts=[];
+  META.blocos.forEach(function(b,i){
+    var qs=QS.filter(function(q){return q.bloco===b.id;});
+    var d=qs.filter(function(q){return S.answers[q.n];}).length;
+    var f=d/qs.length;
+    var k=$('ek-'+b.id), v=$('ev-'+b.id);
+    if(k) k.style.bottom='calc('+f.toFixed(3)+' * (100% - 12px))';
+    if(v) v.textContent=d+'/'+qs.length;
+    pts.push([10+i*40, 24-f*22]);
+  });
+  var c=$('eqcurve');
+  if(c) c.setAttribute('points', [[0,24-(pts[0][1]<24?2:0)]].concat(pts).concat([[100,pts[2][1]]])
+    .map(function(p){return p[0]+','+p[1];}).join(' '));
+}
+function render(){
+  var q=byQ[S.cur];
+  $('q-num').textContent='FAIXA '+pad2(q.n);
+  $('q-blk').textContent='BLOCO '+q.bloco+' · '+q.bloco_nome;
+  $('q-typ').textContent=q.tipo;
+  $('q-text').textContent=q.enunciado;
+  $('now-n').textContent=pad2(q.n);
+  $('now-t').textContent=q.bloco_nome+' — '+q.tipo;
+  $('win-q').textContent='NOW PLAYING '+pad2(q.n)+'/'+META.total;
+  $('q-alts').innerHTML=q.alternativas.map(function(a){
+    var on=S.answers[q.n]===a.letra;
+    return '<button class="alt'+(on?' on':'')+'" data-l="'+a.letra+'" aria-pressed="'+on+'">'+
+      '<span class="l">'+a.letra+'</span><span>'+esc(a.texto)+'</span><span class="c">'+(on?'▶':'')+'</span></button>';
+  }).join('');
+  $('b-mark').className='btn '+(S.marked[q.n]?'btn--on':'btn--g');
+  $('b-mark').textContent=S.marked[q.n]?'● MARCADA':'MARCAR';
+  $('b-clear').disabled=!S.answers[q.n];
+  $('b-prev').disabled=S.cur===1;
+  $('b-next').disabled=S.cur===META.total;
+  $('b-text').classList.toggle('hidden',!q.texto_apoio);
+  paintPlaylist(); paintEq(); meters();
+}
+function go(n){
+  if(n<1||n>META.total) return;
+  S.cur=n; render(); save();
+  var el=$('r-'+n);
+  if(el&&el.scrollIntoView) el.scrollIntoView({block:'nearest'});
+  if(window.innerWidth<900) window.scrollTo({top:0,behavior:'smooth'});
+}
+function answer(l){
+  var q=byQ[S.cur];
+  if(!q.alternativas.some(function(a){return a.letra===l;})) return;
+  S.answers[q.n]=l; render(); save();
+}
+function openText(){
+  var q=byQ[S.cur]; if(!q.texto_apoio) return;
+  var t=TEXTOS[q.texto_apoio];
+  $('tx-title').textContent=q.texto_apoio.replace('_',' ');
+  $('tx-body').innerHTML='<div class="dlgnote">'+esc(t.chamada||'')+'</div>'+
+    t.conteudo.split(/\n\n+/).map(function(p){return '<p>'+esc(p)+'</p>';}).join('');
+  $('ov-text').classList.add('open');
+}
+
+/* -------- entrega -------- */
+function askSubmit(){
+  var bl=META.total-nAns(), mk=nMk();
+  $('cf-msg').textContent = bl===0
+    ? 'Todas as 50 respondidas.'+(mk?' Ainda tem '+mk+' marcada(s) para revisar.':'')+' Depois de entregar não dá pra voltar.'
+    : 'Faltam '+bl+' em branco'+(mk?' e '+mk+' marcada(s) para revisar':'')+'. Em branco conta como erro.';
+  $('ov-confirm').classList.add('open');
+}
+function grade(){
+  var R={ok:0,bad:0,blank:0,pontos:0,blocos:{},habilitado:true};
+  META.blocos.forEach(function(b){ R.blocos[b.id]={ok:0,total:b.questoes,min:b.minimo_acertos}; });
+  QS.forEach(function(q){
+    var a=S.answers[q.n];
+    if(!a){ R.blank++; return; }
+    if(a===q.gabarito){ R.ok++; R.blocos[q.bloco].ok++; } else R.bad++;
+  });
+  R.pontos=R.ok*PESO;
+  META.blocos.forEach(function(b){
+    var r=R.blocos[b.id]; r.pontos=r.ok*PESO; r.pass=r.ok>=r.min;
+    if(!r.pass) R.habilitado=false;
+  });
+  return R;
+}
+function submit(auto){
+  S.running=false; S.done=true;
+  if(timerId) clearInterval(timerId);
+  if(saveId) clearInterval(saveId);
+  wipe();
+  $('ov-confirm').classList.remove('open');
+  $('exam').classList.add('hidden'); $('result').classList.remove('hidden');
+  renderResult(grade(),auto); window.scrollTo(0,0);
+}
+
+/* -------- resultado -------- */
+var revFilter='all', allOpen=false;
+function renderResult(R,auto){
+  $('r-sub').textContent=(auto?'TEMPO ESGOTADO · ':'')+META.titulo.toUpperCase();
+  $('r-lines').innerHTML=[
+    ['ACERTOS',R.ok+'/'+META.total],['PONTOS',R.pontos],
+    ['ERROS',pad2(R.bad)],['BRANCO',pad2(R.blank)],['TEMPO',hms(S.elapsed)]
+  ].map(function(l){ return '<div><b>'+l[0]+'</b><i>'+l[1]+'</i></div>'; }).join('');
+  $('r-stamp').innerHTML=R.habilitado?'<span class="stamp ok">HABILITADO</span>'
+    :'<span class="stamp no">ELIMINADO POR BLOCO</span>';
+  $('r-card').innerHTML=META.blocos.map(function(b){
+    var r=R.blocos[b.id];
+    return '<dt>'+b.nome.toUpperCase()+'</dt><dd style="color:'+(r.pass?'#e2ffd4':'#ff9d86')+'">'+
+      r.ok+'/'+r.total+' <span style="font-size:12px;color:#3f9a2c">MÍN '+r.min+'</span></dd>';
+  }).join('') + '<dt>APROVEITAMENTO</dt><dd>'+Math.round(R.ok/META.total*100)+'%</dd>';
+
+  $('r-eq').innerHTML=META.blocos.map(function(b){
+    var r=R.blocos[b.id];
+    return '<div class="sl"><i class="'+(r.pass?'':'bad')+'">'+r.ok+'/'+r.total+'</i>'+
+      '<div class="rail"><div class="minline" style="bottom:calc('+(r.min/r.total).toFixed(3)+' * (100% - 12px) + 5px)"></div>'+
+      '<div class="knob" style="bottom:calc('+(r.ok/r.total).toFixed(3)+' * (100% - 12px))"></div></div><b>'+shortName(b.id)+'</b></div>';
+  }).join('');
+  var f=META.blocos.filter(function(b){return !R.blocos[b.id].pass;}).map(function(b){return b.nome;});
+  $('r-eqnote').textContent=f.length
+    ? 'A linha vermelha é o mínimo do bloco. Ficou abaixo em: '+f.join(', ')+'. '+META.regra_habilitacao
+    : 'A linha vermelha é o mínimo do bloco. Você passou em todos.';
+
+  var m='';
+  META.blocos.forEach(function(b){
+    m+='<div class="plgrp"><b>BLOCO '+b.id+'</b><i></i><b>'+R.blocos[b.id].ok+'/'+b.questoes+'</b></div>';
+    QS.filter(function(q){return q.bloco===b.id;}).forEach(function(q){
+      var a=S.answers[q.n], cls=!a?'blank':(a===q.gabarito?'ok':'bad');
+      m+='<button class="row '+cls+'" data-goto="'+q.n+'"><span>'+pad2(q.n)+'.</span>'+
+         '<span class="t">'+esc(curto(q))+'</span><span class="v">'+(a||'--')+'</span></button>';
+    });
+  });
+  $('r-pl').innerHTML=m;
+  renderRev();
+}
+function renderRev(){
+  var list=QS.filter(function(q){
+    var a=S.answers[q.n];
+    if(revFilter==='ok') return a===q.gabarito;
+    if(revFilter==='bad') return a&&a!==q.gabarito;
+    if(revFilter==='blank') return !a;
+    return true;
+  });
+  $('r-cnt').textContent=pad2(list.length);
+  $('rev').innerHTML=list.map(function(q){
+    var a=S.answers[q.n], st=!a?'blank':(a===q.gabarito?'ok':'bad');
+    return '<div class="rvi" id="rev-'+q.n+'">'+
+      '<button class="rvh" data-n="'+q.n+'"><span class="n">'+pad2(q.n)+'</span>'+
+      '<span class="led '+st+'"></span><span class="t">'+esc(q.tipo)+'</span>'+
+      '<span class="s">'+(a||'—')+' › '+q.gabarito+'</span></button>'+
+      '<div class="rvb'+(allOpen?' open':'')+'" id="revb-'+q.n+'">'+revBody(q,a)+'</div></div>';
+  }).join('');
+}
+function revBody(q,a){
+  var h='';
+  if(q.texto_apoio) h+='<div class="dlgnote" style="margin-top:12px">'+esc(TEXTOS[q.texto_apoio].chamada||'')+
+    ' <button class="btn btn--g" data-text="'+q.n+'" style="margin-left:6px">VER TEXTO</button></div>';
+  h+='<div class="q">'+esc(q.enunciado)+'</div>';
+  h+=q.alternativas.map(function(alt){
+    var key=alt.letra===q.gabarito, you=alt.letra===a;
+    var cm=q.comentarios&&q.comentarios[alt.letra]?'<span class="cm">'+esc(q.comentarios[alt.letra])+'</span>':'';
+    return '<div class="ra '+(key?'right':you?'wrong':'')+'"><span class="l">'+alt.letra+'</span><span>'+
+      esc(alt.texto)+(you?'<span class="pick you">SUA</span>':'')+(key?'<span class="pick key">GABARITO</span>':'')+cm+'</span></div>';
+  }).join('');
+  return h+'<div class="fund"><b>FUNDAMENTAÇÃO</b>'+esc(q.fundamentacao)+'</div>';
+}
+function paintFilters(){
+  Array.prototype.forEach.call($('r-filters').querySelectorAll('[data-f]'),function(b){
+    b.className='btn '+(b.dataset.f===revFilter?'btn--on':'btn--g');
+  });
+}
+
+/* -------- eventos -------- */
+$('q-alts').onclick=function(e){ var t=e.target.closest('.alt'); if(t) answer(t.dataset.l); };
+$('b-prev').onclick=function(){ go(S.cur-1); };
+$('b-next').onclick=function(){ go(S.cur+1); };
+$('b-mark').onclick=function(){ S.marked[S.cur]=!S.marked[S.cur]; render(); save(); };
+$('b-clear').onclick=function(){ delete S.answers[S.cur]; render(); save(); };
+$('b-text').onclick=openText;
+$('b-submit').onclick=askSubmit;
+$('cf-yes').onclick=function(){ submit(false); };
+$('btn-start').onclick=function(){ start(true); };
+$('btn-resume').onclick=function(){ start(false); };
+$('b-again').onclick=function(){
+  S.answers={}; S.marked={}; S.cur=1; S.elapsed=0; S.done=false;
+  $('result').classList.add('hidden'); $('boot').classList.remove('hidden');
+  $('btn-resume').classList.add('hidden'); window.scrollTo(0,0);
+};
+$('btn-pl').onclick=function(){
+  $('side').classList.toggle('collapsed');
+  $('exam').querySelector('.deck').classList.toggle('nopl');
+  this.className='btn '+($('side').classList.contains('collapsed')?'btn--g':'btn--on');
+};
+$('btn-eq').onclick=function(){
+  $('eqwin').classList.toggle('hidden');
+  this.className='btn '+($('eqwin').classList.contains('hidden')?'btn--g':'btn--on');
+};
+$('b-expand').onclick=function(){ allOpen=!allOpen; this.textContent=allOpen?'FECHAR TUDO':'ABRIR TUDO'; renderRev(); };
+document.querySelector('.plfoot').onclick=function(e){
+  var t=e.target.closest('[data-jump]'); if(!t) return;
+  var j=t.dataset.jump, n=null, i;
+  if(j==='cur'){ n=S.cur; }
+  else if(j==='first'){ for(i=1;i<=META.total;i++){ if(!S.answers[i]){ n=i; break; } } }
+  else { for(i=1;i<=META.total;i++){ if(S.marked[i]){ n=i; break; } } }
+  if(n) go(n);
+};
+$('r-filters').onclick=function(e){
+  var t=e.target.closest('[data-f]'); if(!t) return;
+  revFilter=t.dataset.f; paintFilters(); renderRev();
+};
+$('rev').onclick=function(e){
+  var tx=e.target.closest('[data-text]');
+  if(tx){ S.cur=parseInt(tx.dataset.text,10); openText(); return; }
+  var h=e.target.closest('.rvh');
+  if(h) $('revb-'+h.dataset.n).classList.toggle('open');
+};
+$('r-pl').onclick=function(e){
+  var t=e.target.closest('[data-goto]'); if(!t) return;
+  var n=t.dataset.goto;
+  revFilter='all'; paintFilters(); renderRev();
+  var it=$('rev-'+n);
+  if(it){ $('revb-'+n).classList.add('open'); if(it.scrollIntoView) it.scrollIntoView({behavior:'smooth',block:'center'}); }
+};
+Array.prototype.forEach.call(document.querySelectorAll('[data-close]'),function(b){
+  b.onclick=function(){ $(b.dataset.close).classList.remove('open'); };
+});
+Array.prototype.forEach.call(document.querySelectorAll('.ov'),function(o){
+  o.addEventListener('click',function(e){ if(e.target===o) o.classList.remove('open'); });
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){ Array.prototype.forEach.call(document.querySelectorAll('.ov.open'),function(o){o.classList.remove('open');}); return; }
+  if(!S.running||document.querySelector('.ov.open')) return;
+  var k=e.key.toUpperCase();
+  if(LETRAS.indexOf(k)>-1){ answer(k); e.preventDefault(); }
+  else if(e.key==='ArrowRight'){ go(S.cur+1); e.preventDefault(); }
+  else if(e.key==='ArrowLeft'){ go(S.cur-1); e.preventDefault(); }
+  else if(k==='M'){ S.marked[S.cur]=!S.marked[S.cur]; render(); save(); }
+  else if(k==='T'){ openText(); }
+});
+window.addEventListener('beforeunload',function(e){ if(S.running){ e.preventDefault(); e.returnValue=''; } });
+
+buildBoot();
+if(window.storage){
+  try{ window.storage.get(SKEY,false).then(function(r){
+    if(!r||!r.value) return;
+    var d=JSON.parse(r.value);
+    if(d.answers&&Object.keys(d.answers).length&&d.elapsed<DURACAO){
+      S.answers=d.answers; S.marked=d.marked||{}; S.cur=d.cur||1; S.elapsed=d.elapsed||0;
+      $('btn-resume').classList.remove('hidden');
+      $('resume-lbl').textContent='RETOMAR · '+Object.keys(d.answers).length+' OK · '+hms(d.elapsed);
+    }
+  }).catch(function(){}); }catch(e){}
+}
+})();
+</script>
+</body>
+</html>
