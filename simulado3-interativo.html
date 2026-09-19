@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SIMULADO 3 — LÍNGUA PORTUGUESA — TAE/IFPI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,700&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --breu:#0c1416; --nevoa:#16282a; --tanque:#22514a; --ferrugem:#8a4f2e;
+  --ocre:#c9a15a; --ocre-cl:#e7cf94; --linho:#e9e5d8; --bruma:#8fa199;
+  --limo:#a9c86a; --sangue:#b4514a; --agua:#6fa3b0;
+  --ttl:"Fraunces",Georgia,serif;
+  --ui:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --corte: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  --corte-s: polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--ui);background:var(--breu);color:var(--linho);padding:14px;min-height:100vh;
+  padding-top:calc(14px + env(safe-area-inset-top,0px));
+  padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ============ FUNDO PINTADO ============ */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:radial-gradient(130% 80% at 68% 4%, #5d6a4e 0%, #35493f 26%, #1b2e2f 58%, #0c1416 100%)}
+.bg i{position:absolute;display:block;filter:url(#matte)}
+.bg .n1{left:-12%;top:2%;width:74%;height:44%;opacity:.5;mix-blend-mode:screen;
+  background:radial-gradient(58% 58% at 50% 50%, rgba(201,161,90,.6), transparent 70%)}
+.bg .n2{right:-16%;top:-6%;width:62%;height:50%;opacity:.42;mix-blend-mode:screen;
+  background:radial-gradient(58% 58% at 50% 50%, rgba(233,229,216,.5), transparent 70%)}
+.bg .n3{left:4%;bottom:-6%;width:96%;height:52%;opacity:.7;
+  background:radial-gradient(52% 54% at 50% 62%, rgba(14,32,32,.96), transparent 74%)}
+.bg .n4{right:6%;bottom:14%;width:34%;height:46%;opacity:.35;
+  background:linear-gradient(200deg, rgba(138,79,46,.7), transparent 72%)}
+.bg .torre{position:absolute;left:8%;top:10%;width:9%;height:52%;opacity:.5;filter:url(#matte);
+  background:linear-gradient(180deg,#0a1214,#16282a)}
+.bg .torre2{left:74%;top:18%;width:6%;height:44%}
+.grao{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.22;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='170' height='170' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
+.wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto}
+
+/* ============ JANELA PINTADA ============ */
+.win{position:relative;filter:drop-shadow(0 12px 26px rgba(0,0,0,.6))}
+.win + .win{margin-top:12px}
+.frame{position:relative;clip-path:var(--corte);padding:5px 6px 7px;
+  background:linear-gradient(168deg, rgba(34,81,74,.82), rgba(18,36,38,.9) 58%, rgba(10,18,20,.94));
+  box-shadow:inset 0 0 0 1px rgba(233,229,216,.2)}
+.frame::before{content:"";position:absolute;inset:-18px -14px 40% -14px;z-index:-1;filter:url(#matte);opacity:.55;
+  background:radial-gradient(56% 80% at 24% 34%, rgba(34,81,74,.95), transparent 72%)}
+.win.rust .frame::before{background:radial-gradient(56% 80% at 76% 34%, rgba(138,79,46,.8), transparent 72%)}
+.cant{position:absolute;width:12px;height:12px;z-index:3;pointer-events:none;border:1px solid rgba(233,229,216,.6)}
+.cant.tl{left:3px;top:3px;border-right:0;border-bottom:0}
+.cant.br{right:3px;bottom:4px;border-left:0;border-top:0}
+
+/* barra de título: traço de pincel */
+.bar{display:flex;align-items:center;gap:9px;height:20px;margin-bottom:5px;padding:0 4px}
+.rid{width:24px;height:9px;flex:none;filter:url(#matte);opacity:.9;
+  background:repeating-linear-gradient(90deg, var(--ocre) 0 2px, transparent 2px 5px)}
+.bar h2{margin:0;font-family:var(--ui);font-weight:600;font-size:9.5px;letter-spacing:.34em;
+  color:var(--ocre-cl);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .line{flex:1;height:1px;min-width:8px;background:linear-gradient(90deg, rgba(233,229,216,.42), rgba(233,229,216,.06))}
+.wbtn{display:flex;gap:3px;flex:none}
+.wbtn i{width:8px;height:8px;display:block;border:1px solid rgba(233,229,216,.4)}
+.wbtn i:last-child{background:rgba(233,229,216,.4)}
+
+/* painel: lavagem de tinta */
+.pan{position:relative;clip-path:var(--corte-s);overflow:hidden;
+  background:linear-gradient(172deg, rgba(23,44,44,.9), rgba(10,18,20,.92));
+  box-shadow:inset 0 0 0 1px rgba(233,229,216,.14)}
+.pan::before{content:"";position:absolute;left:-14%;top:-40%;width:78%;height:180%;pointer-events:none;
+  filter:url(#matte);opacity:.34;transform:rotate(-8deg);
+  background:radial-gradient(50% 50% at 50% 50%, rgba(111,163,176,.5), transparent 70%)}
+.pan.warm::before{background:radial-gradient(50% 50% at 50% 50%, rgba(138,79,46,.55), transparent 70%);left:auto;right:-14%}
+.pan > *{position:relative;z-index:1}
+.esc{background:linear-gradient(178deg, rgba(9,17,18,.95), rgba(6,12,13,.97));
+  box-shadow:inset 0 0 0 1px rgba(233,229,216,.12)}
+
+.num{font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.lbl{font-size:8px;letter-spacing:.22em;color:var(--bruma);text-transform:uppercase;font-weight:500}
+.tt{font-family:var(--ttl)}
+
+/* ============ BOTÕES ============ */
+.btn{font-family:var(--ui);font-size:9.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  cursor:pointer;padding:7px 11px;border:1px solid rgba(233,229,216,.24);background:rgba(233,229,216,.05);
+  color:var(--linho);clip-path:var(--corte-s);transition:background .15s,border-color .15s,color .15s}
+.btn:hover{background:rgba(201,161,90,.16);border-color:rgba(201,161,90,.6)}
+.btn:focus-visible{outline:2px solid var(--ocre);outline-offset:2px}
+.btn[disabled]{opacity:.35;cursor:not-allowed}
+.btn--on{background:var(--ocre);border-color:var(--ocre);color:#14201c;font-weight:600}
+.btn--on:hover{background:var(--ocre-cl);border-color:var(--ocre-cl)}
+.btn--go{background:rgba(169,200,106,.22);border-color:var(--limo);color:#e7f3d3}
+.btn--go:hover{background:rgba(169,200,106,.36)}
+.btn--stop{background:rgba(180,81,74,.2);border-color:var(--sangue);color:#f3d8d4}
+.btn--stop:hover{background:rgba(180,81,74,.36)}
+.tbtn{width:38px;height:26px;display:grid;place-items:center;font-size:11px;cursor:pointer;
+  border:1px solid rgba(233,229,216,.24);background:rgba(233,229,216,.05);color:var(--linho);
+  clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
+.tbtn:hover{background:rgba(201,161,90,.18);border-color:rgba(201,161,90,.6)}
+.tbtn:focus-visible{outline:2px solid var(--ocre);outline-offset:2px}
+.tbtn[disabled]{opacity:.32;cursor:not-allowed}
+.tray{display:flex;gap:5px;padding:5px 6px;clip-path:var(--corte-s);
+  background:rgba(0,0,0,.3);box-shadow:inset 0 0 0 1px rgba(233,229,216,.1)}
+
+/* dica circular pintada */
+.hint{display:flex;align-items:center;gap:9px;background:none;border:0;cursor:pointer;padding:0;font-family:var(--ui)}
+.hint b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;flex:none;
+  font-family:var(--ttl);font-size:14px;font-weight:600;color:#141f1c;
+  background:radial-gradient(circle at 34% 28%, var(--ocre-cl), var(--ocre) 58%, #8d6f34);
+  box-shadow:0 0 18px rgba(201,161,90,.4)}
+.hint span{font-size:9.5px;letter-spacing:.22em;color:var(--ocre-cl);font-weight:500;
+  border-bottom:1px solid rgba(201,161,90,.45);padding-bottom:3px}
+.hint:hover span{color:#fff;border-color:var(--ocre)}
+.hint:focus-visible{outline:2px solid var(--ocre);outline-offset:4px}
+
+/* ============ CABEÇALHO ============ */
+.head{display:grid;grid-template-columns:272px minmax(0,1fr);gap:6px}
+.clockbox{padding:9px 11px 10px;display:flex;flex-direction:column;gap:7px}
+.cl-scale{display:flex;gap:16px;padding-left:2px}
+.cl-scale span{font-size:7px;letter-spacing:.2em;color:var(--bruma)}
+.cl-top{display:flex;align-items:flex-end;gap:10px}
+.cl-num{font-family:var(--ttl);font-weight:300;font-size:40px;line-height:.9;color:var(--linho);
+  font-variant-numeric:tabular-nums}
+.viz{display:flex;align-items:flex-end;gap:2px;height:26px;padding-bottom:4px;flex:1}
+.viz i{width:3px;display:block;background:linear-gradient(180deg,var(--ocre),rgba(201,161,90,.15))}
+@keyframes onda{0%,100%{height:14%}20%{height:76%}42%{height:28%}60%{height:94%}78%{height:40%}}
+.cl-foot{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.chip{font-size:10px;letter-spacing:.14em;color:var(--bruma);padding:3px 8px;
+  border:1px solid rgba(233,229,216,.16);background:rgba(233,229,216,.04)}
+.chip.b{color:var(--ocre-cl);border-color:rgba(201,161,90,.5);font-variant-numeric:tabular-nums}
+
+.infobox{padding:9px 11px 10px;display:flex;flex-direction:column;gap:9px;min-width:0}
+.nowline{display:flex;align-items:baseline;gap:10px;min-width:0}
+.nowline .n{font-family:var(--ttl);font-size:26px;font-weight:400;color:var(--ocre);flex:none;line-height:1}
+.nowline .t{font-size:13px;color:var(--linho);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.stats{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.stat{display:flex;align-items:baseline;gap:6px;padding:3px 9px;
+  border:1px solid rgba(233,229,216,.14);background:rgba(233,229,216,.04)}
+.stat b{font-size:7.5px;letter-spacing:.18em;color:var(--bruma)}
+.stat i{font-style:normal;font-size:14px;color:var(--linho);font-variant-numeric:tabular-nums}
+.seek{position:relative;height:6px;background:rgba(0,0,0,.45);box-shadow:inset 0 0 0 1px rgba(233,229,216,.14)}
+.seek i{position:absolute;inset:0 auto 0 0;display:block;background:var(--ocre)}
+.seek i.warn{background:#d59a3c}
+.seek i.crit{background:var(--sangue)}
+.seek u{position:absolute;top:50%;transform:translate(-50%,-50%);width:3px;height:14px;text-decoration:none;
+  background:var(--linho);box-shadow:0 0 8px rgba(233,229,216,.5)}
+
+/* ============ QUESTÃO ============ */
+.qbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 13px;
+  border-bottom:1px solid rgba(233,229,216,.14);background:rgba(201,161,90,.07)}
+.qbar .k{font-family:var(--ttl);font-weight:600;font-size:13px;letter-spacing:.06em;color:var(--ocre-cl)}
+.qbar .b{font-size:9px;letter-spacing:.18em;color:var(--bruma)}
+.qbar .y{margin-left:auto;font-size:10px;color:var(--bruma);text-align:right}
+.qtext{padding:18px 18px 8px;font-size:15.5px;line-height:1.62;color:var(--linho);max-width:76ch}
+.alts{padding:8px 10px 12px;display:flex;flex-direction:column;gap:5px}
+.alt{display:grid;grid-template-columns:22px minmax(0,1fr) 14px;gap:11px;align-items:start;width:100%;
+  padding:10px 14px 10px 11px;cursor:pointer;border:0;text-align:left;font-family:var(--ui);
+  font-size:14px;line-height:1.52;color:var(--linho);
+  clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+  background:linear-gradient(90deg, rgba(233,229,216,.09), rgba(233,229,216,.025) 72%, transparent);
+  box-shadow:inset 2px 0 0 rgba(201,161,90,.45)}
+.alt:hover{background:linear-gradient(90deg, rgba(201,161,90,.24), rgba(201,161,90,.06) 72%, transparent)}
+.alt:focus-visible{outline:2px solid var(--ocre);outline-offset:-2px}
+.alt .l{font-family:var(--ttl);font-size:17px;color:var(--ocre);text-align:center;line-height:1.2}
+.alt .c{font-size:11px;color:transparent;line-height:1.4}
+.alt.on{color:#16201b;background:linear-gradient(90deg, var(--ocre-cl), var(--ocre) 62%, rgba(201,161,90,.55));
+  box-shadow:inset 2px 0 0 #fff}
+.alt.on .l,.alt.on .c{color:#16201b}
+.qfoot{display:flex;gap:9px;align-items:center;flex-wrap:wrap;padding:9px 11px;
+  border-top:1px solid rgba(233,229,216,.14);background:rgba(0,0,0,.2)}
+.qfoot .sp{flex:1;min-width:6px}
+
+/* ============ PLAYLIST ============ */
+.plbar{display:flex;align-items:center;gap:8px;padding:6px 10px;border-bottom:1px solid rgba(233,229,216,.14)}
+.plbar h3{margin:0;font-size:9px;letter-spacing:.3em;color:var(--ocre-cl);font-weight:600}
+.plbar .c{margin-left:auto;font-size:12px;color:var(--bruma);font-variant-numeric:tabular-nums}
+.plscroll{max-height:420px;overflow-y:auto;padding:3px 0 6px;scrollbar-width:thin;scrollbar-color:#3d5a52 #0a1214}
+.plscroll::-webkit-scrollbar{width:10px}
+.plscroll::-webkit-scrollbar-track{background:#0a1214}
+.plscroll::-webkit-scrollbar-thumb{background:#3d5a52}
+.plgrp{display:flex;align-items:center;gap:7px;padding:10px 9px 5px}
+.plgrp b{font-size:7.5px;letter-spacing:.2em;color:var(--bruma);white-space:nowrap;font-weight:500}
+.plgrp i{flex:1;height:1px;background:repeating-linear-gradient(90deg, rgba(233,229,216,.3) 0 2px, transparent 2px 5px)}
+.row{display:grid;grid-template-columns:26px minmax(0,1fr) 22px;gap:7px;align-items:center;width:100%;
+  padding:4px 11px 4px 8px;border:0;cursor:pointer;text-align:left;background:transparent;
+  font-family:var(--ui);font-size:11px;color:var(--bruma);font-variant-numeric:tabular-nums;
+  clip-path:polygon(0 0, calc(100% - 9px) 0, 100% 50%, calc(100% - 9px) 100%, 0 100%)}
+.row:hover{color:var(--linho);background:rgba(233,229,216,.09)}
+.row:focus-visible{outline:1px solid var(--ocre);outline-offset:-1px}
+.row .t{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .v{text-align:right;font-size:12px}
+.row.ans{color:var(--linho)}
+.row.ans .v{color:var(--ocre)}
+.row.mk{box-shadow:inset 3px 0 0 var(--ferrugem)}
+.row.cur{color:#16201b;background:linear-gradient(90deg, var(--ocre-cl), var(--ocre) 70%)}
+.row.cur .v{color:#16201b}
+.row.ok{color:#d5e8c4;background:rgba(169,200,106,.16);box-shadow:inset 3px 0 0 var(--limo)}
+.row.bad{color:#f0cdc8;background:rgba(180,81,74,.18);box-shadow:inset 3px 0 0 var(--sangue)}
+.row.blank{color:#6c7a74;background:rgba(0,0,0,.28);box-shadow:inset 3px 0 0 #42514b}
+.plfoot{display:flex;gap:5px;padding:6px 7px;flex-wrap:wrap;border-top:1px solid rgba(233,229,216,.12)}
+
+/* ============ EQUALIZADOR ============ */
+.eqwrap{display:grid;grid-template-columns:38px minmax(0,1fr);gap:9px;padding:10px 11px 9px}
+.eqscale{display:flex;flex-direction:column;justify-content:space-between;height:108px;padding:2px 0}
+.eqscale span{font-size:9px;color:var(--bruma);text-align:right}
+.eqsliders{display:flex;gap:6px;align-items:flex-end;justify-content:space-between}
+.sl{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0;flex:1}
+.rail{position:relative;width:100%;max-width:22px;height:108px;background:rgba(0,0,0,.45);
+  box-shadow:inset 0 0 0 1px rgba(233,229,216,.14)}
+.rail::before{content:"";position:absolute;left:50%;top:5px;bottom:5px;width:1px;transform:translateX(-50%);
+  background:repeating-linear-gradient(180deg, rgba(233,229,216,.3) 0 1px, transparent 1px 7px)}
+.knob{position:absolute;left:-2px;right:-2px;height:9px;transition:bottom .5s cubic-bezier(.2,.85,.3,1);
+  background:linear-gradient(180deg,var(--linho),#9aa49c);box-shadow:0 2px 5px rgba(0,0,0,.6)}
+.minline{position:absolute;left:-4px;right:-4px;height:2px;background:var(--sangue);box-shadow:0 0 8px rgba(180,81,74,.8)}
+.sl b{font-size:7px;letter-spacing:.1em;color:var(--bruma);text-align:center;font-weight:500}
+.sl i{font-style:normal;font-size:11px;color:var(--linho);font-variant-numeric:tabular-nums}
+.sl i.bad{color:#e79c92}
+
+/* ============ ABERTURA ============ */
+.boot{display:grid;grid-template-columns:minmax(0,1fr) 288px;gap:22px;padding:30px 26px 26px;align-items:end;min-height:340px}
+.boot h1{margin:0;font-family:var(--ttl);font-weight:300;font-size:52px;line-height:.94;letter-spacing:-.02em;color:var(--linho)}
+.boot h1 b{font-weight:600;color:var(--ocre)}
+.boot .sub{font-size:11px;letter-spacing:.24em;color:var(--bruma);margin:14px 0 30px}
+.boot .rules{font-size:13.5px;line-height:1.68;color:var(--linho);max-width:54ch;margin:0 0 24px}
+.boot .rules b{color:var(--ocre-cl);font-weight:500}
+.hints{display:flex;gap:26px;flex-wrap:wrap;align-items:center}
+.card{padding:15px 17px 16px;clip-path:polygon(0 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%);
+  background:linear-gradient(170deg, rgba(138,79,46,.32), rgba(233,229,216,.05));
+  box-shadow:inset 0 0 0 1px rgba(201,161,90,.4)}
+.card h4{margin:0 0 12px;font-family:var(--ttl);font-weight:600;font-size:15px;letter-spacing:.02em;color:var(--ocre-cl)}
+.card dl{margin:0;display:grid;gap:9px}
+.card dt{font-size:7.5px;letter-spacing:.2em;color:var(--bruma);font-weight:500}
+.card dd{margin:0;font-family:var(--ttl);font-weight:400;font-size:19px;color:var(--linho);line-height:1;
+  font-variant-numeric:tabular-nums}
+
+/* ============ RESULTADO ============ */
+.res{display:grid;grid-template-columns:200px minmax(0,1fr) 240px;gap:22px;padding:22px 24px;align-items:center}
+.selo{position:relative;width:190px;height:190px;margin:0 auto;display:grid;place-items:center}
+.selo .aro{position:absolute;inset:0;border-radius:50%;filter:url(#matte);opacity:.85;
+  background:conic-gradient(from 210deg, rgba(201,161,90,.75), rgba(34,81,74,.5) 40%, rgba(138,79,46,.6) 70%, rgba(201,161,90,.75))}
+.selo .miolo{position:relative;width:74%;height:74%;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 36% 30%, #1d3433, #0b1315);
+  box-shadow:inset 0 0 0 1px rgba(233,229,216,.25)}
+.selo .pct{font-family:var(--ttl);font-weight:300;font-size:46px;color:var(--linho);line-height:1}
+.selo .pct u{text-decoration:none;font-size:17px;color:var(--bruma)}
+.res h2{margin:0;font-family:var(--ttl);font-weight:300;font-size:38px;line-height:.98;color:var(--linho)}
+.res .sub{font-size:9px;letter-spacing:.22em;color:var(--bruma);margin:9px 0 16px}
+.reslines{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:12px;margin-bottom:17px}
+.reslines b{display:block;font-size:7.5px;letter-spacing:.2em;color:var(--bruma);margin-bottom:3px;font-weight:500}
+.reslines i{font-family:var(--ttl);font-size:28px;font-style:normal;color:var(--linho);line-height:1;
+  font-variant-numeric:tabular-nums}
+.stamp{display:inline-block;padding:10px 22px;font-size:11px;letter-spacing:.22em;font-weight:600;clip-path:var(--corte-s)}
+.stamp.ok{color:#16220f;background:linear-gradient(180deg,#cfe6a4,var(--limo))}
+.stamp.no{color:#2b0d0a;background:linear-gradient(180deg,#e7a9a2,var(--sangue))}
+
+.filters{display:flex;gap:6px;flex-wrap:wrap;padding:8px 10px;align-items:center;border-bottom:1px solid rgba(233,229,216,.14)}
+.rev{padding:3px 11px 14px}
+.rvi{margin-top:8px;background:rgba(233,229,216,.035);box-shadow:inset 0 0 0 1px rgba(233,229,216,.13);
+  clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px)}
+.rvh{display:grid;grid-template-columns:auto 11px minmax(0,1fr) auto;gap:11px;align-items:center;width:100%;
+  padding:10px 13px;cursor:pointer;border:0;background:transparent;text-align:left;font-family:var(--ui)}
+.rvh:hover{background:rgba(233,229,216,.07)}
+.rvh:focus-visible{outline:2px solid var(--ocre);outline-offset:-2px}
+.rvh .n{font-family:var(--ttl);font-size:17px;color:var(--bruma)}
+.led{width:11px;height:11px;border-radius:50%}
+.led.ok{background:var(--limo);box-shadow:0 0 9px rgba(169,200,106,.6)}
+.led.bad{background:var(--sangue);box-shadow:0 0 9px rgba(180,81,74,.6)}
+.led.blank{background:#48564f}
+.rvh .t{font-size:11.5px;color:var(--linho);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rvh .s{font-size:12px;color:var(--bruma);white-space:nowrap;font-variant-numeric:tabular-nums}
+.rvb{display:none;padding:2px 14px 16px;border-top:1px solid rgba(233,229,216,.12)}
+.rvb.open{display:block}
+.rvb .q{font-size:14px;line-height:1.6;color:var(--linho);margin:14px 0;max-width:74ch}
+.ra{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;padding:9px 12px;margin-bottom:5px;
+  font-size:13px;line-height:1.5;color:var(--bruma);
+  clip-path:polygon(0 0,calc(100% - 9px) 0,100% 50%,calc(100% - 9px) 100%,0 100%);
+  background:rgba(233,229,216,.03)}
+.ra .l{font-family:var(--ttl);font-size:15px}
+.ra.right{color:var(--linho);background:rgba(169,200,106,.16);box-shadow:inset 2px 0 0 var(--limo)}
+.ra.wrong{color:#f0cfca;background:rgba(180,81,74,.16);box-shadow:inset 2px 0 0 var(--sangue)}
+.ra .cm{display:block;margin-top:6px;font-size:12px;line-height:1.55;color:var(--bruma)}
+.ra.right .cm{color:#c3d9ab}.ra.wrong .cm{color:#dfaea6}
+.pick{font-size:7.5px;letter-spacing:.16em;padding:3px 6px;margin-left:8px;vertical-align:middle;font-weight:600}
+.pick.you{background:var(--agua);color:#08222a}
+.pick.key{background:var(--ocre);color:#16201b}
+.fund{margin-top:12px;padding:10px 13px;background:rgba(111,163,176,.1);box-shadow:inset 3px 0 0 var(--agua);
+  font-size:12px;line-height:1.6;color:#cde3e8}
+.fund b{display:block;font-size:7.5px;letter-spacing:.22em;color:var(--agua);margin-bottom:5px}
+
+/* tabela por conteúdo */
+.topos{padding:11px 13px 14px;display:grid;gap:9px}
+.topo{display:grid;grid-template-columns:minmax(0,1fr) 62px;gap:10px;align-items:center;font-size:11.5px}
+.topo .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--linho)}
+.topo .vl{text-align:right;color:var(--bruma);font-variant-numeric:tabular-nums}
+.topo .br{grid-column:1/-1;height:4px;background:rgba(233,229,216,.1)}
+.topo .br i{display:block;height:100%;background:var(--limo)}
+.topo .br i.medio{background:var(--ocre)}
+.topo .br i.fraco{background:var(--sangue)}
+
+/* ============ MODAIS ============ */
+.ov{position:fixed;inset:0;z-index:60;display:none;place-items:center;padding:16px;background:rgba(6,12,13,.9)}
+.ov.open{display:grid}
+.dlg{width:min(760px,100%)}
+.dlg .pan{display:flex;flex-direction:column;max-height:84vh}
+.dlgb{overflow-y:auto;padding:16px 22px 22px;scrollbar-width:thin;scrollbar-color:#3d5a52 #0a1214}
+.dlgb p{font-size:14.5px;line-height:1.72;color:var(--linho);margin:0 0 14px;max-width:70ch}
+.dlgb table{border-collapse:collapse;width:100%;margin:6px 0 16px;font-size:13px}
+.dlgb th{background:rgba(201,161,90,.24);text-align:left;color:var(--linho)}
+.dlgb th,.dlgb td{border:1px solid rgba(233,229,216,.2);padding:7px 10px}
+.dlgb tr:last-child td{font-weight:600}
+.dlgnote{font-size:9px;letter-spacing:.18em;color:var(--bruma);margin-bottom:14px;font-weight:500}
+.xb{margin-left:auto;width:19px;height:15px;font-size:9px;cursor:pointer;color:var(--linho);
+  border:1px solid rgba(233,229,216,.4);background:rgba(233,229,216,.06)}
+.xb:hover{background:rgba(201,161,90,.3)}
+
+.deck{display:grid;grid-template-columns:minmax(0,1fr) 328px;gap:12px;align-items:start;margin-top:12px}
+.deck.nopl{grid-template-columns:minmax(0,1fr)}
+.col{min-width:0}
+.col > .win + .win{margin-top:12px}
+.side.collapsed{display:none}
+.note{font-size:10px;letter-spacing:.04em;color:var(--bruma);line-height:1.6;padding:9px 5px 0}
+.hidden{display:none !important}
+
+@media (max-width:1040px){
+  .res{grid-template-columns:170px minmax(0,1fr)}
+  .res .card{grid-column:1/-1}
+}
+@media (max-width:900px){
+  body{padding:9px}
+  .deck,.head,.boot{grid-template-columns:minmax(0,1fr)}
+  .boot{align-items:start}
+  .res{grid-template-columns:minmax(0,1fr);text-align:center}
+  .selo{width:140px;height:140px}
+  .boot h1{font-size:36px}
+  .res h2{font-size:28px}
+  .cl-num{font-size:34px}
+  .plscroll{max-height:260px}
+  .reslines{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="matte">
+  <feTurbulence type="fractalNoise" baseFrequency="0.013 0.021" numOctaves="4" seed="9" result="t"/>
+  <feDisplacementMap in="SourceGraphic" in2="t" scale="86" xChannelSelector="R" yChannelSelector="G"/>
+  <feGaussianBlur stdDeviation="12"/>
+</filter></svg>
+
+<div class="bg">
+  <i class="n1"></i><i class="n2"></i><i class="n4"></i>
+  <i class="torre"></i><i class="torre torre2"></i><i class="n3"></i>
+</div>
+<div class="grao"></div>
+
+<div class="wrap">
+
+<!-- ================= ABERTURA ================= -->
+<section class="win rust" id="boot">
+  <div class="frame">
+    <span class="cant tl"></span><span class="cant br"></span>
+    <div class="bar"><span class="rid"></span><h2>ARQUIVO DE PROVAS</h2><span class="line"></span>
+      <span class="wbtn"><i></i><i></i><i></i></span></div>
+    <div class="pan warm boot">
+      <div>
+        <h1>Simulado <b>3</b></h1>
+        <div class="sub" id="boot-sub"></div>
+        <div class="hints">
+          <button class="hint" id="btn-start"><b>A</b><span>INICIAR PROVA</span></button>
+          <button class="hint hidden" id="btn-resume"><b>B</b><span id="resume-lbl">RETOMAR</span></button>
+          <button class="hint" id="btn-quick"><b>C</b><span>TREINO DE 20</span></button>
+        </div>
+      </div>
+      <div class="card">
+        <h4>Edital 103/2026</h4>
+        <dl id="boot-dl"></dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROVA ================= -->
+<div id="exam" class="hidden">
+  <section class="win">
+    <div class="frame">
+      <span class="cant tl"></span><span class="cant br"></span>
+      <div class="bar"><span class="rid"></span><h2 id="win-head">SIMULADO 3</h2><span class="line"></span>
+        <span class="wbtn"><i></i><i></i><i></i></span></div>
+      <div class="head">
+        <div class="pan clockbox">
+          <div class="cl-scale"><span>H</span><span>MIN</span><span>SEG</span></div>
+          <div class="cl-top">
+            <div class="cl-num" id="clock">0:00:00</div>
+            <div class="viz" id="viz" aria-hidden="true"></div>
+          </div>
+          <div class="cl-foot">
+            <span class="chip">RESTAM</span><span class="chip b" id="left">3:00:00</span>
+            <span class="chip" id="chip-sec">TEXTO I</span>
+          </div>
+        </div>
+        <div class="pan infobox">
+          <div class="nowline"><span class="n" id="now-n">01</span><span class="t" id="now-t">—</span></div>
+          <div class="stats">
+            <span class="stat"><b>RESPONDIDAS</b><i id="m-ans">0/100</i></span>
+            <span class="stat"><b>MARCADAS</b><i id="m-mk">00</i></span>
+            <span class="stat"><b>BRANCO</b><i id="m-bl">100</i></span>
+            <span style="flex:1"></span>
+            <button class="btn btn--on" id="btn-pl">LISTA</button>
+            <button class="btn btn--on" id="btn-eq">NÍVEIS</button>
+          </div>
+          <div class="seek"><i id="seek" style="width:0"></i><u id="seekh" style="left:0"></u></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="deck">
+    <div class="col">
+      <section class="win">
+        <div class="frame">
+          <span class="cant tl"></span><span class="cant br"></span>
+          <div class="bar"><span class="rid"></span><h2 id="win-q">QUESTÃO</h2><span class="line"></span>
+            <span class="wbtn"><i></i><i></i><i></i></span></div>
+          <div class="pan">
+            <div class="qbar">
+              <span class="k" id="q-num">01</span>
+              <span class="b" id="q-blk"></span>
+              <span class="y" id="q-typ"></span>
+            </div>
+            <div class="qtext" id="q-text"></div>
+            <div class="alts" id="q-alts"></div>
+            <div class="qfoot">
+              <div class="tray">
+                <button class="tbtn" id="b-prev" title="Anterior (←)">◀</button>
+                <button class="tbtn" id="b-next" title="Próxima (→)">▶</button>
+              </div>
+              <button class="btn" id="b-mark">MARCAR</button>
+              <button class="btn" id="b-clear">LIMPAR</button>
+              <button class="btn hidden" id="b-text">TEXTO</button>
+              <span class="sp"></span>
+              <button class="btn btn--stop" id="b-submit">ENTREGAR</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <p class="note">A–E respondem · ← → navegam · M marca · T abre o texto de apoio</p>
+    </div>
+
+    <div class="col side" id="side">
+      <section class="win">
+        <div class="frame">
+          <span class="cant tl"></span><span class="cant br"></span>
+          <div class="bar"><span class="rid"></span><h2>LISTA DE QUESTÕES</h2><span class="line"></span>
+            <span class="wbtn"><i></i><i></i><i></i></span></div>
+          <div class="pan esc">
+            <div class="plbar"><h3 id="pl-tit">100 QUESTÕES</h3><span class="c" id="pl-cnt">0:00</span></div>
+            <div class="plscroll" id="pl"></div>
+            <div class="plfoot">
+              <button class="btn" data-jump="first">1ª EM BRANCO</button>
+              <button class="btn" data-jump="mark">MARCADA</button>
+              <button class="btn" data-jump="cur">ATUAL</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="win" id="eqwin">
+        <div class="frame">
+          <span class="cant tl"></span><span class="cant br"></span>
+          <div class="bar"><span class="rid"></span><h2>NÍVEIS POR SEÇÃO</h2><span class="line"></span>
+            <span class="wbtn"><i></i><i></i><i></i></span></div>
+          <div class="pan">
+            <div class="eqwrap">
+              <div class="eqscale"><span>100%</span><span>50%</span><span>0</span></div>
+              <div class="eqsliders" id="eq"></div>
+            </div>
+            <p class="note" style="padding:0 13px 12px">Quanto de cada seção você já respondeu.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- ================= RESULTADO ================= -->
+<div id="result" class="hidden">
+  <section class="win rust">
+    <div class="frame">
+      <span class="cant tl"></span><span class="cant br"></span>
+      <div class="bar"><span class="rid"></span><h2>PROVA ENTREGUE</h2><span class="line"></span>
+        <span class="wbtn"><i></i><i></i><i></i></span></div>
+      <div class="pan warm res">
+        <div class="selo"><div class="aro"></div><div class="miolo">
+          <div class="pct" id="r-pct">0<u>%</u></div></div></div>
+        <div>
+          <h2 id="r-h2">Fim da prova</h2>
+          <div class="sub" id="r-sub"></div>
+          <div class="reslines" id="r-lines"></div>
+          <div id="r-stamp"></div>
+        </div>
+        <div class="card">
+          <h4>Resumo</h4>
+          <dl id="r-card"></dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="deck">
+    <div class="col">
+      <section class="win">
+        <div class="frame">
+          <span class="cant tl"></span><span class="cant br"></span>
+          <div class="bar"><span class="rid"></span><h2>REVISÃO</h2><span class="line"></span>
+            <span class="wbtn"><i></i><i></i><i></i></span></div>
+          <div class="pan">
+            <div class="filters" id="r-filters">
+              <button class="btn btn--on" data-f="bad">ERROS</button>
+              <button class="btn" data-f="blank">EM BRANCO</button>
+              <button class="btn" data-f="ok">ACERTOS</button>
+              <button class="btn" data-f="all">TODAS</button>
+              <span style="flex:1"></span>
+              <span class="chip b" id="r-cnt">00</span>
+              <button class="btn" id="b-expand">ABRIR TUDO</button>
+            </div>
+            <div class="rev" id="rev"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="col">
+      <section class="win">
+        <div class="frame">
+          <span class="cant tl"></span><span class="cant br"></span>
+          <div class="bar"><span class="rid"></span><h2>DESEMPENHO POR CONTEÚDO</h2><span class="line"></span>
+            <span class="wbtn"><i></i><i></i><i></i></span></div>
+          <div class="pan"><div class="topos" id="r-topos"></div></div>
+        </div>
+      </section>
+      <section class="win">
+        <div class="frame">
+          <span class="cant tl"></span><span class="cant br"></span>
+          <div class="bar"><span class="rid"></span><h2>NÍVEIS POR SEÇÃO</h2><span class="line"></span>
+            <span class="wbtn"><i></i><i></i><i></i></span></div>
+          <div class="pan">
+            <div class="eqwrap">
+              <div class="eqscale"><span>100%</span><span>50%</span><span>0</span></div>
+              <div class="eqsliders" id="r-eq"></div>
+            </div>
+            <p class="note" style="padding:0 13px 12px" id="r-eqnote"></p>
+          </div>
+        </div>
+      </section>
+      <section class="win">
+        <div class="frame">
+          <span class="cant tl"></span><span class="cant br"></span>
+          <div class="bar"><span class="rid"></span><h2>MAPA</h2><span class="line"></span>
+            <span class="wbtn"><i></i><i></i><i></i></span></div>
+          <div class="pan esc"><div class="plscroll" id="r-pl" style="max-height:340px"></div></div>
+        </div>
+      </section>
+      <section class="win">
+        <div class="frame">
+          <div class="pan" style="padding:12px;display:grid;gap:8px">
+            <button class="btn btn--go" id="b-redo">REFAZER SÓ OS ERROS</button>
+            <button class="btn" id="b-again">NOVA PROVA</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="ov" id="ov-text">
+  <div class="win dlg"><div class="frame">
+    <span class="cant tl"></span><span class="cant br"></span>
+    <div class="bar"><span class="rid"></span><h2 id="tx-title">TEXTO</h2><span class="line"></span>
+      <button class="xb" data-close="ov-text">✕</button></div>
+    <div class="pan"><div class="dlgb" id="tx-body"></div></div>
+  </div></div>
+</div>
+
+<div class="ov" id="ov-confirm">
+  <div class="win dlg" style="width:min(440px,100%)"><div class="frame">
+    <span class="cant tl"></span><span class="cant br"></span>
+    <div class="bar"><span class="rid"></span><h2>ENTREGAR</h2><span class="line"></span>
+      <button class="xb" data-close="ov-confirm">✕</button></div>
+    <div class="pan"><div class="dlgb">
+      <p id="cf-msg" style="font-size:14px"></p>
+      <div style="display:flex;gap:9px;flex-wrap:wrap">
+        <button class="btn btn--stop" id="cf-yes">ENTREGAR AGORA</button>
+        <button class="btn" data-close="ov-confirm">VOLTAR</button>
+      </div>
+    </div></div>
+  </div></div>
+</div>
+
+<script type="application/json" id="dataset">{"id":"simulado3-portugues-tae-ifpi","titulo":"Simulado 3 — Língua Portuguesa","cargo":"Técnico em Assuntos Educacionais (Nível E)","concurso":"Edital nº 103/2026 — IFPI","totalQuestoes":100,"tempoSugeridoMin":180,"textos":[{"id":"T1","titulo":"TEXTO I — A escola que se recusa a escolher","fonte":"Texto elaborado para este simulado.","conteudo":"Há um mal-entendido persistente sobre a educação profissional no Brasil, e ele começa pela pergunta errada. Perguntamos se a escola deve formar para o trabalho ou para a cidadania, como se as duas coisas ocupassem lados opostos de um muro. A pergunta parece rigorosa. Na verdade, é apenas cômoda: ela nos poupa do problema mais difícil, que é descobrir como se ensina alguém a ganhar a vida sem reduzi-lo àquilo que ele produz.\n\nQuem defende a formação estritamente técnica costuma apelar à urgência. O jovem precisa de emprego agora, argumenta-se, e filosofia não paga aluguel. O raciocínio tem a força das coisas óbvias e a fragilidade das coisas apressadas. Ninguém contesta que a técnica liberta; o que se contesta é que ela baste. Um trabalhador que domina o procedimento e ignora as razões do procedimento fica preso à primeira máquina que aprendeu a operar. Quando a máquina muda — e ela muda —, resta-lhe a obsolescência.\n\nDo outro lado, os que rejeitam qualquer contaminação do currículo pelo mundo produtivo incorrem em erro simétrico. Fazem da escola um santuário e do trabalho uma sujeira, esquecidos de que a imensa maioria dos estudantes brasileiros não tem o luxo de adiar a vida adulta. Há algo de cruel nessa delicadeza. Ela protege um aluno imaginário e abandona o aluno real.\n\nOs institutos federais nasceram, ao menos no papel, dessa recusa em escolher. A verticalização do ensino, que permite a um mesmo campus ofertar curso técnico, licenciatura e pós-graduação, não é um capricho administrativo: é a tradução institucional da ideia de que o conhecimento não se divide em nobre e útil. Quem entra para consertar um motor pode sair pesquisando materiais. O caminho inverso também ocorre, e com mais frequência do que se admite.\n\nNada disso funciona automaticamente. Basta que a instituição relaxe, e o modelo se desfaz em duas escolas convivendo sob o mesmo teto, uma delas de segunda classe. Manter as pontas atadas exige trabalho pedagógico cotidiano, currículo integrado de fato e professores que não se envergonhem nem da bancada nem da biblioteca. Esse esforço é pouco glamouroso. É também o que sustenta tudo."},{"id":"T2","titulo":"TEXTO II — O elogio da dúvida","fonte":"Texto elaborado para este simulado.","conteudo":"Meu avô tinha uma teoria sobre as pessoas que nunca erram: ou não fazem nada, ou não contam. Dizia isso com a serenidade de quem já errara bastante e havia contado tudo, inclusive as partes feias. Eu era menino e achava aquilo uma espécie de derrota confessada. Levei trinta anos para entender que era o contrário.\n\nA escola em que estudei premiava a certeza. Quem levantava a mão primeiro ganhava o ponto; quem hesitava ficava com o silêncio constrangido da turma. Aprendi cedo a fingir convicção, arte em que me tornei razoavelmente competente e que quase me arruinou. Passei a adolescência defendendo posições de que não estava certo, apenas porque recuar parecia pior do que errar.\n\nFoi um professor de física quem me curou. Diante de uma pergunta que não sabia responder, parou, olhou para o quadro e disse: “Não faço a menor ideia. Vamos descobrir na quinta.” Ninguém riu. A turma percebeu, ao mesmo tempo, que havia ali uma forma de coragem que não nos tinham ensinado.\n\nHoje desconfio de quem responde depressa demais. A pressa costuma ser um disfarce — às vezes do medo, às vezes da preguiça. Meu avô morreu sem saber que estava certo. Talvez soubesse. Ele nunca fez questão de vencer discussões, o que, pensando bem, era outra maneira de vencê-las."},{"id":"T3","titulo":"TEXTO III — Matrículas na educação profissional técnica de nível médio, por forma de oferta","fonte":"Dados fictícios, elaborados para fins didáticos.","tabela":{"cabecalho":["Forma de oferta","2019","2022","2025"],"linhas":[["Integrada","312.400","341.900","388.700"],["Concomitante","84.100","71.500","63.200"],["Subsequente","205.600","232.800","249.100"],["Total","602.100","646.200","701.000"]]},"conteudo":"Legenda: Os dados revelam que, entre 2019 e 2025, cresceram as matrículas na forma integrada e na subsequente, ao passo que a concomitante perdeu quase um quarto de seu contingente."},{"id":"T4","titulo":"TEXTO IV — Charge (descrição)","fonte":"Descrição elaborada para este simulado.","conteudo":"A charge mostra uma sala de aula. No quadro, em letras garrafais, lê-se: PENSAMENTO CRÍTICO. De costas para a turma, um professor segura um apagador. Nas carteiras, os alunos, todos desenhados exatamente iguais, com fones de ouvido e olhos fixos em telas, levantam a mão ao mesmo tempo. O balão de fala de um deles diz: “Professor, isso cai na prova?” No canto inferior direito, sob o desenho, aparece a legenda: “Educação para a autonomia — edição revista e ampliada.”"},{"id":"T5","titulo":"TEXTO V — Excerto de regulamento (fictício)","fonte":"Texto elaborado para este simulado, em linguagem normativa.","conteudo":"Art. 12. Compete à Coordenação Pedagógica acompanhar o desempenho dos estudantes, propor medidas de recuperação e zelar pelo cumprimento do calendário acadêmico.\n\n§ 1.º As medidas de que trata o caput serão implementadas sempre que se verificar rendimento inferior ao mínimo previsto em regulamento próprio.\n\n§ 2.º Caberá aos coordenadores de curso, aos quais se subordinam os professores orientadores, dar ciência aos responsáveis no prazo de cinco dias úteis.\n\n§ 3.º Fica vedado o registro de frequência em desacordo com o disposto neste artigo, ressalvadas as hipóteses previstas em ato do Conselho Superior."}],"questoes":[{"numero":1,"topico":"Interpretação de texto","textoRef":"T1","enunciado":"A tese defendida no Texto I é mais bem sintetizada em:","alternativas":{"A":"a formação técnica deve preceder a formação geral, porque atende à urgência econômica dos estudantes;","B":"a escola deve manter-se afastada do mundo produtivo, a fim de preservar a autonomia intelectual do estudante;","C":"a oposição entre formar para o trabalho e formar para a cidadania é um falso dilema, que dispensa a instituição de enfrentar o problema real;","D":"a verticalização do ensino garante, por si mesma, a integração entre conhecimento técnico e formação humana;","E":"o currículo integrado fracassou nos institutos federais por falta de professores qualificados."},"gabarito":"C","comentarios":{"A":"Incorreta. O texto trata esse raciocínio como “a força das coisas óbvias e a fragilidade das coisas apressadas”, ou seja, critica-o.","B":"Incorreta. Essa é justamente a posição atacada no terceiro parágrafo, acusada de proteger “um aluno imaginário”.","C":"Correta. O primeiro parágrafo afirma que a pergunta é “cômoda” porque “poupa do problema mais difícil”, e é essa acomodação que o texto denuncia.","D":"Incorreta. O último parágrafo nega o automatismo: “Nada disso funciona automaticamente.”","E":"Incorreta. O texto aponta um risco permanente, não um fracasso consumado."},"fundamentacao":"Identificação de tese em texto argumentativo: a ideia central é a recusa do dilema, não a defesa de um dos polos."},{"numero":2,"topico":"Coesão e articulação argumentativa","textoRef":"T1","enunciado":"Em “A pergunta parece rigorosa. Na verdade, é apenas cômoda”, a relação estabelecida entre os dois períodos é de:","alternativas":{"A":"causalidade, sendo o segundo período a causa do primeiro;","B":"retificação, corrigindo o segundo período a avaliação sugerida no primeiro;","C":"conclusão, decorrente do valor argumentativo da forma verbal “parece”;","D":"concessão, admitindo-se no primeiro período um argumento favorável à tese contrária;","E":"exemplificação, ilustrando o segundo período o conteúdo do primeiro."},"gabarito":"B","comentarios":{"A":"Incorreta. Não há relação de causa e efeito; “cômoda” não explica por que a pergunta “parece rigorosa”.","B":"Correta. O operador “na verdade” desfaz a aparência enunciada antes e impõe outra avaliação em seu lugar.","C":"Incorreta. Conclusão exigiria operador do tipo “portanto”, “logo”; “na verdade” não conclui, contrapõe.","D":"Incorreta. É a alternativa mais atraente, porque “parece” tem sabor concessivo. Só que o autor não admite o argumento contrário: ele nega a aparência. Concessão exigiria estrutura do tipo “embora seja rigorosa, é cômoda”.","E":"Incorreta. Não há particularização ilustrativa de conteúdo anterior."},"fundamentacao":"Valor semântico dos operadores argumentativos; “na verdade” é retificativo/contra-argumentativo."},{"numero":3,"topico":"Crase","textoRef":"T1","enunciado":"Considerados os segmentos “costuma apelar à urgência” e “sem reduzi-lo àquilo que ele produz”, é correto afirmar, quanto ao acento grave, que:","alternativas":{"A":"em ambos resulta da fusão da preposição com o artigo definido feminino;","B":"no primeiro é facultativo, porque “urgência” admite a omissão do artigo; no segundo é obrigatório;","C":"no primeiro, resulta de preposição mais artigo; no segundo, de preposição mais pronome demonstrativo;","D":"em ambos é facultativo, uma vez que os verbos admitem regência direta e indireta;","E":"no primeiro decorre da regência de “apelar”; no segundo é indevido, pois “aquilo” não admite acento grave."},"gabarito":"C","comentarios":{"A":"Incorreta. Em “àquilo” não há artigo: há preposição “a” fundida com o demonstrativo “aquilo”.","B":"Incorreta. Com o artigo presente e a preposição exigida pelo verbo, o acento é obrigatório.","C":"Correta. “Apelar a” + “a urgência” = à urgência; “reduzir a” + “aquilo” = àquilo.","D":"Incorreta. “Apelar” e “reduzir a” exigem a preposição nesses contextos; não há facultatividade.","E":"Incorreta. “Àquilo”, “àquele”, “àquela” recebem acento grave sempre que houver preposição “a” regendo o demonstrativo."},"fundamentacao":"Crase por preposição + artigo e crase por preposição + pronome demonstrativo (a + aquilo)."},{"numero":4,"topico":"Sintaxe — pronomes oblíquos e referenciação","textoRef":"T1","enunciado":"Em “Quando a máquina muda — e ela muda —, resta-lhe a obsolescência”, o pronome “lhe”:","alternativas":{"A":"exerce função de objeto direto e retoma “a máquina”;","B":"exerce função de objeto indireto e retoma “a máquina”;","C":"tem valor possessivo e equivale a “sua”;","D":"exerce função de complemento nominal de “obsolescência”;","E":"exerce função de objeto indireto e retoma “um trabalhador”."},"gabarito":"E","comentarios":{"A":"Incorreta. O pronome “lhe” não exerce função de objeto direto na norma-padrão, e o referente não é a máquina.","B":"Incorreta. A função está certa, mas o referente está errado: quem se torna obsoleto é o trabalhador.","C":"Incorreta. O valor possessivo do “lhe” ocorre em contextos como “beijou-lhe a mão”; aqui, quem fica com a obsolescência é alguém, não algo de alguém.","D":"Incorreta. “Obsolescência” é o sujeito de “resta”, e o pronome se liga ao verbo, não ao substantivo.","E":"Correta. “Restar a alguém” pede objeto indireto, e o referente recuperável é “um trabalhador”, sujeito do período anterior."},"fundamentacao":"Função sintática do pronome átono “lhe” e recuperação de referente distante no texto."},{"numero":5,"topico":"Sintaxe — partícula “se”","textoRef":"T1","enunciado":"Em “o que se contesta é que ela baste”, a partícula “se”:","alternativas":{"A":"indetermina o sujeito, razão pela qual o verbo permanece na terceira pessoa do singular;","B":"é parte integrante do verbo, sem função sintática;","C":"é pronome apassivador, funcionando o relativo “que” como sujeito da forma verbal;","D":"é pronome reflexivo, indicando que o sujeito pratica e sofre a ação;","E":"é índice de indeterminação, o que impede a transposição para a voz passiva analítica."},"gabarito":"C","comentarios":{"A":"Incorreta. A indeterminação pelo “se” ocorre com verbos que não admitem objeto direto; “contestar” é transitivo direto.","B":"Incorreta. “Contestar-se” não é verbo pronominal; a partícula tem função clara.","C":"Correta. Equivale a “o que é contestado”: o relativo “que” é o sujeito paciente.","D":"Incorreta. Não há reflexividade: ninguém contesta a si mesmo.","E":"Incorreta. A transposição é possível justamente porque a partícula é apassivadora."},"fundamentacao":"Distinção entre partícula apassivadora e índice de indeterminação do sujeito."},{"numero":6,"topico":"Interpretação — efeitos de sentido","textoRef":"T1","enunciado":"A frase “Há algo de cruel nessa delicadeza” produz efeito de sentido que consiste em:","alternativas":{"A":"atenuar a crítica dirigida aos defensores da formação estritamente técnica;","B":"elogiar a sensibilidade dos que concebem a escola como santuário;","C":"afirmar que a crueldade é traço inevitável de qualquer proposta curricular;","D":"opor a intenção protetora da posição criticada aos seus efeitos concretos;","E":"recuperar, por meio de hipérbole, o argumento do segundo parágrafo."},"gabarito":"D","comentarios":{"A":"Incorreta. A crítica ali dirigida é à outra posição, a dos que rejeitam o mundo produtivo.","B":"Incorreta. O termo “delicadeza” aparece com valor irônico, não elogioso.","C":"Incorreta. Não há generalização; a avaliação recai sobre uma posição específica.","D":"Correta. A aproximação de “cruel” e “delicadeza” expõe o contraste entre boa intenção e resultado, explicitado na sequência: “protege um aluno imaginário e abandona o aluno real”.","E":"Incorreta. Não há exagero expressivo, e o argumento retomado é o do terceiro parágrafo."},"fundamentacao":"Ironia e paradoxo como recursos argumentativos."},{"numero":7,"topico":"Pontuação","textoRef":"T1","enunciado":"Em “não é um capricho administrativo: é a tradução institucional da ideia de que o conhecimento não se divide em nobre e útil”, os dois-pontos:","alternativas":{"A":"anunciam citação atribuída a terceiros;","B":"introduzem enumeração de itens;","C":"poderiam ser substituídos por vírgula, mantida a correção gramatical;","D":"marcam a elipse do verbo na sequência que se segue.","E":"introduzem segmento de valor explicativo, que esclarece a afirmação anterior;"},"gabarito":"E","comentarios":{"A":"Incorreta. Não há discurso direto nem atribuição de fala.","B":"Incorreta. Segue-se uma oração, não uma lista de elementos.","C":"Incorreta. A vírgula, ali, separaria duas orações sem conectivo, o que não atende à norma-padrão nesse contexto.","D":"Incorreta. O verbo “é” está expresso na segunda parte.","E":"Correta. Os dois-pontos anunciam o esclarecimento do que foi negado antes."},"fundamentacao":"Empregos dos dois-pontos: enumeração, citação, esclarecimento e consequência."},{"numero":8,"topico":"Sintaxe — relações semânticas","textoRef":"T1","enunciado":"Em “Basta que a instituição relaxe, e o modelo se desfaz em duas escolas convivendo sob o mesmo teto”, a relação semântica estabelecida entre as duas partes é de:","alternativas":{"A":"consequência, sendo a primeira parte o resultado da segunda;","B":"condição, equivalendo o trecho a “se a instituição relaxar, o modelo se desfaz”;","C":"concessão, equivalendo o trecho a “ainda que a instituição relaxe, o modelo se desfaz”;","D":"tempo, indicando simultaneidade entre os dois fatos;","E":"finalidade, expressando o propósito do relaxamento institucional."},"gabarito":"B","comentarios":{"A":"Incorreta. A ordem está invertida: o resultado é o desfazimento do modelo, expresso na segunda parte.","B":"Correta. A construção com “basta que” tem valor condicional suficiente, e o “e” liga a consequência.","C":"Incorreta. Concessão implicaria contrariedade: o modelo se manteria apesar do relaxamento.","D":"Incorreta. A leitura temporal é possível superficialmente, mas “basta que” marca suficiência, isto é, condição mínima, e não coincidência de tempo.","E":"Incorreta. Não há propósito, e sim consequência automática."},"fundamentacao":"Valor condicional de construções com “bastar que” e coordenação com valor consecutivo."},{"numero":9,"topico":"Concordância e regência","textoRef":"T1","enunciado":"Sobre o segmento “esquecidos de que a imensa maioria dos estudantes brasileiros não tem o luxo de adiar a vida adulta”, é correto afirmar que:","alternativas":{"A":"a forma “têm” seria a única aceitável, por atração do adjunto adnominal no plural;","B":"a preposição “de”, em “esquecidos de que”, é exigida pelo verbo “adiar”;","C":"o núcleo do sujeito de “tem” é “maioria”, admitindo-se também a flexão no plural, por concordância atrativa;","D":"“esquecidos” classifica-se como adjunto adverbial de causa;","E":"a oração iniciada por “que”, em “esquecidos de que...”, exerce função de objeto direto."},"gabarito":"C","comentarios":{"A":"Incorreta. O plural é possível, mas não obrigatório.","B":"Incorreta. A preposição é exigida pelo adjetivo “esquecido”, que se constrói com “de”.","C":"Correta. Com expressões partitivas do tipo “a maioria de + plural”, a norma admite tanto o singular (concordância com o núcleo) quanto o plural (concordância atrativa ou siléptica).","D":"Incorreta. “Esquecidos” refere-se ao sujeito e funciona como predicativo.","E":"Incorreta. Por vir preposicionada e completar um adjetivo, a oração é subordinada substantiva completiva nominal."},"fundamentacao":"Concordância com expressões partitivas e regência nominal de “esquecido de”."},{"numero":10,"topico":"Sintaxe do período composto","textoRef":"T1","enunciado":"Em “Quem entra para consertar um motor pode sair pesquisando materiais”, é correto afirmar que:","alternativas":{"A":"“Quem” é pronome interrogativo e introduz oração interrogativa indireta;","B":"“para consertar um motor” exprime finalidade e constitui oração reduzida de infinitivo;","C":"“pesquisando materiais” exprime causa em relação a “pode sair”;","D":"a substituição de “Quem” por “Aquele que” alteraria o sentido do período;","E":"o sujeito de “pode sair” está indeterminado."},"gabarito":"B","comentarios":{"A":"Incorreta. Não há pergunta; “Quem” é relativo indefinido, equivalente a “aquele que”.","B":"Correta. A preposição “para” diante do infinitivo marca finalidade, em oração reduzida.","C":"Incorreta. O gerúndio indica modo, não causa.","D":"Incorreta. A substituição é justamente a paráfrase esperada, sem prejuízo de sentido.","E":"Incorreta. O sujeito é a oração “Quem entra para consertar um motor”, de natureza determinada."},"fundamentacao":"Orações reduzidas e classificação do pronome relativo indefinido “quem”."},{"numero":11,"topico":"Semântica","textoRef":"T1","enunciado":"Assinale a substituição que preserva o sentido do vocábulo no contexto do Texto I.","alternativas":{"A":"“obsolescência” (2.º parágrafo) por “obstinação”;","B":"“simétrico” (3.º parágrafo) por “assimétrico”;","C":"“santuário” (3.º parágrafo) por “cemitério”;","D":"“capricho” (4.º parágrafo) por “esmero”.","E":"“cômoda” (1.º parágrafo) por “conveniente”;"},"gabarito":"E","comentarios":{"A":"Incorreta. “Obsolescência” é o envelhecimento, a desatualização; “obstinação” é teimosia.","B":"Incorreta. A substituição inverte o sentido: o texto afirma que o erro é do mesmo tipo, invertido de lado.","C":"Incorreta. “Santuário” aponta para lugar preservado e intocável, não para lugar de morte.","D":"Incorreta. Aqui “capricho” significa arbitrariedade, vontade sem razão, e não zelo. É a armadilha de polissemia da questão.","E":"Correta. “Cômoda”, ali, tem o sentido de acomodada, que evita o esforço, próximo de “conveniente”."},"fundamentacao":"Sinonímia contextual e polissemia."},{"numero":12,"topico":"Coesão referencial","textoRef":"T1","enunciado":"Em “Ela protege um aluno imaginário e abandona o aluno real”, o pronome “Ela” retoma:","alternativas":{"A":"a escola tomada como santuário;","B":"a formação estritamente técnica;","C":"a delicadeza mencionada no período anterior;","D":"a maioria dos estudantes brasileiros;","E":"a vida adulta."},"gabarito":"C","comentarios":{"A":"Incorreta. A escola aparece como objeto da ação criticada, não como agente da proteção nesse período.","B":"Incorreta. O parágrafo trata da posição oposta à da formação estritamente técnica.","C":"Correta. O período imediatamente anterior é “Há algo de cruel nessa delicadeza”, e é a delicadeza que protege e abandona.","D":"Incorreta. A maioria dos estudantes é quem sofre o abandono, não quem protege.","E":"Incorreta. Não há sentido possível para essa retomada no contexto."},"fundamentacao":"Anáfora pronominal e recuperação do antecedente mais próximo compatível."},{"numero":13,"topico":"Colocação pronominal e sintaxe","textoRef":"T1","enunciado":"Em “professores que não se envergonhem nem da bancada nem da biblioteca”:","alternativas":{"A":"a próclise é facultativa, admitindo-se igualmente “que não envergonhem-se”;","B":"a próclise é obrigatória, por atração do advérbio de negação;","C":"“se” é índice de indeterminação do sujeito;","D":"“nem... nem” estabelece relação alternativa entre os complementos;","E":"o modo subjuntivo, em “envergonhem”, apresenta o fato como realizado."},"gabarito":"B","comentarios":{"A":"Incorreta. Há dois fatores de próclise: o pronome relativo “que” e o advérbio “não”. A ênclise é vedada.","B":"Correta. Palavras de sentido negativo atraem o pronome átono.","C":"Incorreta. “Envergonhar-se” é verbo pronominal, e o sujeito é “professores”, determinado.","D":"Incorreta. “Nem... nem” é conjunção aditiva de valor negativo, não alternativa.","E":"Incorreta. O subjuntivo, na adjetiva, indica fato hipotético ou desejado, não realizado."},"fundamentacao":"Fatores de próclise e valor modal do subjuntivo em oração adjetiva."},{"numero":14,"topico":"Morfologia — flexão verbal","textoRef":"T2","enunciado":"No Texto II, a forma verbal “errara” equivale, quanto ao valor temporal, a:","alternativas":{"A":"errará;","B":"erraria;","C":"errasse;","D":"tinha errado;","E":"errava."},"gabarito":"D","comentarios":{"A":"Incorreta. “Errará” é futuro do presente, e o contexto é claramente anterior ao passado narrado.","B":"Incorreta. “Erraria” é futuro do pretérito, tempo de valor hipotético.","C":"Incorreta. “Errasse” é pretérito imperfeito do subjuntivo, e o trecho é assertivo.","D":"Correta. Trata-se do pretérito mais-que-perfeito simples do indicativo, cuja forma composta é “tinha errado”.","E":"Incorreta. “Errava” é imperfeito do indicativo e não marca anterioridade a outro passado."},"fundamentacao":"Pretérito mais-que-perfeito simples e sua correspondência com a forma composta."},{"numero":15,"topico":"Sintaxe — construções de realce","textoRef":"T2","enunciado":"Em “Foi um professor de física quem me curou”, ocorre:","alternativas":{"A":"voz passiva analítica, com agente da passiva expresso;","B":"construção de realce, em que o verbo “ser” focaliza o termo destacado;","C":"oração subordinada adjetiva restritiva iniciada por “quem”;","D":"sujeito indeterminado, marcado pelo pronome “quem”;","E":"predicativo do sujeito representado por “um professor de física”."},"gabarito":"B","comentarios":{"A":"Incorreta. Não há particípio nem agente da passiva; “curou” está na voz ativa.","B":"Correta. A ordem simples seria “Um professor de física me curou”. O verbo “ser” funciona como realce do sujeito.","C":"Incorreta. Falta antecedente para uma adjetiva restritiva; a construção é clivada.","D":"Incorreta. O sujeito está expresso e determinado.","E":"Incorreta. Na construção de realce, o termo focalizado é o sujeito, não predicativo."},"fundamentacao":"Construções clivadas do tipo “ser... que/quem” e realce sintático."},{"numero":16,"topico":"Regência nominal","textoRef":"T2","enunciado":"A preposição “em”, em “arte em que me tornei razoavelmente competente”, é exigida:","alternativas":{"A":"pelo adjetivo “competente”;","B":"pelo verbo “tornar-se”;","C":"pelo substantivo “arte”;","D":"pelo pronome relativo “que”;","E":"pelo advérbio “razoavelmente”."},"gabarito":"A","comentarios":{"A":"Correta. Diz-se “competente em algo”; é a regência do adjetivo que exige a preposição antes do relativo.","B":"Incorreta. “Tornar-se” liga o sujeito ao predicativo e não rege preposição nesse contexto.","C":"Incorreta. “Arte” é o antecedente do relativo, e não o termo regente.","D":"Incorreta. O relativo “que” não exige preposição por si mesmo; ele a recebe do termo regente.","E":"Incorreta. Advérbios de intensidade não regem complementos preposicionados."},"fundamentacao":"Preposição anteposta ao pronome relativo determinada pela regência do termo subordinante."},{"numero":17,"topico":"Regência e pronomes relativos","textoRef":"T2","enunciado":"Assinale a reescrita de “Passei a adolescência defendendo posições de que não estava certo” que preserva a correção quanto à regência.","alternativas":{"A":"Passei a adolescência defendendo posições que não estava certo.","B":"Passei a adolescência defendendo posições cujas não estava certo.","C":"Passei a adolescência defendendo posições a que não estava certo.","D":"Passei a adolescência defendendo posições das quais não estava certo.","E":"Passei a adolescência defendendo posições em que não estava certo."},"gabarito":"D","comentarios":{"A":"Incorreta. Suprime-se a preposição exigida por “certo de”.","B":"Incorreta. “Cujo” é pronome relativo possessivo e exige substantivo posposto, sem artigo.","C":"Incorreta. Não se diz “certo a algo”.","D":"Correta. “De que” equivale a “das quais”, mantendo-se a preposição.","E":"Incorreta. “Certo em algo” não corresponde à regência do adjetivo no sentido de convicção."},"fundamentacao":"Regência nominal de “certo de” e equivalência entre “de que” e “do qual/da qual”."},{"numero":18,"topico":"Sintaxe — sujeito e complementos","textoRef":"T2","enunciado":"Em “havia ali uma forma de coragem que não nos tinham ensinado”:","alternativas":{"A":"o sujeito de “tinham ensinado” está indeterminado, e “nos” funciona como objeto indireto;","B":"a forma “tinham” tem como sujeito “uma forma de coragem”;","C":"“nos” é objeto direto e retoma “uma forma de coragem”;","D":"a forma “havia” poderia ser flexionada como “haviam”, por concordar com “uma forma de coragem”;","E":"a próclise em “não nos tinham ensinado” contraria a norma-padrão."},"gabarito":"A","comentarios":{"A":"Correta. O verbo na terceira pessoa do plural sem sujeito expresso indetermina o sujeito, e “nos” é quem recebe o ensino.","B":"Incorreta. “Uma forma de coragem” é o antecedente do relativo “que”, que funciona como objeto direto de “ensinado”.","C":"Incorreta. Quem foi ensinado é o objeto indireto; o objeto direto é o relativo “que”.","D":"Incorreta. “Haver”, no sentido de existir, é impessoal e permanece no singular.","E":"Incorreta. O advérbio “não” exige próclise, e é isso o que ocorre."},"fundamentacao":"Indeterminação do sujeito pela terceira pessoa do plural e funções dos pronomes átonos."},{"numero":19,"topico":"Pontuação","textoRef":"T2","enunciado":"O travessão em “A pressa costuma ser um disfarce — às vezes do medo, às vezes da preguiça”:","alternativas":{"A":"marca a mudança de interlocutor no diálogo;","B":"indica a supressão de uma forma verbal;","C":"separa o sujeito do predicado, o que é vedado pela norma-padrão;","D":"introduz oração coordenada adversativa.","E":"introduz segmento explicativo, podendo ser substituído por dois-pontos;"},"gabarito":"E","comentarios":{"A":"Incorreta. Não há discurso direto nesse período.","B":"Incorreta. Ainda que haja elipse de “disfarce”, a função do travessão ali é explicativa, e a alternativa descreve mal o fenômeno.","C":"Incorreta. O sinal aparece depois do predicado completo.","D":"Incorreta. Não há oposição, e sim especificação.","E":"Correta. O segmento posposto explicita de que a pressa é disfarce, valor típico também dos dois-pontos."},"fundamentacao":"Travessão de isolamento com valor explicativo."},{"numero":20,"topico":"Coesão referencial","textoRef":"T2","enunciado":"Em “o que, pensando bem, era outra maneira de vencê-las”:","alternativas":{"A":"“o que” retoma apenas o substantivo “discussões”;","B":"“las” retoma “maneira”;","C":"“pensando bem” exprime causa;","D":"“o que” retoma o conteúdo integral da oração anterior;","E":"“vencê-las” encontra-se na voz passiva."},"gabarito":"D","comentarios":{"A":"Incorreta. O que era outra maneira de vencer não é o substantivo isolado, mas o fato de nunca fazer questão de vencer.","B":"Incorreta. “Las” retoma “discussões”.","C":"Incorreta. A expressão marca ressalva reflexiva do narrador, sem valor causal.","D":"Correta. Trata-se de anáfora encapsuladora: “o que” resume toda a proposição anterior.","E":"Incorreta. O infinitivo está na voz ativa, com pronome objeto direto."},"fundamentacao":"Anáfora encapsuladora com “o que” e retomada por pronome oblíquo."},{"numero":21,"topico":"Interpretação — efeitos de sentido","textoRef":"T2","enunciado":"A sequência “Meu avô morreu sem saber que estava certo. Talvez soubesse.” produz o efeito de:","alternativas":{"A":"contradição lógica que invalida o argumento construído no texto;","B":"certeza definitiva a respeito do que pensava o avô;","C":"ressalva do narrador, que relativiza a própria afirmação e reforça o tema do texto;","D":"ironia dirigida ao avô, apresentado como ingênuo;","E":"digressão sem relação com o assunto tratado nos parágrafos anteriores."},"gabarito":"C","comentarios":{"A":"Incorreta. A ressalva não invalida nada; ela é coerente com o elogio da dúvida.","B":"Incorreta. “Talvez” instaura hipótese, e não certeza.","C":"Correta. O narrador afirma e imediatamente duvida da própria afirmação, encenando a tese do texto.","D":"Incorreta. O avô é figura de autoridade positiva ao longo de todo o texto.","E":"Incorreta. O trecho retoma diretamente o tema da dúvida."},"fundamentacao":"Modalização epistêmica pelo advérbio “talvez” e coerência temática."},{"numero":22,"topico":"Pontuação","textoRef":"T2","enunciado":"O ponto e vírgula em “Quem levantava a mão primeiro ganhava o ponto; quem hesitava ficava com o silêncio constrangido da turma”:","alternativas":{"A":"substitui obrigatoriamente um ponto final;","B":"isola oração subordinada adverbial deslocada;","C":"indica a omissão de conjunção subordinativa causal;","D":"poderia ser substituído por dois-pontos, sem alteração de valor.","E":"separa orações de estrutura paralela, reforçando o contraste entre elas;"},"gabarito":"E","comentarios":{"A":"Incorreta. Não há obrigatoriedade: o ponto e vírgula é escolha estilística de quem escreve.","B":"Incorreta. Ambas as orações são independentes entre si.","C":"Incorreta. Não há relação de causa entre os fatos apresentados.","D":"Incorreta. Os dois-pontos anunciariam explicação ou consequência, valores ausentes ali.","E":"Correta. As duas orações repetem a mesma estrutura sintática, e o sinal marca a simetria e o contraste."},"fundamentacao":"Ponto e vírgula entre orações coordenadas de estrutura paralela."},{"numero":23,"topico":"Interpretação de texto multimodal","textoRef":"T3","enunciado":"Com base exclusivamente nos dados do Texto III, é correto afirmar que:","alternativas":{"A":"todas as formas de oferta apresentaram crescimento entre 2019 e 2025;","B":"a forma subsequente ultrapassou a integrada em 2025;","C":"o total de matrículas cresceu de forma contínua, embora uma das formas de oferta tenha recuado;","D":"a queda da forma concomitante foi compensada, ano a ano, pelo crescimento equivalente da subsequente;","E":"houve redução do total de matrículas entre 2022 e 2025."},"gabarito":"C","comentarios":{"A":"Incorreta. A forma concomitante recua em todos os intervalos: 84.100, depois 71.500 e, por fim, 63.200.","B":"Incorreta. Em 2025, a integrada registra 388.700 e a subsequente, 249.100.","C":"Correta. O total passa de 602.100 para 646.200 e depois para 701.000, ao passo que a concomitante cai de 84.100 para 63.200.","D":"Incorreta. Entre 2019 e 2022 a concomitante perde 12.600 e a subsequente ganha 27.200; não há equivalência.","E":"Incorreta. O total sobe de 646.200 para 701.000."},"fundamentacao":"Leitura de tabela: comparação entre séries e verificação de totais."},{"numero":24,"topico":"Interpretação de dados","textoRef":"T3","enunciado":"Sobre a participação da forma integrada no total de matrículas, os dados do Texto III permitem afirmar que ela:","alternativas":{"A":"permaneceu estável, em torno de 52%, nos três anos observados;","B":"cresceu, passando de pouco menos de 52% para mais de 55%;","C":"caiu, porque o crescimento do total foi proporcionalmente maior;","D":"ultrapassou 60% em 2025;","E":"não pode ser calculada, porque a tabela não informa o total."},"gabarito":"B","comentarios":{"A":"Incorreta. Em 2019 a participação é de cerca de 51,9%, e em 2025 chega a cerca de 55,4%.","B":"Correta. 312.400/602.100 é aproximadamente 51,9%; 388.700/701.000 é aproximadamente 55,4%.","C":"Incorreta. A integrada cresceu 24,4% no período, e o total, 16,4%.","D":"Incorreta. O valor de 2025 fica abaixo de 56%.","E":"Incorreta. A linha “Total” está expressa na tabela."},"fundamentacao":"Cálculo de participação relativa a partir de dados tabulares."},{"numero":25,"topico":"Semântica dos conectivos","textoRef":"T3","enunciado":"Na legenda do Texto III, a locução “ao passo que” estabelece relação de:","alternativas":{"A":"causa;","B":"conclusão;","C":"finalidade;","D":"contraste;","E":"conformidade."},"gabarito":"D","comentarios":{"A":"Incorreta. A queda da concomitante não é apresentada como causa do crescimento das demais.","B":"Incorreta. Não há dedução a partir de premissa anterior.","C":"Incorreta. Não se expressa propósito.","D":"Correta. A locução opõe dois movimentos simultâneos e de sinais contrários.","E":"Incorreta. Conformidade exigiria conectivos do tipo “conforme”, “segundo”."},"fundamentacao":"Valor contrastivo (por vezes chamado proporcional-adversativo) de “ao passo que”."},{"numero":26,"topico":"Concordância verbal","textoRef":"T3","enunciado":"Em “cresceram as matrículas na forma integrada e na subsequente”, a forma verbal está no plural porque:","alternativas":{"A":"concorda com o adjunto adverbial “na forma integrada e na subsequente”;","B":"o verbo “crescer” é impessoal e admite as duas flexões indistintamente;","C":"concorda com “as matrículas”, sujeito posposto ao verbo;","D":"há sujeito indeterminado, marcado pela terceira pessoa do plural;","E":"concorda com o termo “dados”, sujeito da oração principal."},"gabarito":"C","comentarios":{"A":"Incorreta. Adjunto adverbial não determina a flexão do verbo.","B":"Incorreta. “Crescer” tem sujeito e não é impessoal.","C":"Correta. A posposição do sujeito não altera a regra: o verbo concorda com ele.","D":"Incorreta. O sujeito está expresso.","E":"Incorreta. “Dados” é sujeito de “revelam”, e não da oração encaixada."},"fundamentacao":"Concordância com sujeito posposto."},{"numero":27,"topico":"Interpretação — inferência","textoRef":"T3","enunciado":"Assinale a conclusão que NÃO se sustenta apenas com base no Texto III.","alternativas":{"A":"A retração da forma concomitante decorre da má qualidade dos cursos ofertados nessa modalidade.","B":"A forma integrada foi a que mais cresceu em números absolutos no período.","C":"A forma subsequente respondia, em 2022, por mais de um terço do total.","D":"O total de matrículas em 2025 supera o de 2019 em quase cem mil.","E":"Em todos os anos observados, a forma integrada superou a soma das outras duas."},"gabarito":"A","comentarios":{"A":"Correta como resposta. A tabela informa a variação, não as causas dela. Atribuir a queda à qualidade é extrapolação.","B":"Sustenta-se. A integrada ganha 76.300 no período, contra 43.500 da subsequente.","C":"Sustenta-se. 232.800 em 646.200 corresponde a cerca de 36%.","D":"Sustenta-se. A diferença é de 98.900.","E":"Sustenta-se. Em 2019, 312.400 contra 289.700; em 2022, 341.900 contra 304.300; em 2025, 388.700 contra 312.300."},"fundamentacao":"Distinção entre informação explícita, inferência autorizada e extrapolação."},{"numero":28,"topico":"Interpretação de texto não verbal","textoRef":"T4","enunciado":"O humor da charge do Texto IV nasce, principalmente:","alternativas":{"A":"da crítica ao professor, retratado como incompetente por estar de costas;","B":"da denúncia do uso de fones de ouvido em sala de aula;","C":"da defesa de provas mais rigorosas nas escolas técnicas;","D":"do contraste entre o conteúdo escrito no quadro e o comportamento representado dos alunos;","E":"da comparação entre estudantes brasileiros e estrangeiros."},"gabarito":"D","comentarios":{"A":"Incorreta. O professor não é o alvo central; ele aparece de costas, apagando ou escrevendo, sem marca de julgamento.","B":"Incorreta. Os fones compõem a cena, mas não constituem o alvo da crítica.","C":"Incorreta. A charge critica a centralidade da prova, e não sua brandura.","D":"Correta. O quadro anuncia pensamento crítico enquanto os alunos, idênticos e sincronizados, perguntam apenas o que cai na prova.","E":"Incorreta. Não há qualquer elemento comparativo entre países."},"fundamentacao":"Leitura de texto não verbal: construção do humor por contradição entre elementos da cena."},{"numero":29,"topico":"Semântica e ironia","textoRef":"T4","enunciado":"A legenda “Educação para a autonomia — edição revista e ampliada” produz efeito irônico porque:","alternativas":{"A":"apresenta dado estatístico incompatível com a imagem;","B":"utiliza linguagem coloquial em contexto formal;","C":"repete termos já presentes no balão de fala do aluno;","D":"emprega jargão do mercado editorial para descrever uma cena que contradiz a expressão inicial;","E":"recorre à hipérbole para exagerar a atenção da turma."},"gabarito":"D","comentarios":{"A":"Incorreta. Não há números na charge.","B":"Incorreta. A legenda é formal, tomada de empréstimo ao vocabulário editorial.","C":"Incorreta. Não há repetição do enunciado do balão.","D":"Correta. A fórmula de reedição de livros sugere aperfeiçoamento, mas o que a imagem mostra é a padronização dos alunos.","E":"Incorreta. A ironia não se apoia em exagero, e sim na contradição entre rótulo e cena."},"fundamentacao":"Ironia por incongruência entre registro verbal e conteúdo visual."},{"numero":30,"topico":"Relação entre linguagens","textoRef":"T4","enunciado":"Sobre a articulação entre os elementos verbais e não verbais da charge, é correto afirmar que:","alternativas":{"A":"a crítica só se completa na relação entre os dois planos, pois nenhum deles a produz sozinho;","B":"o texto verbal é dispensável, pois a imagem já expressa integralmente a crítica;","C":"os elementos verbais e visuais são redundantes, repetindo a mesma informação;","D":"a imagem contradiz o texto verbal, tornando a charge incoerente;","E":"o texto verbal cumpre função exclusivamente estética, sem valor argumentativo."},"gabarito":"A","comentarios":{"A":"Correta. É a soma entre o anúncio escrito e o comportamento desenhado que constrói o sentido crítico.","B":"Incorreta. Sem a expressão no quadro e sem a legenda, a cena perderia o alvo da crítica.","C":"Incorreta. Cada plano acrescenta informação distinta; não há repetição.","D":"Incorreta. Há tensão intencional entre os planos, o que é recurso de sentido, não incoerência.","E":"Incorreta. O texto verbal é decisivo para o argumento."},"fundamentacao":"Multimodalidade: complementaridade entre linguagens verbal e visual."},{"numero":31,"topico":"Crase e paralelismo","textoRef":"T5","enunciado":"No caput do art. 12 do Texto V, sobre o segmento “Compete à Coordenação Pedagógica acompanhar o desempenho dos estudantes, propor medidas de recuperação e zelar pelo cumprimento do calendário acadêmico”, é correto afirmar que:","alternativas":{"A":"o acento grave decorre da preposição exigida por “competir” somada ao artigo definido feminino, e os três infinitivos mantêm paralelismo sintático;","B":"o acento grave é indevido, pois “competir” é verbo transitivo direto;","C":"o acento grave é facultativo, por se tratar de nome de setor institucional;","D":"os infinitivos funcionam como adjuntos adverbiais de finalidade;","E":"“à Coordenação Pedagógica” é o sujeito da forma verbal “Compete”."},"gabarito":"A","comentarios":{"A":"Correta. Preposição mais artigo justificam o acento, e os três infinitivos exercem a mesma função, em estrutura paralela.","B":"Incorreta. No sentido de caber a alguém, “competir” é transitivo indireto e rege a preposição “a”.","C":"Incorreta. Presentes preposição e artigo, o acento é obrigatório.","D":"Incorreta. Os infinitivos formam o sujeito oracional de “Compete”.","E":"Incorreta. Esse segmento é o objeto indireto; o sujeito é aquilo que compete."},"fundamentacao":"Regência de “competir a”, crase e paralelismo sintático em texto normativo."},{"numero":32,"topico":"Regência e sintaxe","textoRef":"T5","enunciado":"No § 1.º, em “As medidas de que trata o caput”:","alternativas":{"A":"a preposição “de” é exigida pelo substantivo “medidas”;","B":"“o caput” é objeto direto de “trata”;","C":"o relativo “que” exerce função de sujeito;","D":"a construção equivale a “As medidas que trata o caput”, sem prejuízo da norma-padrão.","E":"a preposição “de” é exigida pelo verbo “tratar”, e “o caput” é o sujeito posposto;"},"gabarito":"E","comentarios":{"A":"Incorreta. Quem rege a preposição é o verbo: trata-se de algo.","B":"Incorreta. “O caput” é quem trata, e não o que é tratado.","C":"Incorreta. O relativo é objeto indireto, preposicionado.","D":"Incorreta. A supressão da preposição desrespeita a regência do verbo.","E":"Correta. “Tratar de” é transitivo indireto, e o sujeito aparece depois do verbo, ordem comum em textos normativos."},"fundamentacao":"Regência verbal de “tratar de” e ordem inversa em linguagem oficial."},{"numero":33,"topico":"Concordância e partícula “se”","textoRef":"T5","enunciado":"Ainda no § 1.º, considerada a expressão “sempre que se verificar rendimento inferior ao mínimo previsto”, se o termo “rendimento” fosse substituído por “rendimentos”, a forma verbal deveria ser:","alternativas":{"A":"se verificar, pois a partícula indetermina o sujeito;","B":"se verificaram, pela exigência do futuro do subjuntivo;","C":"se verificasse, por se tratar de hipótese;","D":"se verificarem, pois a partícula é apassivadora e o verbo concorda com o sujeito paciente;","E":"verificar-se-á, por imposição da linguagem normativa."},"gabarito":"D","comentarios":{"A":"Incorreta. “Verificar” é transitivo direto, o que caracteriza voz passiva sintética, e não indeterminação.","B":"Incorreta. “Verificaram” é pretérito perfeito do indicativo, incompatível com “sempre que” nesse contexto.","C":"Incorreta. O imperfeito do subjuntivo alteraria o valor temporal da norma.","D":"Correta. Equivale a “sempre que forem verificados rendimentos inferiores”; o verbo vai para o plural.","E":"Incorreta. A mesóclise não se aplica em oração subordinada e não resolve a concordância."},"fundamentacao":"Voz passiva sintética e concordância do verbo com o sujeito paciente."},{"numero":34,"topico":"Sintaxe e regência","textoRef":"T5","enunciado":"No § 2.º, em “aos quais se subordinam os professores orientadores”:","alternativas":{"A":"“os professores orientadores” é objeto direto de “subordinam”;","B":"a partícula “se” é apassivadora, e a construção equivale a “são subordinados pelos professores orientadores”;","C":"a preposição em “aos quais” é exigida pelo verbo “subordinar-se”, e “os professores orientadores” é o sujeito posposto;","D":"o verbo deveria estar no singular, para concordar com “Caberá”;","E":"“aos quais” retoma “os responsáveis”."},"gabarito":"C","comentarios":{"A":"Incorreta. Quem se subordina são os professores; eles praticam a ação expressa pelo verbo pronominal.","B":"Incorreta. A paráfrase inverte os papéis: os professores é que se subordinam aos coordenadores.","C":"Correta. Diz-se “subordinar-se a alguém”, daí a preposição diante do relativo, e o sujeito vem posposto.","D":"Incorreta. São verbos de orações diferentes, com sujeitos diferentes.","E":"Incorreta. O antecedente é “os coordenadores de curso”, imediatamente anterior."},"fundamentacao":"Regência de verbo pronominal, sujeito posposto e antecedente do pronome relativo."},{"numero":35,"topico":"Concordância nominal","textoRef":"T5","enunciado":"No § 3.º, se “o registro de frequência” fosse substituído por “a anotação de frequência”, a redação correta seria:","alternativas":{"A":"Fica vedado a anotação de frequência;","B":"Ficam vedado a anotação de frequência;","C":"Fica vedada a anotação de frequência;","D":"Fica vedados a anotação de frequência;","E":"Fica vedado à anotação de frequência."},"gabarito":"C","comentarios":{"A":"Incorreta. Com o sujeito determinado pelo artigo, o predicativo concorda em gênero e número.","B":"Incorreta. O verbo deve permanecer no singular, e o predicativo, no feminino.","C":"Correta. “Anotação” é feminino singular e está determinada, o que exige “vedada”.","D":"Incorreta. O plural não encontra apoio no sujeito.","E":"Incorreta. Não há preposição regendo o sujeito, logo não cabe acento grave."},"fundamentacao":"Concordância do predicativo em construções do tipo “é proibido/é vedado”."},{"numero":36,"topico":"Sintaxe — orações reduzidas","textoRef":"T5","enunciado":"No § 3.º, o segmento “ressalvadas as hipóteses previstas em ato do Conselho Superior” classifica-se como:","alternativas":{"A":"aposto explicativo do sujeito “o registro de frequência”;","B":"oração subordinada substantiva objetiva direta;","C":"adjunto adnominal de “desacordo”;","D":"oração coordenada sindética adversativa.","E":"oração reduzida de particípio, com valor de ressalva, cujo particípio concorda com “as hipóteses”;"},"gabarito":"E","comentarios":{"A":"Incorreta. Não retoma nem explica o sujeito da oração principal.","B":"Incorreta. Não completa o sentido de nenhum verbo transitivo direto.","C":"Incorreta. Não determina o substantivo “desacordo”.","D":"Incorreta. Não há conjunção coordenativa; a oração é reduzida e subordinada.","E":"Correta. Trata-se de construção absoluta de particípio, frequente na linguagem normativa, com concordância em gênero e número com o termo a que se refere."},"fundamentacao":"Oração reduzida de particípio em construção absoluta e sua concordância."},{"numero":37,"topico":"Crase","enunciado":"Assinale a frase em que o acento indicativo de crase foi empregado de modo INCORRETO.","alternativas":{"A":"O relatório foi encaminhado à direção de ensino na tarde de ontem.","B":"Fizemos referência às normas revogadas pela nova resolução.","C":"Passamos à discutir o mérito da proposta apenas no fim da reunião.","D":"O servidor dedicou-se à tarefa que ninguém queria assumir.","E":"Chegamos à conclusão de que o prazo era exíguo."},"gabarito":"C","comentarios":{"A":"Correta quanto ao uso. “Encaminhar a” mais o artigo de “a direção” justificam o acento.","B":"Correta quanto ao uso. “Fazer referência a” mais o artigo plural “as normas”.","C":"Resposta. Não há crase diante de verbo: o correto é “Passamos a discutir”.","D":"Correta quanto ao uso. “Dedicar-se a” mais o artigo de “a tarefa”.","E":"Correta quanto ao uso. “Chegar a” mais o artigo de “a conclusão”."},"fundamentacao":"Não ocorre crase diante de verbos, pronomes pessoais, palavras masculinas e artigos indefinidos."},{"numero":38,"topico":"Crase","enunciado":"Assinale a alternativa em que o emprego do acento grave é facultativo.","alternativas":{"A":"Entreguei o processo à secretária do campus.","B":"Voltaremos à Bahia no próximo semestre.","C":"Os dois ficaram frente à frente durante a discussão.","D":"Assistimos à sessão de abertura do evento.","E":"Refiro-me à sua proposta de alteração do calendário."},"gabarito":"E","comentarios":{"A":"Incorreta. Diante de substantivo feminino determinado, o acento é obrigatório.","B":"Incorreta. “Bahia” exige artigo, o que torna o acento obrigatório.","C":"Incorreta. Em locuções adverbiais femininas, o acento é obrigatório.","D":"Incorreta. “Assistir a”, no sentido de presenciar, mais o artigo, exigem o acento.","E":"Correta. Diante de pronome possessivo feminino singular, o artigo é facultativo, e o acento acompanha essa facultatividade."},"fundamentacao":"Casos de crase facultativa: antes de possessivo feminino singular, de nome próprio feminino e depois de “até”."},{"numero":39,"topico":"Crase","enunciado":"Assinale a frase em que o sinal indicativo de crase foi corretamente omitido.","alternativas":{"A":"O pedido foi submetido a comissão designada pelo reitor.","B":"Ele se dirigiu a diretora com aspereza.","C":"Voltamos a mesma sala de sempre.","D":"A proposta foi apresentada a Assembleia Geral.","E":"Não obedeço a ordens que desconheço."},"gabarito":"E","comentarios":{"A":"Incorreta. Deveria haver acento: “submetido à comissão”.","B":"Incorreta. O correto é “dirigiu-se à diretora”.","C":"Incorreta. Diante de “mesma”, feminino, o acento é obrigatório: “à mesma sala”.","D":"Incorreta. O correto é “apresentada à Assembleia Geral”.","E":"Correta. O substantivo está no plural sem artigo, o que dispensa o acento. Com artigo, seria “às ordens”."},"fundamentacao":"Ausência de artigo diante de substantivo plural em sentido genérico."},{"numero":40,"topico":"Crase","enunciado":"Assinale a frase em que o acento grave decorre da fusão da preposição com pronome demonstrativo.","alternativas":{"A":"Referi-me à aluna que faltou à avaliação.","B":"Minha opinião é semelhante à do relator.","C":"Fomos à feira de ciências do campus.","D":"Ele costuma estudar à noite.","E":"Obedeça às regras do edital."},"gabarito":"B","comentarios":{"A":"Incorreta. Há preposição mais artigo definido.","B":"Correta. “À do relator” equivale a “àquela do relator”: preposição mais demonstrativo.","C":"Incorreta. Há preposição mais artigo definido.","D":"Incorreta. Trata-se de locução adverbial feminina.","E":"Incorreta. Há preposição mais artigo definido plural."},"fundamentacao":"Crase diante de “a” com valor demonstrativo, seguido de “de” ou “que”."},{"numero":41,"topico":"Crase","enunciado":"Assinale a alternativa correta quanto ao emprego do acento grave.","alternativas":{"A":"Esta é a proposta a qual me referi na sessão anterior.","B":"Esta é a proposta àquela que me referi na sessão anterior.","C":"Esta é a proposta à qual me referi na sessão anterior.","D":"Esta é a proposta à que me referi na sessão anterior.","E":"Esta é a proposta a cuja me referi na sessão anterior."},"gabarito":"C","comentarios":{"A":"Incorreta. Falta a preposição exigida pelo verbo.","B":"Incorreta. A construção duplica o antecedente e não se sustenta sintaticamente.","C":"Correta. “Referir-se a” mais “a qual” resultam em “à qual”.","D":"Incorreta. Diante do relativo “que”, invariável, não há artigo e, portanto, não há crase.","E":"Incorreta. “Cujo” exige substantivo posposto e não admite artigo."},"fundamentacao":"Crase diante de “a qual/as quais” e ausência de crase diante de “que”."},{"numero":42,"topico":"Crase","enunciado":"Assinale a alternativa em que o emprego do acento grave contraria a norma-padrão.","alternativas":{"A":"Compramos os equipamentos à prazo, em doze parcelas.","B":"O barulho aumentava à medida que a plateia crescia.","C":"Saímos às pressas, sem conferir os documentos.","D":"A sala de reuniões fica à esquerda do auditório.","E":"Preferimos o diálogo à imposição de medidas."},"gabarito":"A","comentarios":{"A":"Resposta. “Prazo” é masculino, e locuções adverbiais masculinas não recebem acento: “a prazo”.","B":"Correta quanto ao uso. Locução proporcional “à medida que”.","C":"Correta quanto ao uso. Locução adverbial feminina.","D":"Correta quanto ao uso. Locução adverbial feminina de lugar.","E":"Correta quanto ao uso. “Preferir algo a algo” mais artigo."},"fundamentacao":"Locuções adverbiais femininas recebem acento; as masculinas, não."},{"numero":43,"topico":"Crase","enunciado":"Assinale a alternativa inteiramente correta quanto ao acento grave.","alternativas":{"A":"À partir de segunda-feira, as inscrições estarão abertas.","B":"Os documentos foram entregues à ele em mãos.","C":"Estamos à procura de soluções à curto prazo.","D":"O texto foi redigido à moda dos manuais antigos.","E":"Ninguém se opôs à que o prazo fosse prorrogado."},"gabarito":"D","comentarios":{"A":"Incorreta. Em “a partir de” jamais há acento.","B":"Incorreta. Não há crase diante de pronome pessoal: “entregues a ele”.","C":"Incorreta. “A curto prazo” é locução masculina, sem acento.","D":"Correta. “Redigido a” mais o artigo de “a moda” justificam o acento. A mesma expressão admite crase por elipse quando o substantivo fica subentendido, como em “bife à milanesa”.","E":"Incorreta. Não há crase diante da conjunção “que”."},"fundamentacao":"Crase por elipse, vedações clássicas e locuções fixas."},{"numero":44,"topico":"Crase","enunciado":"Assinale a alternativa em que há erro quanto ao emprego do acento grave.","alternativas":{"A":"O expediente encerra-se a uma hora da tarde.","B":"A sessão começou às quatorze horas em ponto.","C":"Fomos até à porta do auditório e voltamos.","D":"Daqui a duas semanas divulgaremos o resultado.","E":"Ficamos face a face com o problema."},"gabarito":"A","comentarios":{"A":"Resposta. Sendo hora determinada, o correto é “à uma hora da tarde”.","B":"Correta quanto ao uso. Horas determinadas exigem o acento.","C":"Correta quanto ao uso. Depois de “até”, o acento é facultativo.","D":"Correta quanto ao uso. Indicando tempo futuro, “daqui a” não recebe acento.","E":"Correta quanto ao uso. Locução com palavra masculina, sem acento."},"fundamentacao":"Crase em indicações de horas e distinção entre “daqui a” e “há”."},{"numero":45,"topico":"Crase","enunciado":"Assinale a alternativa que completa corretamente as lacunas: “Comunicaram o resultado ____ candidata ____ que fizemos referência, ____ qual coube o primeiro lugar.”","alternativas":{"A":"a / a / à","B":"à / a / à","C":"à / à / a","D":"a / à / a","E":"à / à / à"},"gabarito":"B","comentarios":{"A":"Incorreta. A primeira lacuna exige acento, por preposição mais artigo.","B":"Correta. “Comunicar a” mais artigo dá “à candidata”; diante do relativo “que”, não há artigo; “caber a” mais “a qual” dá “à qual”.","C":"Incorreta. A segunda lacuna precede o relativo invariável “que”.","D":"Incorreta. Erra a primeira e a terceira lacunas.","E":"Incorreta. Erra a segunda lacuna."},"fundamentacao":"Crase com relativos: “a que” sem acento, “à qual” com acento."},{"numero":46,"topico":"Concordância verbal","enunciado":"Assinale a alternativa em que a concordância verbal está de acordo com a norma-padrão.","alternativas":{"A":"Devem existir critérios mais objetivos de avaliação.","B":"Fazem cinco anos que o campus foi inaugurado.","C":"Houveram muitas reclamações a respeito do edital.","D":"Podem haver falhas na correção das provas.","E":"Tratam-se de questões de interpretação."},"gabarito":"A","comentarios":{"A":"Correta. “Existir” tem sujeito e concorda com ele; o auxiliar acompanha a flexão.","B":"Incorreta. “Fazer”, indicando tempo decorrido, é impessoal: “Faz cinco anos”.","C":"Incorreta. “Haver”, no sentido de existir, é impessoal: “Houve muitas reclamações”.","D":"Incorreta. A impessoalidade de “haver” se transmite ao auxiliar: “Pode haver falhas”.","E":"Incorreta. “Tratar-se de” é construção de sujeito indeterminado e permanece no singular."},"fundamentacao":"Verbos impessoais e transmissão da impessoalidade ao auxiliar."},{"numero":47,"topico":"Concordância verbal","enunciado":"Assinale a alternativa em que a concordância verbal está correta.","alternativas":{"A":"Cada um dos candidatos apresentaram os documentos exigidos.","B":"Ele foi um dos servidores que apoiaram o projeto desde o início.","C":"Cerca de vinte processos foi analisado na sessão de ontem.","D":"Qual de nós serão escolhidos para a comissão?","E":"Vossa Senhoria deveis comparecer à cerimônia de posse."},"gabarito":"B","comentarios":{"A":"Incorreta. “Cada um” exige verbo no singular: “apresentou”.","B":"Correta. Em “um dos que”, o antecedente do relativo é o plural “servidores”, e a flexão plural é a recomendada.","C":"Incorreta. Com expressões aproximativas, o verbo concorda com o numeral: “foram analisados”.","D":"Incorreta. “Qual de nós” pede singular: “será escolhido”.","E":"Incorreta. Pronomes de tratamento levam o verbo à terceira pessoa: “deve comparecer”."},"fundamentacao":"Casos especiais de concordância: “um dos que”, “cada um”, expressões aproximativas e pronomes de tratamento."},{"numero":48,"topico":"Concordância verbal","enunciado":"Assinale a alternativa em que a concordância está de acordo com a norma-padrão.","alternativas":{"A":"Precisam-se de professores substitutos para o próximo semestre.","B":"Vive-se dias difíceis na educação pública.","C":"Fizeram-se necessário novas medidas de contenção.","D":"Alugam-se salas para eventos acadêmicos.","E":"Ocorreu, no ano passado, vários problemas de infraestrutura."},"gabarito":"D","comentarios":{"A":"Incorreta. “Precisar de” é transitivo indireto; a partícula indetermina o sujeito e o verbo fica no singular.","B":"Incorreta. “Viver dias” admite voz passiva sintética: “Vivem-se dias difíceis”.","C":"Incorreta. O predicativo deve concordar: “Fizeram-se necessárias novas medidas”.","D":"Correta. “Salas” é sujeito paciente: equivale a “salas são alugadas”.","E":"Incorreta. “Ocorrer” concorda com o sujeito: “Ocorreram vários problemas”."},"fundamentacao":"Voz passiva sintética versus índice de indeterminação do sujeito."},{"numero":49,"topico":"Concordância verbal","enunciado":"Assinale a alternativa INCORRETA quanto à concordância verbal.","alternativas":{"A":"Nenhum dos presentes se manifestaram contra a proposta.","B":"Cerca de mil candidatos inscreveram-se no certame.","C":"A metade dos servidores aderiu à paralisação.","D":"O pessoal do setor chegou atrasado à reunião.","E":"Mais de trinta processos aguardam análise."},"gabarito":"A","comentarios":{"A":"Resposta. “Nenhum dos presentes” exige verbo no singular: “se manifestou”.","B":"Correta quanto ao uso. Com expressão aproximativa, a concordância se faz com o numeral.","C":"Correta quanto ao uso. Com expressões partitivas, admite-se o singular; o plural também seria aceitável.","D":"Correta quanto ao uso. “Pessoal” é coletivo singular.","E":"Correta quanto ao uso. Com “mais de”, o verbo concorda com o numeral."},"fundamentacao":"Concordância com pronomes indefinidos singulares seguidos de “de + plural”."},{"numero":50,"topico":"Concordância verbal","enunciado":"Assinale a alternativa em que a concordância verbal contraria a norma-padrão.","alternativas":{"A":"Havia, no auditório, mais de duzentas pessoas.","B":"Existe muitos motivos para o adiamento do concurso.","C":"Fazia dez anos que não se via um edital como aquele.","D":"Chegaram ao setor os pareceres solicitados.","E":"Deve haver razões para tanto atraso."},"gabarito":"B","comentarios":{"A":"Correta quanto ao uso. “Haver”, no sentido de existir, é impessoal.","B":"Resposta. “Existir” não é impessoal e deve concordar: “Existem muitos motivos”.","C":"Correta quanto ao uso. “Fazer” de tempo decorrido é impessoal.","D":"Correta quanto ao uso. O sujeito posposto determina o plural.","E":"Correta quanto ao uso. A impessoalidade de “haver” alcança o auxiliar."},"fundamentacao":"Contraste entre “haver” impessoal e “existir” pessoal."},{"numero":51,"topico":"Concordância verbal","enunciado":"Assinale a alternativa em que a concordância verbal está correta.","alternativas":{"A":"Sou eu que resolve os problemas do setor.","B":"Fomos nós que resolvemos o problema do laboratório.","C":"Foi os alunos que reclamaram do horário.","D":"Somos nós que decide o rumo do curso.","E":"Fui eu que apresentaram a proposta à comissão."},"gabarito":"B","comentarios":{"A":"Incorreta. O correto é “Sou eu que resolvo”.","B":"Correta. Com “que”, o verbo concorda com o antecedente, aqui o pronome “nós”.","C":"Incorreta. O verbo “ser” concorda com “os alunos”: “Foram os alunos que reclamaram”.","D":"Incorreta. O correto é “Somos nós que decidimos”.","E":"Incorreta. O correto é “Fui eu que apresentei”."},"fundamentacao":"Concordância nas construções “ser... que” com pronomes pessoais."},{"numero":52,"topico":"Concordância verbal","enunciado":"Assinale a alternativa INCORRETA quanto à concordância verbal.","alternativas":{"A":"Um ou outro candidato conseguirá a aprovação.","B":"Nem a chuva nem o cansaço impediram a caminhada.","C":"Foram aprovados o regimento e o calendário acadêmico.","D":"Não só os professores mas também os técnicos participaram da assembleia.","E":"O diretor e o coordenador assinou o documento."},"gabarito":"E","comentarios":{"A":"Correta quanto ao uso. “Um ou outro” exclui um dos termos e pede singular.","B":"Correta quanto ao uso. Com “nem... nem”, admite-se o plural quando o fato atinge os dois núcleos.","C":"Correta quanto ao uso. Com sujeito composto posposto, admite-se a concordância no plural.","D":"Correta quanto ao uso. Com “não só... mas também”, o verbo vai ao plural.","E":"Resposta. Sujeito composto anteposto exige verbo no plural: “assinaram”."},"fundamentacao":"Concordância com sujeito composto: posição e conectivos."},{"numero":53,"topico":"Concordância nominal","enunciado":"Assinale a alternativa correta quanto à concordância nominal.","alternativas":{"A":"As certidões seguem anexo ao processo.","B":"Elas mesmo redigiram o relatório final.","C":"É proibido a entrada de pessoas não autorizadas.","D":"Foi enviado, em anexos, as planilhas de custos.","E":"Seguem anexos os documentos solicitados."},"gabarito":"E","comentarios":{"A":"Incorreta. O correto é “anexas ao processo”.","B":"Incorreta. “Mesmo”, com valor de reforço, concorda: “Elas mesmas”.","C":"Incorreta. Com o sujeito determinado, o predicativo concorda: “É proibida a entrada”.","D":"Incorreta. A locução é invariável, “em anexo”, e o verbo deve concordar: “Foram enviadas”.","E":"Correta. “Anexo” é adjetivo e concorda com “documentos”."},"fundamentacao":"Concordância de “anexo”, “mesmo” e de predicativos em construções impessoais."},{"numero":54,"topico":"Concordância nominal","enunciado":"Assinale a alternativa em que a concordância nominal está de acordo com a norma-padrão.","alternativas":{"A":"Ela ficou meio nervosa com o resultado do recurso.","B":"Havia bastante razões para o adiamento da sessão.","C":"Ela estava meia cansada depois da prova.","D":"Sobraram menas vagas do que se esperava.","E":"A porta do auditório estava meia aberta desde cedo."},"gabarito":"A","comentarios":{"A":"Correta. Com valor de “um pouco”, “meio” é advérbio e permanece invariável.","B":"Incorreta. Antes de substantivo, “bastante” é pronome indefinido e varia: “bastantes razões”.","C":"Incorreta. O correto é “meio cansada”.","D":"Incorreta. “Menos” é invariável; não existe a forma “menas”.","E":"Incorreta. O correto é “meio aberta”."},"fundamentacao":"Palavras de dupla classificação: “meio”, “bastante”, “menos”."},{"numero":55,"topico":"Concordância nominal","enunciado":"Assinale a alternativa em que a concordância nominal contraria a norma-padrão.","alternativas":{"A":"Os alunos ficaram alerta durante toda a prova.","B":"Eles chegaram todos sós ao campus.","C":"É necessário paciência nesses casos.","D":"As candidatas estavam quites com a tesouraria.","E":"Seguem em anexo as fichas de inscrição preenchida."},"gabarito":"E","comentarios":{"A":"Correta quanto ao uso. Com valor adverbial, “alerta” permanece invariável; dicionários também registram a forma flexionada “alertas”, o que não torna a frase incorreta.","B":"Correta quanto ao uso. “Só”, adjetivo, concorda com o sujeito.","C":"Correta quanto ao uso. Sem determinante, a expressão permanece invariável.","D":"Correta quanto ao uso. “Quite” varia em número: “quites”.","E":"Resposta. O particípio deve concordar com “fichas”: “preenchidas”."},"fundamentacao":"Invariabilidade de “alerta”, variação de “quite” e concordância do adjunto adnominal."},{"numero":56,"topico":"Concordância nominal","enunciado":"Assinale a alternativa correta.","alternativas":{"A":"É proibido a entrada de animais no laboratório.","B":"Está proibido a divulgação dos gabaritos preliminares.","C":"É necessário muita cautela ao interpretar o edital.","D":"É proibida a permanência de estudantes nos corredores.","E":"Foi anexado as cópias ao requerimento."},"gabarito":"D","comentarios":{"A":"Incorreta. O correto é “É proibida a entrada”.","B":"Incorreta. O correto é “Está proibida a divulgação”.","C":"Incorreta. Determinado por “muita”, o sujeito exige “É necessária muita cautela”.","D":"Correta. Com o sujeito determinado pelo artigo, o predicativo concorda em gênero e número.","E":"Incorreta. O correto é “Foram anexadas as cópias”."},"fundamentacao":"Concordância em expressões do tipo “é proibido”, “é necessário”, “é bom”."},{"numero":57,"topico":"Concordância nominal","enunciado":"Assinale a alternativa correta quanto à concordância de “possível”.","alternativas":{"A":"As questões eram as mais difíceis possível.","B":"As questões eram o mais difíceis possíveis.","C":"As questões eram as mais difícil possíveis.","D":"As questões eram o mais difícil possíveis.","E":"As questões eram as mais difíceis possíveis."},"gabarito":"E","comentarios":{"A":"Incorreta. Mistura o artigo plural com o adjetivo no singular.","B":"Incorreta. Com “o mais”, o correto seria manter tudo no singular: “o mais difícil possível”.","C":"Incorreta. O adjetivo deve concordar com “questões”.","D":"Incorreta. Com “o mais”, o adjetivo final permanece no singular.","E":"Correta. Quando o superlativo vem precedido de artigo no plural, “possível” também vai ao plural."},"fundamentacao":"Concordância de “possível” com a forma do superlativo relativo."},{"numero":58,"topico":"Regência verbal","enunciado":"Assinale a alternativa em que a regência verbal está de acordo com a norma-padrão.","alternativas":{"A":"Assistimos o filme na sala de vídeo do campus.","B":"Aspirava o cargo de diretor havia anos.","C":"O documento visa a atender às novas exigências legais.","D":"Prefiro estudar do que trabalhar aos sábados.","E":"Ele obedeceu o regulamento sem questionar."},"gabarito":"C","comentarios":{"A":"Incorreta. No sentido de presenciar, “assistir” é transitivo indireto: “assistimos ao filme”.","B":"Incorreta. No sentido de almejar, “aspirar” é transitivo indireto: “aspirava ao cargo”.","C":"Correta. “Visar”, no sentido de ter por objetivo, rege a preposição “a”, e “atender a exigências” também.","D":"Incorreta. A norma pede “Prefiro estudar a trabalhar”.","E":"Incorreta. “Obedecer” é transitivo indireto: “obedeceu ao regulamento”."},"fundamentacao":"Verbos de regência cobrada com frequência: assistir, visar, aspirar, preferir, obedecer."},{"numero":59,"topico":"Regência verbal","enunciado":"Assinale a alternativa INCORRETA quanto à regência verbal.","alternativas":{"A":"A medida implicará mudanças no calendário acadêmico.","B":"Chegamos ao campus antes das sete horas.","C":"Ele namora com a colega de turma há dois anos.","D":"O aluno esqueceu-se do prazo de recurso.","E":"Informei o resultado aos candidatos aprovados."},"gabarito":"C","comentarios":{"A":"Correta quanto ao uso. No sentido de acarretar, “implicar” é transitivo direto.","B":"Correta quanto ao uso. “Chegar a”, e não “chegar em”, na norma-padrão.","C":"Resposta. “Namorar” é transitivo direto: “namora a colega”.","D":"Correta quanto ao uso. Na forma pronominal, “esquecer-se de”.","E":"Correta quanto ao uso. “Informar algo a alguém” ou “informar alguém de algo”."},"fundamentacao":"Regência de implicar, chegar, namorar, esquecer e informar."},{"numero":60,"topico":"Regência verbal","enunciado":"Assinale a alternativa correta quanto à regência verbal.","alternativas":{"A":"Custei a entender o enunciado da questão.","B":"A comissão procedeu o julgamento dos recursos.","C":"Não simpatizei-me com a proposta apresentada.","D":"Ele visava o cargo mais alto da instituição.","E":"Procedeu-se ao exame dos recursos interpostos."},"gabarito":"E","comentarios":{"A":"Incorreta. Na norma-padrão, “custar” tem por sujeito a coisa difícil: “Custou-me entender”.","B":"Incorreta. Falta a preposição: “procedeu ao julgamento”.","C":"Incorreta. “Simpatizar” não é pronominal, e “não” exige próclise: “Não simpatizei com”.","D":"Incorreta. No sentido de almejar, “visar” rege “a”: “visava ao cargo”.","E":"Correta. No sentido de dar início, “proceder” é transitivo indireto e rege “a”."},"fundamentacao":"Regência de custar, proceder, simpatizar e visar."},{"numero":61,"topico":"Regência verbal e pronomes relativos","enunciado":"Assinale a alternativa correta.","alternativas":{"A":"Este é o livro que preciso para a prova.","B":"O colega que me refiro saiu mais cedo.","C":"O cargo que aspiro exige experiência comprovada.","D":"A norma que obedeço está publicada no portal.","E":"A sala em que assistimos à palestra é bastante ampla."},"gabarito":"E","comentarios":{"A":"Incorreta. “Precisar de” exige a preposição: “de que preciso”.","B":"Incorreta. O correto é “a que me refiro”.","C":"Incorreta. O correto é “a que aspiro”.","D":"Incorreta. O correto é “a que obedeço”.","E":"Correta. A preposição “em” é exigida pela ideia de lugar, e “assistir a” está corretamente construído."},"fundamentacao":"Preposição obrigatória diante do relativo quando exigida pelo verbo da oração adjetiva."},{"numero":62,"topico":"Regência — “onde” e “aonde”","enunciado":"Assinale a alternativa correta quanto ao emprego de “onde” e “aonde”.","alternativas":{"A":"O município aonde nasci fica no interior do estado.","B":"Esta é a reunião onde definimos o calendário.","C":"O prazo onde se encerram as inscrições é hoje.","D":"Aonde você pretende chegar com esse argumento?","E":"O relatório onde constam os dados foi extraviado."},"gabarito":"D","comentarios":{"A":"Incorreta. Sem ideia de movimento, usa-se “onde”: “o município onde nasci”.","B":"Incorreta. “Reunião” não é lugar físico: “em que definimos”.","C":"Incorreta. “Prazo” indica tempo: “em que se encerram”.","D":"Correta. “Chegar a” exige movimento, o que justifica “aonde”.","E":"Incorreta. “Relatório” não é lugar: “em que constam”."},"fundamentacao":"“Onde” para lugar físico sem movimento; “aonde” com verbos de movimento; “em que” nos demais casos."},{"numero":63,"topico":"Regência verbal","enunciado":"Assinale a alternativa INCORRETA quanto à regência verbal.","alternativas":{"A":"Chamaram-no de incompetente diante de todos.","B":"Ele assistiu ao jogo pela televisão.","C":"Fui na secretaria pedir a declaração de matrícula.","D":"Comunicaram aos alunos a mudança de horário.","E":"O professor perdoou ao aluno a falta cometida."},"gabarito":"C","comentarios":{"A":"Correta quanto ao uso. “Chamar de” é uma das construções admitidas.","B":"Correta quanto ao uso. “Assistir a”, no sentido de presenciar.","C":"Resposta. Verbos de movimento pedem “a” ou “para”: “Fui à secretaria”.","D":"Correta quanto ao uso. “Comunicar algo a alguém”.","E":"Correta quanto ao uso. “Perdoar algo a alguém”."},"fundamentacao":"Verbos de movimento e regência de chamar, assistir, comunicar e perdoar."},{"numero":64,"topico":"Regência nominal","enunciado":"Assinale a alternativa em que a preposição está corretamente empregada.","alternativas":{"A":"O texto é passível a interpretações divergentes.","B":"Ele tem preferência por questões de interpretação.","C":"Ela está imbuída com o espírito de equipe.","D":"O servidor é dotado com grande paciência.","E":"O relatório é compatível ao modelo exigido."},"gabarito":"B","comentarios":{"A":"Incorreta. O correto é “passível de”.","B":"Correta. “Preferência por” é a regência prevista pela norma.","C":"Incorreta. O correto é “imbuída de”.","D":"Incorreta. O correto é “dotado de”.","E":"Incorreta. O correto é “compatível com”."},"fundamentacao":"Regência nominal de preferência, passível, imbuído, dotado e compatível."},{"numero":65,"topico":"Regência nominal","enunciado":"Assinale a alternativa INCORRETA quanto à regência nominal.","alternativas":{"A":"Somos favoráveis à proposta de reformulação.","B":"Ele demonstrou desprezo com as regras do edital.","C":"O acervo é acessível a todos os estudantes.","D":"O programa é destinado às comunidades rurais.","E":"Ela é entendida em legislação educacional."},"gabarito":"B","comentarios":{"A":"Correta quanto ao uso. “Favorável a”.","B":"Resposta. O correto é “desprezo por” ou “desprezo a”.","C":"Correta quanto ao uso. “Acessível a”.","D":"Correta quanto ao uso. “Destinado a”.","E":"Correta quanto ao uso. “Entendido em”."},"fundamentacao":"Regência nominal de favorável, acessível, destinado, desprezo e entendido."},{"numero":66,"topico":"Regência nominal","enunciado":"Assinale a alternativa correta.","alternativas":{"A":"O acesso ao acervo digital será restrito aos matriculados.","B":"A obediência das normas internas é obrigatória.","C":"Tenho certeza que ele comparecerá à sessão.","D":"Sua insistência de errar é notável.","E":"O respeito das diferenças é essencial na escola."},"gabarito":"A","comentarios":{"A":"Correta. “Acesso a” é a regência prevista.","B":"Incorreta. O correto é “obediência às normas”.","C":"Incorreta. O substantivo “certeza” rege “de”: “certeza de que”.","D":"Incorreta. O correto é “insistência em errar”.","E":"Incorreta. O correto é “respeito às diferenças”."},"fundamentacao":"Regência de nomes derivados de verbos e vedação ao chamado cacófato sintático da omissão de preposição."},{"numero":67,"topico":"Colocação pronominal","enunciado":"Assinale a alternativa em que a colocação pronominal contraria a norma-padrão.","alternativas":{"A":"Não me disseram nada sobre o resultado.","B":"Tudo se resolveu em poucos dias.","C":"Me parece que houve engano na correção.","D":"Jamais lhe faltou coragem para discordar.","E":"Quem me avisou foi o coordenador do curso."},"gabarito":"C","comentarios":{"A":"Correta quanto ao uso. O advérbio “não” exige próclise.","B":"Correta quanto ao uso. O pronome indefinido “tudo” atrai o pronome átono.","C":"Resposta. Na norma-padrão escrita, não se inicia período com pronome átono: “Parece-me que”.","D":"Correta quanto ao uso. “Jamais” atrai o pronome.","E":"Correta quanto ao uso. O pronome relativo “quem” atrai o pronome átono."},"fundamentacao":"Vedação ao pronome átono em início de período na escrita formal."},{"numero":68,"topico":"Colocação pronominal","enunciado":"Assinale a alternativa correta quanto à colocação pronominal.","alternativas":{"A":"Lhe farei o pedido amanhã, na reunião do colegiado.","B":"Não far-lhe-ei o pedido amanhã.","C":"Farei-lhe o pedido amanhã, na reunião do colegiado.","D":"Far-lhe-ei o pedido amanhã, na reunião do colegiado.","E":"Se eu ver-te amanhã, direi tudo."},"gabarito":"D","comentarios":{"A":"Incorreta. Não se inicia período com pronome átono.","B":"Incorreta. Havendo “não”, a próclise se impõe: “Não lhe farei”.","C":"Incorreta. A ênclise é vedada com verbo no futuro.","D":"Correta. Com verbo no futuro do presente e sem fator de próclise, emprega-se a mesóclise.","E":"Incorreta. Além do problema de colocação, a forma verbal correta seria “vir”, futuro do subjuntivo."},"fundamentacao":"Mesóclise no futuro do presente e do pretérito; próclise obrigatória com palavra atrativa."},{"numero":69,"topico":"Colocação pronominal","enunciado":"Assinale a alternativa em que o pronome átono deve obrigatoriamente vir antes do verbo.","alternativas":{"A":"O coordenador entregou-me o parecer ontem.","B":"Depois da reunião, despedimo-nos rapidamente.","C":"Ele lhe dirá toda a verdade na próxima semana.","D":"Ninguém nos avisou do adiamento da sessão.","E":"Avisaram-me sobre o resultado por telefone."},"gabarito":"D","comentarios":{"A":"Incorreta. Não há palavra atrativa; a ênclise é a colocação esperada.","B":"Incorreta. Depois de pausa marcada por vírgula, a ênclise é a colocação natural.","C":"Incorreta. Com sujeito expresso e verbo no futuro, cabem próclise e mesóclise; não há obrigatoriedade.","D":"Correta. O pronome indefinido negativo “ninguém” exige próclise.","E":"Incorreta. Em início de período, a ênclise é a única possibilidade."},"fundamentacao":"Fatores de próclise: negação, indefinidos, relativos, conjunções subordinativas e advérbios sem pausa."},{"numero":70,"topico":"Colocação pronominal","enunciado":"Assinale a alternativa correta quanto à colocação do pronome átono em locuções verbais.","alternativas":{"A":"Tinham-me avisado do prazo com antecedência.","B":"Tinham avisado-me do prazo com antecedência.","C":"Não tinham avisado-me do prazo com antecedência.","D":"Me tinham avisado do prazo com antecedência.","E":"Tinham avisado-lhe do prazo com antecedência."},"gabarito":"A","comentarios":{"A":"Correta. A ênclise ao auxiliar é admitida quando não há palavra atrativa.","B":"Incorreta. É vedada a ênclise ao particípio.","C":"Incorreta. Além da ênclise ao particípio, o “não” exigiria próclise.","D":"Incorreta. Não se inicia período com pronome átono.","E":"Incorreta. Repete-se a ênclise ao particípio, além do problema de regência de “avisar alguém”."},"fundamentacao":"Colocação pronominal em locuções verbais: vedação da ênclise ao particípio."},{"numero":71,"topico":"Colocação pronominal","enunciado":"Assinale a alternativa INCORRETA quanto à colocação pronominal.","alternativas":{"A":"Comecei a fazê-lo ainda ontem à noite.","B":"Ao me ver, ele não cumprimentou-me.","C":"Não posso deixar de dizer-lhe a verdade.","D":"É difícil não se emocionar com a cena final.","E":"Para não me atrasar, saí de casa mais cedo."},"gabarito":"B","comentarios":{"A":"Correta quanto ao uso. Com infinitivo preposicionado, a ênclise é admitida.","B":"Resposta. Em “não cumprimentou-me”, o advérbio de negação exige próclise: “não me cumprimentou”.","C":"Correta quanto ao uso. A ênclise ao infinitivo é livre nesse contexto.","D":"Correta quanto ao uso. O “não” anteposto ao infinitivo justifica a próclise.","E":"Correta quanto ao uso. A negação atrai o pronome."},"fundamentacao":"Colocação com infinitivo e obrigatoriedade da próclise após palavra negativa."},{"numero":72,"topico":"Colocação pronominal","enunciado":"Assinale a alternativa correta quanto à colocação pronominal.","alternativas":{"A":"Em tratando-se de prazos, é preciso rigor absoluto.","B":"Em se tratando de prazos, é preciso rigor absoluto.","C":"Não fazendo-o hoje, teremos problemas amanhã.","D":"Jamais entregaria-lhe o documento sem conferir.","E":"Tudo resolveu-se com uma simples conversa."},"gabarito":"B","comentarios":{"A":"Incorreta. A ênclise é vedada nesse contexto.","B":"Correta. Com gerúndio precedido da preposição “em”, a próclise é a colocação prevista.","C":"Incorreta. O advérbio “não” atrai o pronome: “Não o fazendo”.","D":"Incorreta. “Jamais” exige próclise: “Jamais lhe entregaria”.","E":"Incorreta. O indefinido “tudo” exige próclise: “Tudo se resolveu”."},"fundamentacao":"Colocação com gerúndio e palavras atrativas."},{"numero":73,"topico":"Pontuação","enunciado":"Considere os períodos: I. Os servidores, que participaram do curso, receberam certificado. II. Os servidores que participaram do curso receberam certificado. Assinale a alternativa correta.","alternativas":{"A":"I e II têm exatamente o mesmo sentido.","B":"Em I, entende-se que apenas parte dos servidores participou do curso.","C":"Em II, a oração adjetiva é explicativa.","D":"Em I, a vírgula é obrigatória por separar sujeito de predicado.","E":"Em I, entende-se que todos os servidores participaram; em II, apenas parte deles."},"gabarito":"E","comentarios":{"A":"Incorreta. A presença ou a ausência das vírgulas altera o alcance da informação.","B":"Incorreta. A leitura restritiva corresponde ao período II.","C":"Incorreta. Sem vírgulas, a adjetiva é restritiva.","D":"Incorreta. A vírgula ali isola a oração explicativa; separar sujeito de predicado é justamente o que a norma veda.","E":"Correta. Isolada por vírgulas, a adjetiva é explicativa e generaliza; sem vírgulas, é restritiva e delimita."},"fundamentacao":"Distinção entre oração adjetiva restritiva e explicativa e seus efeitos de sentido."},{"numero":74,"topico":"Pontuação","enunciado":"Assinale a alternativa em que a vírgula empregada antes de “e” está de acordo com a norma-padrão.","alternativas":{"A":"O diretor assinou o documento, e o coordenador o arquivou.","B":"A comissão analisou, e aprovou o relatório final.","C":"Os alunos, e os professores participaram da assembleia.","D":"Ele estudou muito, e, foi aprovado no concurso.","E":"Chegou cedo e, saiu antes do encerramento."},"gabarito":"A","comentarios":{"A":"Correta. A vírgula antes de “e” é admitida quando as orações coordenadas têm sujeitos diferentes.","B":"Incorreta. Separa-se indevidamente o verbo do seu complemento.","C":"Incorreta. Separam-se indevidamente termos coordenados ligados por “e”.","D":"Incorreta. A segunda vírgula isola indevidamente a conjunção.","E":"Incorreta. A vírgula depois de “e” não se justifica nesse contexto."},"fundamentacao":"Emprego da vírgula antes da conjunção “e” em orações com sujeitos distintos."},{"numero":75,"topico":"Pontuação","enunciado":"Assinale a alternativa corretamente pontuada.","alternativas":{"A":"São atribuições do setor, planejar as atividades, acompanhar os indicadores e elaborar relatórios.","B":"São atribuições do setor: planejar as atividades; acompanhar os indicadores; e elaborar relatórios.","C":"São atribuições do setor: planejar as atividades. Acompanhar os indicadores. E elaborar relatórios.","D":"São, atribuições do setor: planejar as atividades; acompanhar os indicadores e; elaborar relatórios.","E":"São atribuições do setor; planejar as atividades: acompanhar os indicadores: elaborar relatórios."},"gabarito":"B","comentarios":{"A":"Incorreta. A vírgula não cumpre a função de anunciar a enumeração.","B":"Correta. Os dois-pontos anunciam a enumeração, e o ponto e vírgula separa os itens, uso corrente em textos normativos.","C":"Incorreta. O fracionamento em períodos independentes desfaz a estrutura enumerativa.","D":"Incorreta. Há vírgula entre verbo e predicativo e ponto e vírgula deslocado depois da conjunção.","E":"Incorreta. Os sinais estão trocados: o ponto e vírgula não anuncia enumeração."},"fundamentacao":"Dois-pontos para anunciar enumeração e ponto e vírgula entre itens de série."},{"numero":76,"topico":"Pontuação","enunciado":"Assinale a alternativa em que a vírgula isola um vocativo.","alternativas":{"A":"Teresina, capital do Piauí, sediará a prova objetiva.","B":"Ontem, o resultado preliminar foi divulgado.","C":"O reitor, que assinou o edital, viajou na segunda-feira.","D":"Candidatos, confiram os dados antes de enviar a inscrição.","E":"Estudou com afinco, portanto foi aprovado."},"gabarito":"D","comentarios":{"A":"Incorreta. Trata-se de aposto explicativo.","B":"Incorreta. A vírgula isola adjunto adverbial deslocado.","C":"Incorreta. A vírgula isola oração adjetiva explicativa.","D":"Correta. “Candidatos” é o termo por meio do qual se chama o interlocutor.","E":"Incorreta. A vírgula antecede conjunção conclusiva."},"fundamentacao":"Identificação do vocativo e distinção em relação ao aposto."},{"numero":77,"topico":"Pontuação","enunciado":"Assinale a alternativa corretamente pontuada.","alternativas":{"A":"O prazo era curto; o resultado, contudo, saiu antes do previsto.","B":"O prazo era curto, o resultado contudo saiu antes do previsto.","C":"O prazo era curto; o resultado contudo, saiu antes do previsto.","D":"O prazo era curto, o resultado, contudo saiu antes do previsto.","E":"O prazo era, curto; o resultado contudo, saiu antes do previsto."},"gabarito":"A","comentarios":{"A":"Correta. O ponto e vírgula separa as orações, e as vírgulas isolam a conjunção deslocada.","B":"Incorreta. Faltam as vírgulas que isolam “contudo”, e a vírgula sozinha não liga bem as orações.","C":"Incorreta. Isola-se “contudo” apenas de um lado.","D":"Incorreta. Também isola “contudo” apenas de um lado.","E":"Incorreta. Separa-se o verbo do predicativo, além do isolamento incompleto da conjunção."},"fundamentacao":"Isolamento por vírgulas de conjunções coordenativas deslocadas."},{"numero":78,"topico":"Pontuação","enunciado":"Assinale a alternativa em que há erro de pontuação.","alternativas":{"A":"Os candidatos aprovados na primeira etapa, deverão apresentar os documentos.","B":"Na primeira etapa, serão avaliados os conhecimentos gerais.","C":"Os candidatos deverão, até sexta-feira, entregar os documentos.","D":"Serão convocados, em ordem de classificação, os aprovados.","E":"Quem não comparecer no dia da prova será eliminado."},"gabarito":"A","comentarios":{"A":"Resposta. A vírgula separa indevidamente o sujeito do verbo.","B":"Correta quanto ao uso. A vírgula isola adjunto adverbial anteposto.","C":"Correta quanto ao uso. As vírgulas isolam adjunto adverbial intercalado.","D":"Correta quanto ao uso. As vírgulas isolam expressão intercalada.","E":"Correta quanto ao uso. Não há termo deslocado que justifique vírgula."},"fundamentacao":"Vedação da vírgula entre sujeito e predicado."},{"numero":79,"topico":"Pontuação","enunciado":"A vírgula empregada em “Concluído o levantamento, a comissão emitiu o parecer” justifica-se por:","alternativas":{"A":"isolar aposto explicativo;","B":"marcar a elipse de uma forma verbal;","C":"separar oração reduzida de particípio anteposta à principal;","D":"isolar vocativo;","E":"separar termos coordenados de mesma função."},"gabarito":"C","comentarios":{"A":"Incorreta. Não há termo que explique ou identifique outro.","B":"Incorreta. Não há verbo subentendido substituído pela vírgula.","C":"Correta. “Concluído o levantamento” é oração reduzida de particípio, de valor temporal, anteposta à principal.","D":"Incorreta. Não há chamamento do interlocutor.","E":"Incorreta. Não há série de termos coordenados."},"fundamentacao":"Vírgula obrigatória em oração subordinada, inclusive reduzida, anteposta à principal."},{"numero":80,"topico":"Pontuação","enunciado":"Assinale a alternativa corretamente pontuada.","alternativas":{"A":"A avaliação diagnóstica isto é, aquela realizada no início do processo orienta o planejamento.","B":"A avaliação diagnóstica, isto é, aquela realizada no início do processo, orienta o planejamento.","C":"A avaliação diagnóstica, isto é aquela realizada no início do processo, orienta o planejamento.","D":"A avaliação, diagnóstica isto é, aquela realizada no início do processo orienta, o planejamento.","E":"A avaliação diagnóstica isto é aquela realizada no início do processo, orienta o planejamento."},"gabarito":"B","comentarios":{"A":"Incorreta. Falta a vírgula que abre a explicação e a que a fecha.","B":"Correta. A expressão explicativa “isto é” vem isolada por vírgulas, e o aposto explicativo é fechado antes do verbo.","C":"Incorreta. Falta a vírgula depois de “isto é”.","D":"Incorreta. As vírgulas estão deslocadas e separam verbo de complemento.","E":"Incorreta. A pontuação isola apenas o fim da explicação e separa sujeito de predicado."},"fundamentacao":"Isolamento de expressões explicativas e de apostos por vírgulas."},{"numero":81,"topico":"Ortografia — emprego do hífen","enunciado":"Assinale a alternativa em que todas as palavras estão grafadas de acordo com o Acordo Ortográfico vigente.","alternativas":{"A":"auto-escola, ante-sala, contra-regra","B":"autoescola, antessala, contrarregra","C":"autoescola, antesala, contraregra","D":"auto-escola, antessala, contrarregra","E":"autoescola, antessala, contra-regra"},"gabarito":"B","comentarios":{"A":"Incorreta. Nenhuma das três formas exige hífen.","B":"Correta. Prefixo terminado em vogal diante de vogal diferente une-se sem hífen; diante de “s” e “r”, dobram-se essas consoantes.","C":"Incorreta. Falta a duplicação do “s” e do “r”.","D":"Incorreta. “Auto-escola” contraria a regra: o correto é “autoescola”.","E":"Incorreta. Pela regra de prefixação, o “r” dobra e não há hífen: “contrarregra”."},"fundamentacao":"Prefixação e uso do hífen: duplicação de “r” e “s” após prefixo terminado em vogal."},{"numero":82,"topico":"Ortografia — emprego do hífen","enunciado":"Assinale a alternativa inteiramente correta.","alternativas":{"A":"co-ordenar, preescolar, superresistente","B":"coordenar, preescolar, super-resistente","C":"co-ordenar, pré-escolar, superresistente","D":"coordenar, pré-escolar, super-resistente","E":"coordenar, pré-escolar, superresistente"},"gabarito":"D","comentarios":{"A":"Incorreta. “Co-ordenar” e “preescolar” contrariam as regras.","B":"Incorreta. “Preescolar” deveria ser “pré-escolar”.","C":"Incorreta. “Co-ordenar” e “superresistente” estão errados.","D":"Correta. O prefixo “co” aglutina-se; prefixos tônicos acentuados exigem hífen; “super” diante de “r” também.","E":"Incorreta. Diante de “r”, o prefixo “super” exige hífen."},"fundamentacao":"Hífen com prefixos tônicos acentuados e com prefixos terminados em “r”."},{"numero":83,"topico":"Acentuação gráfica","enunciado":"Assinale a alternativa em que a acentuação está de acordo com o Acordo Ortográfico vigente.","alternativas":{"A":"idéia, heróico, jibóia","B":"ideia, heróico, jiboia","C":"ideia, heroico, jiboia","D":"idéia, heroico, jibóia","E":"ideia, heroico, jibóia"},"gabarito":"C","comentarios":{"A":"Incorreta. As três formas seguem a regra anterior ao Acordo.","B":"Incorreta. “Heróico” é paroxítona e não recebe acento.","C":"Correta. Ditongos abertos “ei” e “oi” em palavras paroxítonas deixaram de ser acentuados.","D":"Incorreta. “Idéia” e “jibóia” são formas antigas.","E":"Incorreta. “Jibóia” contraria a regra em vigor."},"fundamentacao":"Supressão do acento em ditongos abertos de paroxítonas."},{"numero":84,"topico":"Acentuação gráfica","enunciado":"Assinale a alternativa inteiramente correta quanto à acentuação.","alternativas":{"A":"Eles tem razão, mas ele não têm tempo; ontem ele não pôde vir.","B":"Eles têm razão, mas ele não tem tempo; ontem ele não pode vir.","C":"Eles têem razão, mas ele não tem tempo; ontem ele não pôde vir.","D":"Eles têm razão, mas ele não tem tempo; ontem ele não pôde vir.","E":"Eles têm razão, mas ele não têm tempo; ontem ele não pôde vir."},"gabarito":"D","comentarios":{"A":"Incorreta. As formas de singular e plural estão trocadas.","B":"Incorreta. Com o advérbio “ontem”, exige-se o pretérito “pôde”.","C":"Incorreta. Não existe a forma “têem”.","D":"Correta. O acento diferencial de número em “têm” e o acento diferencial de tempo em “pôde” estão corretamente empregados.","E":"Incorreta. Com sujeito no singular, usa-se “tem”."},"fundamentacao":"Acentos diferenciais que permanecem em vigor: “têm/tem”, “vêm/vem”, “pôde/pode”, “pôr/por”."},{"numero":85,"topico":"Ortografia — parônimos e homônimos","enunciado":"Assinale a alternativa inteiramente correta.","alternativas":{"A":"O aluno agiu mau, mas não é mal; estudou afim de recuperar a nota.","B":"O aluno agiu mal, mas não é mal; estudou afim de recuperar a nota.","C":"O aluno agiu mau, mas não é mau; estudou a fim de recuperar a nota.","D":"O aluno agiu mal, mas não é mau; estudou afim de recuperar a nota.","E":"O aluno agiu mal, mas não é mau; estudou a fim de recuperar a nota."},"gabarito":"E","comentarios":{"A":"Incorreta. Inverte o uso de “mal” e “mau” e emprega “afim”, que significa semelhante ou aparentado.","B":"Incorreta. “Não é mal” exigiria o adjetivo “mau”.","C":"Incorreta. “Agiu mau” exigiria o advérbio “mal”.","D":"Incorreta. “Afim de” não exprime finalidade.","E":"Correta. “Mal” é advérbio, opõe-se a “bem”; “mau” é adjetivo, opõe-se a “bom”; “a fim de” exprime finalidade."},"fundamentacao":"Emprego de “mal/mau” e de “a fim de/afim”."},{"numero":86,"topico":"Ortografia","enunciado":"Assinale a alternativa em que todas as palavras estão corretamente grafadas.","alternativas":{"A":"excessão, ascenção, obceção, discrissão","B":"exceção, ascenção, obsessão, discrição","C":"excessão, ascensão, obsessão, discreção","D":"exceção, ascensão, obsessão, discrição","E":"exceção, ascensão, obceção, discrição"},"gabarito":"D","comentarios":{"A":"Incorreta. Todas as formas estão grafadas erroneamente.","B":"Incorreta. “Ascenção” contraria a grafia correta, “ascensão”.","C":"Incorreta. “Excessão” não existe: o correto é “exceção”. A forma preferida do outro par também é “discrição”.","D":"Correta. As quatro formas seguem a grafia registrada em dicionário.","E":"Incorreta. O correto é “obsessão”."},"fundamentacao":"Grafia de palavras com “ç”, “ss” e “s” em contextos de sufixação."},{"numero":87,"topico":"Morfologia — classes de palavras","enunciado":"Em “Que dia difícil! Que você não desanime é o que desejo”, as ocorrências de “que” classificam-se, respectivamente, como:","alternativas":{"A":"pronome relativo, conjunção integrante, pronome indefinido;","B":"advérbio, pronome relativo, conjunção integrante;","C":"pronome indefinido, conjunção integrante, pronome relativo;","D":"conjunção integrante, pronome relativo, pronome indefinido;","E":"pronome interrogativo, conjunção coordenativa, pronome relativo."},"gabarito":"C","comentarios":{"A":"Incorreta. A primeira ocorrência não retoma antecedente algum.","B":"Incorreta. A primeira ocorrência determina o substantivo “dia”, o que descarta a classificação como advérbio.","C":"Correta. Na exclamação, “que” é pronome indefinido adjetivo; depois, introduz oração subjetiva como conjunção integrante; por fim, retoma “o” como pronome relativo.","D":"Incorreta. A ordem das classificações não corresponde às ocorrências.","E":"Incorreta. Não há pergunta na primeira ocorrência, e a segunda introduz oração subordinada, não coordenada."},"fundamentacao":"Polivalência da palavra “que” e seus critérios de classificação."},{"numero":88,"topico":"Morfologia — formação de palavras","enunciado":"Assinale a alternativa em que as palavras foram formadas, respectivamente, por derivação prefixal, derivação sufixal e composição por justaposição.","alternativas":{"A":"felizmente, infeliz, girassol","B":"desleal, planalto, lealdade","C":"guarda-chuva, deslealdade, refazer","D":"refazer, aguardente, cafezinho","E":"infeliz, felizmente, passatempo"},"gabarito":"E","comentarios":{"A":"Incorreta. A ordem está invertida, e “girassol” envolve alteração, o que caracteriza aglutinação.","B":"Incorreta. “Planalto” é composição por aglutinação, e a sequência não corresponde à pedida.","C":"Incorreta. A ordem dos processos não corresponde à do enunciado.","D":"Incorreta. “Aguardente” é aglutinação, e “cafezinho” é derivação sufixal.","E":"Correta. “In-” é prefixo, “-mente” é sufixo e “passatempo” resulta da união de dois radicais sem alteração fonética."},"fundamentacao":"Processos de formação: derivação prefixal, sufixal, composição por justaposição e por aglutinação."},{"numero":89,"topico":"Morfologia — formação de palavras","enunciado":"Em “O jantar estava frio”, a palavra “jantar” resulta de:","alternativas":{"A":"derivação prefixal;","B":"derivação imprópria;","C":"derivação sufixal;","D":"derivação regressiva;","E":"composição por aglutinação."},"gabarito":"B","comentarios":{"A":"Incorreta. Não há prefixo acrescentado ao radical.","B":"Correta. A palavra muda de classe, do verbo para o substantivo, sem alteração de forma.","C":"Incorreta. Não há sufixo derivacional.","D":"Incorreta. Na regressiva há redução da forma, como em “o beijo”, de “beijar”.","E":"Incorreta. Não há união de radicais."},"fundamentacao":"Derivação imprópria (conversão) e sua distinção em relação à derivação regressiva."},{"numero":90,"topico":"Morfologia — flexão verbal","enunciado":"Assinale a alternativa em que as formas de imperativo referentes ao pronome “tu” foram corretamente empregadas.","alternativas":{"A":"Faz o exercício e não te esqueças do prazo.","B":"Faça o exercício e não te esqueça do prazo.","C":"Faz o exercício e não te esquece do prazo.","D":"Faz o exercício e não se esqueças do prazo.","E":"Faça o exercício e não se esqueças do prazo."},"gabarito":"A","comentarios":{"A":"Correta. O imperativo afirmativo de “tu” vem do presente do indicativo sem o “s”; o negativo vem do presente do subjuntivo.","B":"Incorreta. “Faça” corresponde a “você”, o que quebra a uniformidade de tratamento.","C":"Incorreta. O imperativo negativo exige a forma do subjuntivo, “esqueças”.","D":"Incorreta. Com “tu”, o pronome é “te”, e não “se”.","E":"Incorreta. Mistura tratamento e pronome incompatíveis."},"fundamentacao":"Formação do imperativo afirmativo e negativo e uniformidade de tratamento."},{"numero":91,"topico":"Morfologia — flexão verbal","enunciado":"Assinale a alternativa correta quanto ao emprego das formas verbais.","alternativas":{"A":"Se ele intervir na reunião, o impasse será superado.","B":"Quando eles proporem a emenda, votaremos o texto.","C":"Se nós mantermos o prazo, tudo dará certo.","D":"Se ele intervier na reunião, o impasse será superado.","E":"Assim que ele ver o resultado, avisará os colegas."},"gabarito":"D","comentarios":{"A":"Incorreta. “Intervir” é a forma do infinitivo, não do futuro do subjuntivo.","B":"Incorreta. O correto é “propuserem”.","C":"Incorreta. O correto é “mantivermos”.","D":"Correta. “Intervir” deriva de “vir” e faz o futuro do subjuntivo em “intervier”.","E":"Incorreta. O correto é “vir”, futuro do subjuntivo de “ver”."},"fundamentacao":"Futuro do subjuntivo de verbos irregulares e derivados."},{"numero":92,"topico":"Morfologia — pronomes","enunciado":"Assinale a alternativa correta quanto ao emprego dos pronomes pessoais.","alternativas":{"A":"Trouxeram o documento para eu assinar ainda hoje.","B":"Não há nada entre eu e você que precise ser esclarecido.","C":"Isso é para mim resolver antes do prazo.","D":"Chegou um recado para mim entregar a você.","E":"Ele fez tudo por mim e por tu."},"gabarito":"A","comentarios":{"A":"Correta. Sendo sujeito do infinitivo, emprega-se o pronome reto “eu”.","B":"Incorreta. Depois de preposição, usa-se a forma oblíqua: “entre mim e você”.","C":"Incorreta. O correto é “para eu resolver”.","D":"Incorreta. O correto é “para eu entregar”.","E":"Incorreta. Depois de preposição, usa-se “ti”: “por mim e por ti”."},"fundamentacao":"Emprego de “eu/mim” diante de infinitivo e depois de preposição."},{"numero":93,"topico":"Morfologia — classes de palavras","enunciado":"Em “Só os aprovados receberão o certificado” e “Eles ficaram sós na sala”, a palavra “só” classifica-se, respectivamente, como:","alternativas":{"A":"adjetivo e advérbio;","B":"advérbio e adjetivo;","C":"advérbio nas duas ocorrências;","D":"adjetivo nas duas ocorrências;","E":"pronome indefinido e adjetivo."},"gabarito":"B","comentarios":{"A":"Incorreta. A ordem está invertida.","B":"Correta. No primeiro caso, equivale a “somente” e é invariável; no segundo, equivale a “sozinhos” e varia.","C":"Incorreta. A flexão em “sós” revela o valor adjetivo.","D":"Incorreta. Na primeira ocorrência, a palavra não qualifica nenhum substantivo.","E":"Incorreta. “Só” não figura entre os pronomes indefinidos."},"fundamentacao":"Palavras de dupla classificação e critério funcional de análise."},{"numero":94,"topico":"Morfologia — conjunções","enunciado":"Assinale a alternativa em que o conectivo destacado exprime concessão.","alternativas":{"A":"Conquanto o prazo fosse curto, a comissão concluiu o trabalho.","B":"Estudou tanto que passou em primeiro lugar.","C":"Como o prazo era curto, houve atraso na entrega.","D":"À medida que o prazo se encurtava, crescia a tensão.","E":"Desde que haja quórum, a sessão será realizada."},"gabarito":"A","comentarios":{"A":"Correta. “Conquanto” equivale a “embora” e admite um obstáculo que não impede o fato principal.","B":"Incorreta. “Tanto... que” exprime consequência.","C":"Incorreta. “Como”, no início do período, exprime causa.","D":"Incorreta. “À medida que” exprime proporção.","E":"Incorreta. “Desde que”, com verbo no subjuntivo, exprime condição."},"fundamentacao":"Valores semânticos das conjunções subordinativas adverbiais."},{"numero":95,"topico":"Semântica — parônimos","enunciado":"Assinale a alternativa em que a palavra destacada foi empregada corretamente.","alternativas":{"A":"O servidor foi taxado de incompetente pelos colegas.","B":"O relatório descriminou os gastos por setor.","C":"A norma foi infligida pelo estudante.","D":"A comissão deferiu o recurso apresentado pelo candidato.","E":"O documento foi ratificado, ou seja, corrigido."},"gabarito":"D","comentarios":{"A":"Incorreta. No sentido de rotular, emprega-se “tachado”; “taxar” é fixar taxa.","B":"Incorreta. No sentido de discernir, separar item a item, emprega-se “discriminar”.","C":"Incorreta. Norma se “infringe”; pena se “inflige”.","D":"Correta. “Deferir” é conceder, atender; “diferir” é adiar ou ser diferente.","E":"Incorreta. “Ratificar” é confirmar; corrigir é “retificar”."},"fundamentacao":"Parônimos de uso frequente em texto administrativo."},{"numero":96,"topico":"Semântica — polissemia e homonímia","enunciado":"Assinale a alternativa em que a relação entre os sentidos configura polissemia.","alternativas":{"A":"“manga”, fruta, e “manga”, parte da camisa.","B":"“cela”, cômodo, e “sela”, arreio.","C":"“acender” e “ascender”.","D":"“eminente” e “iminente”.","E":"“Ele deixou o cargo” e “Ele deixou o livro sobre a mesa”."},"gabarito":"E","comentarios":{"A":"Incorreta. São palavras de origens diferentes que coincidiram na forma: homonímia.","B":"Incorreta. São homônimos homófonos.","C":"Incorreta. São parônimos, semelhantes na forma e distintos no sentido.","D":"Incorreta. Também se trata de parônimos.","E":"Correta. Trata-se da mesma palavra, com sentidos distintos, porém relacionados entre si."},"fundamentacao":"Distinção entre polissemia, homonímia e paronímia."},{"numero":97,"topico":"Semântica — sinonímia","enunciado":"Em “O parecer foi lacônico”, a palavra destacada equivale a:","alternativas":{"A":"conciso;","B":"prolixo;","C":"confuso;","D":"elogioso;","E":"definitivo."},"gabarito":"A","comentarios":{"A":"Correta. “Lacônico” qualifica o que se diz em poucas palavras.","B":"Incorreta. “Prolixo” é justamente o contrário: excessivamente longo.","C":"Incorreta. Brevidade não implica falta de clareza.","D":"Incorreta. O termo não carrega juízo de valor sobre o conteúdo.","E":"Incorreta. Não há relação com o caráter conclusivo do parecer."},"fundamentacao":"Sinonímia contextual de vocabulário culto."},{"numero":98,"topico":"Semântica — antonímia","enunciado":"Assinale a alternativa que apresenta um par de antônimos.","alternativas":{"A":"parcimonioso / econômico","B":"inócuo / inofensivo","C":"efêmero / duradouro","D":"exímio / hábil","E":"fortuito / casual"},"gabarito":"C","comentarios":{"A":"Incorreta. São sinônimos: ambos indicam moderação nos gastos.","B":"Incorreta. São sinônimos: ambos indicam ausência de dano.","C":"Correta. “Efêmero” é o que dura pouco; “duradouro”, o que se prolonga.","D":"Incorreta. São sinônimos: ambos indicam destreza.","E":"Incorreta. São sinônimos: ambos indicam acaso."},"fundamentacao":"Relações de sentido: sinonímia e antonímia."},{"numero":99,"topico":"Semântica — denotação e conotação","enunciado":"Assinale a alternativa em que a expressão destacada foi empregada em sentido conotativo.","alternativas":{"A":"O candidato engoliu o choro e continuou a prova.","B":"O prazo previsto no edital termina na sexta-feira.","C":"A prova objetiva terá quatro horas de duração.","D":"O campus fica a dez quilômetros do centro da cidade.","E":"A comissão publicou o gabarito preliminar no portal."},"gabarito":"A","comentarios":{"A":"Correta. “Engolir o choro” não descreve ato físico, e sim a contenção da emoção.","B":"Incorreta. A informação é literal.","C":"Incorreta. Trata-se de dado objetivo.","D":"Incorreta. A medida é literal.","E":"Incorreta. Não há deslocamento de sentido."},"fundamentacao":"Sentido literal e sentido figurado."},{"numero":100,"topico":"Semântica — ambiguidade","enunciado":"Assinale o período que apresenta ambiguidade.","alternativas":{"A":"O coordenador informou ao aluno que o prazo havia terminado.","B":"A comissão publicou o resultado na tarde de ontem.","C":"Os candidatos entregaram os documentos na secretaria.","D":"O edital prevê recurso no prazo de cinco dias.","E":"O professor disse ao aluno que ele seria aprovado."},"gabarito":"E","comentarios":{"A":"Incorreta. Não há pronome de referência indeterminada; o conteúdo informado é claro.","B":"Incorreta. Todos os termos têm referência única.","C":"Incorreta. Não há duplicidade de leitura.","D":"Incorreta. A informação é unívoca.","E":"Correta. O pronome “ele” pode remeter tanto ao professor quanto ao aluno."},"fundamentacao":"Ambiguidade por referência pronominal imprecisa."}]}</script>
+<script>
+(function(){
+"use strict";
+var D = JSON.parse(document.getElementById('dataset').textContent);
+var TEX = {}; D.textos.forEach(function(t){ TEX[t.id]=t; });
+var byQ = {}; D.questoes.forEach(function(q){ byQ[q.numero]=q; });
+var LETRAS = ['A','B','C','D','E'];
+var DURACAO = 180*60, SKEY = 'simulado3:pt:v1';
+var $ = function(id){ return document.getElementById(id); };
+
+var SECOES = [
+  {id:1, nome:'TEXTO I',  curta:'TXT I',  ini:1,  fim:13,  tex:'T1'},
+  {id:2, nome:'TEXTO II', curta:'TXT II', ini:14, fim:22,  tex:'T2'},
+  {id:3, nome:'TEXTO III',curta:'TXT III',ini:23, fim:27,  tex:'T3'},
+  {id:4, nome:'TEXTO IV', curta:'TXT IV', ini:28, fim:30,  tex:'T4'},
+  {id:5, nome:'TEXTO V',  curta:'TXT V',  ini:31, fim:36,  tex:'T5'},
+  {id:6, nome:'GRAMÁTICA',curta:'GRAM',   ini:37, fim:100, tex:null}
+];
+function secaoDe(n){
+  for(var i=0;i<SECOES.length;i++){ if(n>=SECOES[i].ini && n<=SECOES[i].fim) return SECOES[i]; }
+  return SECOES[5];
+}
+var GRUPOS = [
+  ['Interpreta','Interpretação e leitura'],['Relação entre linguagens','Interpretação e leitura'],
+  ['Coesão','Coesão e referência'],['Crase','Crase'],
+  ['Concordância verbal','Concordância verbal'],['Concordância nominal','Concordância nominal'],
+  ['Concordância','Concordância'],['Regência nominal','Regência nominal'],
+  ['Regência verbal','Regência verbal'],['Regência','Regência'],
+  ['Colocação','Colocação pronominal'],['Pontuação','Pontuação'],
+  ['Ortografia','Ortografia e acentuação'],['Acentuação','Ortografia e acentuação'],
+  ['Morfologia','Morfologia'],['Semântica','Semântica'],['Sintaxe','Sintaxe']
+];
+function grupo(t){
+  for(var i=0;i<GRUPOS.length;i++){ if(t.indexOf(GRUPOS[i][0])===0) return GRUPOS[i][1]; }
+  return t;
+}
+
+var S = { ordem:[], answers:{}, marked:{}, cur:1, elapsed:0, running:false, done:false, treino:false };
+var timerId=null, saveId=null;
+
+function hms(s){ s=Math.max(0,Math.floor(s));
+  return Math.floor(s/3600)+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+function mmss(s){ s=Math.max(0,Math.floor(s));
+  return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+function pad2(n){ return String(n).padStart(2,'0'); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function nAns(){ return Object.keys(S.answers).length; }
+function nMk(){ var c=0; for(var k in S.marked) if(S.marked[k]) c++; return c; }
+function total(){ return S.ordem.length; }
+function curto(q){ var t=q.topico; return t.length>32 ? t.slice(0,31)+'…' : t; }
+
+/* -------- armazenamento -------- */
+function save(){ if(S.done) return;
+  try{ localStorage.setItem(SKEY, JSON.stringify({ordem:S.ordem,answers:S.answers,marked:S.marked,
+    cur:S.cur,elapsed:S.elapsed,treino:S.treino})); }catch(e){} }
+function wipe(){ try{ localStorage.removeItem(SKEY); }catch(e){} }
+
+/* -------- abertura -------- */
+function buildBoot(){
+  $('boot-sub').textContent = (D.cargo || '').toUpperCase();
+  $('boot-dl').innerHTML = [
+    ['QUESTÕES', D.questoes.length],
+    ['TEMPO', '3:00:00'],
+    ['TEXTOS DE APOIO', '5'],
+    ['MÍNIMO NO BLOCO', '50%']
+  ].map(function(x){ return '<dt>'+x[0]+'</dt><dd>'+x[1]+'</dd>'; }).join('');
+  var viz=$('viz');
+  for(var i=0;i<22;i++){
+    var b=document.createElement('i');
+    b.style.height=(14+Math.random()*70)+'%';
+    b.style.animation='onda '+(0.7+Math.random()*1.1).toFixed(2)+'s ease-in-out infinite';
+    b.style.animationDelay=(Math.random()*1.1).toFixed(2)+'s';
+    viz.appendChild(b);
+  }
+}
+
+/* -------- prova -------- */
+function ordemCompleta(){ return D.questoes.map(function(q){ return q.numero; }); }
+function ordemSorteio(k){
+  var c=ordemCompleta();
+  for(var i=c.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=c[i]; c[i]=c[j]; c[j]=t; }
+  return c.slice(0,k).sort(function(a,b){ return a-b; });
+}
+function start(opts){
+  opts = opts || {};
+  if(opts.ordem){ S.ordem=opts.ordem; S.answers={}; S.marked={}; S.cur=S.ordem[0]; S.elapsed=0;
+    S.treino=!!opts.treino; wipe(); }
+  S.running=true; S.done=false;
+  $('boot').classList.add('hidden'); $('result').classList.add('hidden'); $('exam').classList.remove('hidden');
+  $('win-head').textContent = S.treino ? 'TREINO DE '+total() : 'SIMULADO 3 · LÍNGUA PORTUGUESA';
+  $('pl-tit').textContent = total()+' QUESTÕES';
+  $('m-ans').textContent = nAns()+'/'+total();
+  buildPlaylist(); buildEq(); render(); tick();
+  if(timerId) clearInterval(timerId);
+  timerId=setInterval(function(){ S.elapsed++; tick(); if(!S.treino && S.elapsed>=DURACAO) submit(true); },1000);
+  if(saveId) clearInterval(saveId);
+  saveId=setInterval(save,8000);
+  window.scrollTo(0,0);
+}
+function tick(){
+  $('clock').textContent=hms(S.elapsed);
+  $('left').textContent=S.treino ? '—' : hms(DURACAO-S.elapsed);
+  $('pl-cnt').textContent=mmss(S.elapsed);
+  var p=S.treino ? (S.ordem.indexOf(S.cur)+1)/total()*100 : Math.min(100,S.elapsed/DURACAO*100);
+  var f=$('seek'); f.style.width=p+'%';
+  f.className = (!S.treino && p>92) ? 'crit' : (!S.treino && p>75) ? 'warn' : '';
+  $('seekh').style.left=p+'%';
+}
+function meters(){
+  $('m-ans').textContent=nAns()+'/'+total();
+  $('m-mk').textContent=pad2(nMk());
+  $('m-bl').textContent=pad2(total()-nAns());
+}
+function secoesAtivas(){
+  return SECOES.filter(function(s){
+    return S.ordem.some(function(n){ return n>=s.ini && n<=s.fim; });
+  });
+}
+function buildPlaylist(){
+  var h='';
+  secoesAtivas().forEach(function(s){
+    var lista=S.ordem.filter(function(n){ return n>=s.ini && n<=s.fim; });
+    h+='<div class="plgrp"><b>'+s.nome+'</b><i></i><b>'+lista.length+'</b></div>';
+    lista.forEach(function(n){
+      h+='<button class="row" id="r-'+n+'" data-n="'+n+'">'+
+         '<span>'+pad2(n)+'.</span><span class="t">'+esc(curto(byQ[n]))+'</span>'+
+         '<span class="v" id="rv-'+n+'">—</span></button>';
+    });
+  });
+  var pl=$('pl'); pl.innerHTML=h;
+  pl.onclick=function(e){ var t=e.target.closest('.row'); if(t) go(parseInt(t.dataset.n,10)); };
+}
+function paintPlaylist(){
+  S.ordem.forEach(function(n){
+    var el=$('r-'+n); if(!el) return;
+    var c='row';
+    if(S.answers[n]) c+=' ans';
+    if(S.marked[n]) c+=' mk';
+    if(n===S.cur) c+=' cur';
+    el.className=c;
+    $('rv-'+n).textContent=S.answers[n]||'—';
+  });
+}
+function buildEq(){
+  $('eq').innerHTML=secoesAtivas().map(function(s){
+    return '<div class="sl"><i id="ev-'+s.id+'">0</i>'+
+      '<div class="rail"><div class="knob" id="ek-'+s.id+'" style="bottom:0"></div></div>'+
+      '<b>'+s.curta+'</b></div>';
+  }).join('');
+}
+function paintEq(){
+  secoesAtivas().forEach(function(s){
+    var qs=S.ordem.filter(function(n){ return n>=s.ini && n<=s.fim; });
+    var d=qs.filter(function(n){ return S.answers[n]; }).length;
+    var k=$('ek-'+s.id), v=$('ev-'+s.id);
+    if(k) k.style.bottom='calc('+(d/qs.length).toFixed(3)+' * (100% - 9px))';
+    if(v) v.textContent=d+'/'+qs.length;
+  });
+}
+function render(){
+  var q=byQ[S.cur], s=secaoDe(S.cur), pos=S.ordem.indexOf(S.cur)+1;
+  $('q-num').textContent='Questão '+pad2(q.numero);
+  $('q-blk').textContent=s.nome;
+  $('q-typ').textContent=q.topico;
+  $('q-text').textContent=q.enunciado;
+  $('now-n').textContent=pad2(q.numero);
+  $('now-t').textContent=q.topico;
+  $('win-q').textContent=pos+' DE '+total();
+  $('chip-sec').textContent=s.nome;
+  $('q-alts').innerHTML=LETRAS.map(function(l){
+    var on=S.answers[q.numero]===l;
+    return '<button class="alt'+(on?' on':'')+'" data-l="'+l+'" aria-pressed="'+on+'">'+
+      '<span class="l">'+l+'</span><span>'+esc(q.alternativas[l])+'</span><span class="c">'+(on?'▶':'')+'</span></button>';
+  }).join('');
+  $('b-mark').className='btn '+(S.marked[q.numero]?'btn--on':'');
+  $('b-mark').textContent=S.marked[q.numero]?'● MARCADA':'MARCAR';
+  $('b-clear').disabled=!S.answers[q.numero];
+  $('b-prev').disabled=pos===1;
+  $('b-next').disabled=pos===total();
+  $('b-text').classList.toggle('hidden',!q.textoRef);
+  if(q.textoRef) $('b-text').textContent = TEX[q.textoRef].titulo.split(' — ')[0].toUpperCase();
+  paintPlaylist(); paintEq(); meters();
+}
+function go(n){
+  var i=S.ordem.indexOf(n);
+  if(i<0) return;
+  S.cur=n; render(); save();
+  var el=$('r-'+n);
+  if(el&&el.scrollIntoView) el.scrollIntoView({block:'nearest'});
+  if(window.innerWidth<900) window.scrollTo({top:0,behavior:'smooth'});
+}
+function passo(d){
+  var i=S.ordem.indexOf(S.cur)+d;
+  if(i>=0 && i<total()) go(S.ordem[i]);
+}
+function answer(l){
+  if(LETRAS.indexOf(l)<0) return;
+  S.answers[S.cur]=l; render(); save();
+}
+function openText(){
+  var q=byQ[S.cur]; if(!q.textoRef) return; mostrarTexto(q.textoRef);
+}
+function mostrarTexto(tid){
+  var t=TEX[tid], h='';
+  $('tx-title').textContent=t.titulo.split(' — ')[0].toUpperCase();
+  h+='<div class="dlgnote">'+esc(t.titulo)+'</div>';
+  if(t.tabela){
+    h+='<table><tr>'+t.tabela.cabecalho.map(function(c){return '<th>'+esc(c)+'</th>';}).join('')+'</tr>';
+    t.tabela.linhas.forEach(function(lin){
+      h+='<tr>'+lin.map(function(c){return '<td>'+esc(c)+'</td>';}).join('')+'</tr>';
+    });
+    h+='</table>';
+  }
+  h+=t.conteudo.split(/\n\n+/).map(function(p){ return '<p>'+esc(p)+'</p>'; }).join('');
+  h+='<p class="dlgnote" style="margin:0">'+esc(t.fonte)+'</p>';
+  $('tx-body').innerHTML=h;
+  $('ov-text').classList.add('open');
+}
+
+/* -------- entrega -------- */
+function askSubmit(){
+  var bl=total()-nAns(), mk=nMk();
+  $('cf-msg').textContent = bl===0
+    ? 'Tudo respondido.'+(mk?' Ainda tem '+mk+' marcada(s) para revisar.':'')+' Depois de entregar não dá para voltar.'
+    : 'Faltam '+bl+' em branco'+(mk?' e '+mk+' marcada(s) para revisar':'')+'. Em branco conta como erro.';
+  $('ov-confirm').classList.add('open');
+}
+function grade(){
+  var R={ok:0,bad:0,blank:0,secoes:{},topicos:{}};
+  S.ordem.forEach(function(n){
+    var q=byQ[n], a=S.answers[n], s=secaoDe(n), g=grupo(q.topico);
+    R.secoes[s.id]=R.secoes[s.id]||{ok:0,total:0,nome:s.nome,curta:s.curta};
+    R.topicos[g]=R.topicos[g]||{ok:0,total:0};
+    R.secoes[s.id].total++; R.topicos[g].total++;
+    if(!a){ R.blank++; return; }
+    if(a===q.gabarito){ R.ok++; R.secoes[s.id].ok++; R.topicos[g].ok++; }
+    else R.bad++;
+  });
+  R.pct=Math.round(R.ok/total()*100);
+  R.habilitado=R.ok/total()>=0.5;
+  return R;
+}
+function submit(auto){
+  S.running=false; S.done=true;
+  if(timerId) clearInterval(timerId);
+  if(saveId) clearInterval(saveId);
+  wipe();
+  $('ov-confirm').classList.remove('open');
+  $('exam').classList.add('hidden'); $('result').classList.remove('hidden');
+  renderResult(grade(),auto); window.scrollTo(0,0);
+}
+
+/* -------- resultado -------- */
+var revFilter='bad', allOpen=false, R=null;
+function renderResult(res,auto){
+  R=res;
+  $('r-pct').innerHTML=res.pct+'<u>%</u>';
+  $('r-h2').textContent = res.pct>=80 ? 'Sobrou folga' : res.pct>=60 ? 'Passaria no corte'
+    : res.pct>=50 ? 'Em cima do corte' : 'Abaixo do corte';
+  $('r-sub').textContent=(auto?'TEMPO ESGOTADO · ':'')+(S.treino?'TREINO DE '+total():'SIMULADO 3 · LÍNGUA PORTUGUESA');
+  $('r-lines').innerHTML=[
+    ['ACERTOS',res.ok+'/'+total()],['ERROS',pad2(res.bad)],
+    ['BRANCO',pad2(res.blank)],['TEMPO',hms(S.elapsed)]
+  ].map(function(l){ return '<div><b>'+l[0]+'</b><i>'+l[1]+'</i></div>'; }).join('');
+  $('r-stamp').innerHTML=res.habilitado?'<span class="stamp ok">ACIMA DO MÍNIMO DO BLOCO</span>'
+    :'<span class="stamp no">ABAIXO DO MÍNIMO DO BLOCO</span>';
+
+  var ord=Object.keys(res.topicos).map(function(k){ return [k,res.topicos[k]]; })
+    .sort(function(a,b){ return (a[1].ok/a[1].total)-(b[1].ok/b[1].total); });
+  $('r-card').innerHTML = ord.slice(0,3).map(function(p){
+    return '<dt>MAIS FRACO — '+p[0].toUpperCase()+'</dt><dd>'+p[1].ok+'/'+p[1].total+'</dd>';
+  }).join('');
+  $('r-topos').innerHTML = ord.map(function(p){
+    var f=p[1].ok/p[1].total, cls = f<.5?'fraco':(f<.75?'medio':'');
+    return '<div class="topo"><span class="nm">'+esc(p[0])+'</span>'+
+      '<span class="vl">'+p[1].ok+'/'+p[1].total+'</span>'+
+      '<span class="br"><i class="'+cls+'" style="width:'+(f*100)+'%"></i></span></div>';
+  }).join('');
+
+  $('r-eq').innerHTML=secoesAtivas().map(function(s){
+    var r=res.secoes[s.id], f=r.ok/r.total;
+    return '<div class="sl"><i class="'+(f>=.5?'':'bad')+'">'+r.ok+'/'+r.total+'</i>'+
+      '<div class="rail"><div class="minline" style="bottom:calc(0.5 * (100% - 9px) + 4px)"></div>'+
+      '<div class="knob" style="bottom:calc('+f.toFixed(3)+' * (100% - 9px))"></div></div><b>'+s.curta+'</b></div>';
+  }).join('');
+  var fracas=secoesAtivas().filter(function(s){ var r=res.secoes[s.id]; return r.ok/r.total<0.5; })
+    .map(function(s){ return s.nome; });
+  $('r-eqnote').textContent = fracas.length
+    ? 'A linha vermelha é a metade. Ficou abaixo em: '+fracas.join(', ')+'.'
+    : 'A linha vermelha é a metade. Você passou dela em todas as seções.';
+
+  var m='';
+  secoesAtivas().forEach(function(s){
+    var lista=S.ordem.filter(function(n){ return n>=s.ini && n<=s.fim; });
+    var ok=lista.filter(function(n){ return S.answers[n]===byQ[n].gabarito; }).length;
+    m+='<div class="plgrp"><b>'+s.nome+'</b><i></i><b>'+ok+'/'+lista.length+'</b></div>';
+    lista.forEach(function(n){
+      var a=S.answers[n], cls=!a?'blank':(a===byQ[n].gabarito?'ok':'bad');
+      m+='<button class="row '+cls+'" data-goto="'+n+'"><span>'+pad2(n)+'.</span>'+
+         '<span class="t">'+esc(curto(byQ[n]))+'</span><span class="v">'+(a||'—')+'</span></button>';
+    });
+  });
+  $('r-pl').innerHTML=m;
+  $('b-redo').disabled = res.bad===0;
+  paintFilters(); renderRev();
+}
+function renderRev(){
+  var list=S.ordem.filter(function(n){
+    var a=S.answers[n];
+    if(revFilter==='ok') return a===byQ[n].gabarito;
+    if(revFilter==='bad') return a&&a!==byQ[n].gabarito;
+    if(revFilter==='blank') return !a;
+    return true;
+  });
+  $('r-cnt').textContent=pad2(list.length);
+  if(!list.length){
+    $('rev').innerHTML='<p class="note" style="padding:22px 4px">Nada neste filtro. Troque o recorte acima.</p>';
+    return;
+  }
+  $('rev').innerHTML=list.map(function(n){
+    var q=byQ[n], a=S.answers[n], st=!a?'blank':(a===q.gabarito?'ok':'bad');
+    return '<div class="rvi" id="rev-'+n+'">'+
+      '<button class="rvh" data-n="'+n+'"><span class="n">'+pad2(n)+'</span>'+
+      '<span class="led '+st+'"></span><span class="t">'+esc(q.topico)+'</span>'+
+      '<span class="s">'+(a||'—')+' › '+q.gabarito+'</span></button>'+
+      '<div class="rvb'+(allOpen?' open':'')+'" id="revb-'+n+'">'+revBody(q,a)+'</div></div>';
+  }).join('');
+}
+function revBody(q,a){
+  var h='';
+  if(q.textoRef) h+='<div class="dlgnote" style="margin-top:13px">'+esc(TEX[q.textoRef].titulo)+
+    ' <button class="btn" data-text="'+q.textoRef+'" style="margin-left:7px">VER TEXTO</button></div>';
+  h+='<div class="q">'+esc(q.enunciado)+'</div>';
+  h+=LETRAS.map(function(l){
+    var key=l===q.gabarito, you=l===a;
+    return '<div class="ra '+(key?'right':you?'wrong':'')+'"><span class="l">'+l+'</span><span>'+
+      esc(q.alternativas[l])+(you?'<span class="pick you">SUA</span>':'')+
+      (key?'<span class="pick key">GABARITO</span>':'')+
+      '<span class="cm">'+esc(q.comentarios[l])+'</span></span></div>';
+  }).join('');
+  return h+'<div class="fund"><b>REGRA EM JOGO</b>'+esc(q.fundamentacao)+'</div>';
+}
+function paintFilters(){
+  Array.prototype.forEach.call($('r-filters').querySelectorAll('[data-f]'),function(b){
+    b.className='btn '+(b.dataset.f===revFilter?'btn--on':'');
+  });
+}
+
+/* -------- eventos -------- */
+$('q-alts').onclick=function(e){ var t=e.target.closest('.alt'); if(t) answer(t.dataset.l); };
+$('b-prev').onclick=function(){ passo(-1); };
+$('b-next').onclick=function(){ passo(1); };
+$('b-mark').onclick=function(){ S.marked[S.cur]=!S.marked[S.cur]; render(); save(); };
+$('b-clear').onclick=function(){ delete S.answers[S.cur]; render(); save(); };
+$('b-text').onclick=openText;
+$('b-submit').onclick=askSubmit;
+$('cf-yes').onclick=function(){ submit(false); };
+$('btn-start').onclick=function(){ start({ordem:ordemCompleta(),treino:false}); };
+$('btn-quick').onclick=function(){ start({ordem:ordemSorteio(20),treino:true}); };
+$('btn-resume').onclick=function(){ start({}); };
+$('b-again').onclick=function(){
+  S.done=false; wipe();
+  $('result').classList.add('hidden'); $('boot').classList.remove('hidden');
+  $('btn-resume').classList.add('hidden'); window.scrollTo(0,0);
+};
+$('b-redo').onclick=function(){
+  var errados=S.ordem.filter(function(n){ return S.answers[n] && S.answers[n]!==byQ[n].gabarito; });
+  if(!errados.length) return;
+  start({ordem:errados,treino:true});
+};
+$('btn-pl').onclick=function(){
+  $('side').classList.toggle('collapsed');
+  $('exam').querySelector('.deck').classList.toggle('nopl');
+  this.className='btn '+($('side').classList.contains('collapsed')?'':'btn--on');
+};
+$('btn-eq').onclick=function(){
+  $('eqwin').classList.toggle('hidden');
+  this.className='btn '+($('eqwin').classList.contains('hidden')?'':'btn--on');
+};
+$('b-expand').onclick=function(){ allOpen=!allOpen; this.textContent=allOpen?'FECHAR TUDO':'ABRIR TUDO'; renderRev(); };
+document.querySelector('.plfoot').onclick=function(e){
+  var t=e.target.closest('[data-jump]'); if(!t) return;
+  var j=t.dataset.jump, n=null, i;
+  if(j==='cur') n=S.cur;
+  else if(j==='first'){ for(i=0;i<S.ordem.length;i++){ if(!S.answers[S.ordem[i]]){ n=S.ordem[i]; break; } } }
+  else { for(i=0;i<S.ordem.length;i++){ if(S.marked[S.ordem[i]]){ n=S.ordem[i]; break; } } }
+  if(n) go(n);
+};
+$('r-filters').onclick=function(e){
+  var t=e.target.closest('[data-f]'); if(!t) return;
+  revFilter=t.dataset.f; paintFilters(); renderRev();
+};
+$('rev').onclick=function(e){
+  var tx=e.target.closest('[data-text]');
+  if(tx){ mostrarTexto(tx.dataset.text); return; }
+  var h=e.target.closest('.rvh');
+  if(h) $('revb-'+h.dataset.n).classList.toggle('open');
+};
+$('r-pl').onclick=function(e){
+  var t=e.target.closest('[data-goto]'); if(!t) return;
+  var n=t.dataset.goto;
+  revFilter='all'; paintFilters(); renderRev();
+  var it=$('rev-'+n);
+  if(it){ $('revb-'+n).classList.add('open'); if(it.scrollIntoView) it.scrollIntoView({behavior:'smooth',block:'center'}); }
+};
+Array.prototype.forEach.call(document.querySelectorAll('[data-close]'),function(b){
+  b.onclick=function(){ $(b.dataset.close).classList.remove('open'); };
+});
+Array.prototype.forEach.call(document.querySelectorAll('.ov'),function(o){
+  o.addEventListener('click',function(e){ if(e.target===o) o.classList.remove('open'); });
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){ Array.prototype.forEach.call(document.querySelectorAll('.ov.open'),function(o){o.classList.remove('open');}); return; }
+  if(!S.running||document.querySelector('.ov.open')) return;
+  var k=e.key.toUpperCase();
+  if(LETRAS.indexOf(k)>-1){ answer(k); e.preventDefault(); }
+  else if(e.key==='ArrowRight'){ passo(1); e.preventDefault(); }
+  else if(e.key==='ArrowLeft'){ passo(-1); e.preventDefault(); }
+  else if(k==='M'){ S.marked[S.cur]=!S.marked[S.cur]; render(); save(); }
+  else if(k==='T'){ openText(); }
+});
+window.addEventListener('beforeunload',function(e){ if(S.running){ e.preventDefault(); e.returnValue=''; } });
+
+buildBoot();
+try{
+  var raw=localStorage.getItem(SKEY);
+  if(raw){
+    var d=JSON.parse(raw);
+    if(d && d.ordem && d.ordem.length && Object.keys(d.answers||{}).length){
+      S.ordem=d.ordem; S.answers=d.answers||{}; S.marked=d.marked||{};
+      S.cur=d.cur||d.ordem[0]; S.elapsed=d.elapsed||0; S.treino=!!d.treino;
+      $('btn-resume').classList.remove('hidden');
+      $('resume-lbl').textContent='RETOMAR · '+Object.keys(d.answers).length+' FEITAS · '+hms(d.elapsed);
+    }
+  }
+}catch(e){}
+})();
+</script>
+</body>
+</html>
